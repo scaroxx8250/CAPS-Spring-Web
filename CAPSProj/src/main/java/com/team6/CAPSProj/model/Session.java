@@ -1,14 +1,11 @@
 package com.team6.CAPSProj.model;
 
-import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.FutureOrPresent;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Session {
@@ -16,9 +13,8 @@ public class Session {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int sessionId; 
 	
-	@FutureOrPresent
-	@DateTimeFormat(pattern="dd-MM-yyyy HH:mm:ss") 
-	private LocalDateTime timestamp;
+
+	private long timestamp;
 	
 	private String email;
 
@@ -27,14 +23,14 @@ public class Session {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Session(int sessionId, @FutureOrPresent LocalDateTime timestamp, String email) {
+	public Session(int sessionId, long timestamp, String email) {
 		super();
 		this.sessionId = sessionId;
 		this.timestamp = timestamp;
 		this.email = email;
 	}
 
-	public Session(@FutureOrPresent LocalDateTime timestamp, String email) {
+	public Session(long timestamp, String email) {
 		super();
 		this.timestamp = timestamp;
 		this.email = email;
@@ -44,7 +40,7 @@ public class Session {
 		return sessionId;
 	}
 
-	public LocalDateTime getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
@@ -56,7 +52,7 @@ public class Session {
 		this.sessionId = sessionId;
 	}
 
-	public void setTimestamp(LocalDateTime timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 
