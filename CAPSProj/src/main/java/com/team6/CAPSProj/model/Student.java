@@ -1,14 +1,15 @@
 package com.team6.CAPSProj.model;
 
 import java.time.LocalDate;
-import java.util.List;
-import javax.persistence.JoinColumn;
+import java.util.HashSet;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Student {
@@ -16,17 +17,15 @@ public class Student {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int studentId;
 	
-	@ManyToMany
-	@JoinTable(name="student_course", 
-	joinColumns= @JoinColumn(name = "studentId"),
-	inverseJoinColumns = @JoinColumn(name="courseId"))
-	private List<Course> courses;
+	private HashSet<StudentCourse> studentCourses= new HashSet<StudentCourse>();
 	
+
 	private String firstName;
 	private String lastName;
 	private String personEmail;
 	private String email;
 	private String password;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate matrDate;
 	
 	
@@ -34,23 +33,9 @@ public class Student {
 	public Student() {
 		super();
 	}
-
-
-	//Constructor with all attributes
-	public Student(int studentId, List<Course> courses, String firstName, String lastName, String personEmail,
-			String email, String password, LocalDate matrDate) {
-		super();
-		this.studentId = studentId;
-		this.courses = courses;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.personEmail = personEmail;
-		this.email = email;
-		this.password = password;
-		this.matrDate = matrDate;
-	}
 	
-	//Constructor without id and courses
+
+
 	public Student(String firstName, String lastName, String personEmail, String email, String password,
 			LocalDate matrDate) {
 		super();
@@ -62,26 +47,29 @@ public class Student {
 		this.matrDate = matrDate;
 	}
 	
+	
 	//Getters and Setters
 	public int getStudentId() {
 		return studentId;
 	}
 
-
 	public void setStudentId(int studentId) {
 		this.studentId = studentId;
 	}
-
-
-	public List<Course> getCourses() {
-		return courses;
+	
+	@OneToMany(mappedBy="student")
+	public HashSet<StudentCourse> getStudentCourse() {
+		return studentCourses;
 	}
 
 
-	public void setCourses(List<Course> courses) {
-		this.courses = courses;
+	public void setStudentCourses(HashSet<StudentCourse> studentCourse) {
+		this.studentCourses = studentCourse;
 	}
-
+	
+	public void addStudentCourse(StudentCourse studentCourse) {
+		this.studentCourses.add(studentCourse);
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -142,13 +130,15 @@ public class Student {
 		this.matrDate = matrDate;
 	}
 
-	
-	//toString method 
+
+
 	@Override
 	public String toString() {
-		return "Student [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", personEmail=" + personEmail + ", email=" + email + ", password=" + password + ", matrDate="
-				+ matrDate + "]";
+		return "Student [studentId=" + studentId + ", studentCourse=" + studentCourses + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", personEmail=" + personEmail + ", email=" + email + ", password="
+				+ password + ", matrDate=" + matrDate + "]";
 	}
+
+	
 	
 }

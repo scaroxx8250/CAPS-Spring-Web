@@ -19,7 +19,7 @@ public class Lecturer {
 	private String personalEmail;
 	private String email;
 	private String password;
-	@OneToMany(mappedBy = "Lecturer")
+	@OneToMany(mappedBy = "lecturer")
 	private List<Course> courses;
 	
 	

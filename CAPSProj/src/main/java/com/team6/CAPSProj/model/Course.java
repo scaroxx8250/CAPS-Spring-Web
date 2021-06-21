@@ -1,13 +1,13 @@
 package com.team6.CAPSProj.model;
 
-import java.util.List;
+import java.util.HashSet;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Course {
@@ -21,35 +21,24 @@ public class Course {
 	private int credits;
 	@ManyToOne
 	private Lecturer lecturer;
-	@ManyToMany(mappedBy = "courses")
-	private List<Student> students;
 	private int size;
-	
-	public Course(int courseId, String courseName, String description, String faculty, int credits, Lecturer lecturer,
-			int size) {
-		super();
-		this.courseId = courseId;
-		this.courseName = courseName;
-		this.description = description;
-		this.faculty = faculty;
-		this.credits = credits;
-		this.lecturer = lecturer;
-		this.size = size;
-	}
-	
-	public Course(String courseName, String description, String faculty, int credits, int size) {
-		super();
-		this.courseName = courseName;
-		this.description = description;
-		this.faculty = faculty;
-		this.credits = credits;
-		this.size = size;
-	}
+	private HashSet<StudentCourse> studentCourses = new HashSet<StudentCourse>();
+
 	
 	public Course() {
 		super();
 	}
 	
+		
+	public Course(String courseName, String description, String faculty, int credits, int size) {
+	super();
+	this.courseName = courseName;
+	this.description = description;
+	this.faculty = faculty;
+	this.credits = credits;
+	this.size = size;
+}
+
 	public int getCourseId() {
 		return courseId;
 	}
@@ -82,11 +71,10 @@ public class Course {
 		this.faculty = faculty;
 	}
 	
-	public int getCredit() {
+	public int getCredits() {
 		return credits;
 	}
-	
-	public void setCredit(int credits) {
+	public void setCredits(int credits) {
 		this.credits = credits;
 	}
 	
@@ -106,6 +94,17 @@ public class Course {
 		this.size = size;
 	}
 	
+
+	@OneToMany(mappedBy="course")
+	public HashSet<StudentCourse> getStudentCourses() {
+		return studentCourses;
+	}
+	public void setStudentCourses(HashSet<StudentCourse> studentCourse) {
+		this.studentCourses = studentCourse;
+	}
+	public void addStudentCourse(StudentCourse studentCourse) {
+		this.studentCourses.add(studentCourse);
+	}
 	@Override
 	public String toString() {
 		return "Course [courseId=" + courseId + ", courseName=" + courseName + ", description=" + description
