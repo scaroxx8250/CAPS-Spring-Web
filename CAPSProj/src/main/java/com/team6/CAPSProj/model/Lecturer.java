@@ -1,6 +1,12 @@
 package com.team6.CAPSProj.model;
 
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Lecturer {
@@ -14,10 +20,10 @@ public class Lecturer {
 	private String email;
 	private String password;
 	@OneToMany(mappedBy = "Lecturer")
-	private List<Courses> courses;
+	private List<Course> courses;
 	
 	
-	public Lecturer(int lecturerId, List<Courses> courses, String firstName, String lastName, String faculty,
+	public Lecturer(int lecturerId, List<Course> courses, String firstName, String lastName, String faculty,
 			String personalEmail, String email, String password) {
 		super();
 		this.lecturerId = lecturerId;
@@ -43,7 +49,6 @@ public class Lecturer {
 	
 	public Lecturer() {
 		super();
-		//TODO Auto-generated constructor stub
 	}
 	
 	//Getter and Setters
@@ -55,11 +60,11 @@ public class Lecturer {
 		this.lecturerId = lecturerId;
 	}
 
-	public List<Courses> getCourses() {
+	public List<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(List<Courses> courses) {
+	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
 
@@ -109,6 +114,13 @@ public class Lecturer {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "Lecturer [lecturerId=" + lecturerId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", faculty=" + faculty + ", personalEmail=" + personalEmail + ", email=" + email + ", password="
+				+ password + ", courses=" + courses + "]";
 	}
 	
 }
