@@ -10,6 +10,7 @@ public class CapsProjApplication {
 		SpringApplication.run(CapsProjApplication.class, args);
 		System.out.println("Hello world2");
 		System.out.println("Hello world3");
+		System.out.println("Hello world4");
 	}
 
 }
