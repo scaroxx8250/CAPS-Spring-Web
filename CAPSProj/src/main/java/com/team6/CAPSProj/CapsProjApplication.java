@@ -50,14 +50,14 @@ public class CapsProjApplication {
 		return args ->{
 			
 			Student s1 = new Student("Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
-			//srepo.save(s1);
+			srepo.save(s1);
 			
-			Course c1 = new Course("SA4102", "C#", "COM", 5, 100);
-			//crepo.save(c1);
+			Course c1 = new Course("SA4102", "C#", "COM", 5,LocalDate.of(2021, 6, 22), 100);
+			crepo.save(c1);
 			
 			Grade B = Grade.B;
 			
-			StudentCourse sc1 = new StudentCourse(s1, c1, B, LocalDate.of(2021, 6, 22));
+			StudentCourse sc1 = new StudentCourse(s1, c1, B );
 			screpo.save(sc1);
 			
 //			Book b1 = new Book("Spring Boot");

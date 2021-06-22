@@ -1,7 +1,6 @@
 package com.team6.CAPSProj.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +28,7 @@ private Course course;
 
 //additional fields
 private Grade grade;
-private LocalDate EnrolDate;
+
 public Student getStudent() {
 	return student;
 }
@@ -48,18 +47,12 @@ public Grade getGrade() {
 public void setGrade(Grade grade) {
 	this.grade = grade;
 }
-public LocalDate getEnrolDate() {
-	return EnrolDate;
-}
-public void setEnrolDate(LocalDate enrolDate) {
-	EnrolDate = enrolDate;
-}
-public StudentCourse(Student student, Course course, Grade grade, LocalDate enrolDate) {
+
+public StudentCourse(Student student, Course course, Grade grade) {
 	super();
 	this.student = student;
 	this.course = course;
 	this.grade = grade;
-	EnrolDate = enrolDate;
 }
 public StudentCourse() {
 	super();

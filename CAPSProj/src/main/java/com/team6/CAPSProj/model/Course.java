@@ -1,5 +1,6 @@
 package com.team6.CAPSProj.model;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 
 import javax.persistence.Basic;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Course {
@@ -26,6 +29,8 @@ public class Course {
 	private String faculty;
 
 	private int credits;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	private LocalDate courseStartDate;
 	
 	@ManyToOne
 	private Lecturer lecturer;
@@ -40,12 +45,13 @@ public class Course {
 	}
 	
 		
-	public Course(String courseName, String description, String faculty, int credits, int size) {
+	public Course(String courseName, String description, String faculty, int credits, LocalDate courseStartDate, int size) {
 	super();
 	this.courseName = courseName;
 	this.description = description;
 	this.faculty = faculty;
 	this.credits = credits;
+	this.courseStartDate = courseStartDate;
 	this.size = size;
 }
 
@@ -88,6 +94,16 @@ public class Course {
 		this.credits = credits;
 	}
 	
+	public LocalDate getCourseStartDate() {
+		return courseStartDate;
+	}
+
+
+	public void setCourseStartDate(LocalDate courseStartDate) {
+		this.courseStartDate = courseStartDate;
+	}
+
+
 	public Lecturer getLecturer() {
 		return lecturer;
 	}
@@ -108,18 +124,22 @@ public class Course {
 		return studentCourses;
 	}
 	
-	@OneToMany(mappedBy = "course", cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy = "course")
 	public void setStudentCourses(HashSet<StudentCourse> studentCourse) {
 		this.studentCourses = studentCourse;
 	}
-	public void addStudentCourse(StudentCourse studentCourse) {
-		this.studentCourses.add(studentCourse);
-	}
+//	public void addStudentCourse(StudentCourse studentCourse) {
+//		this.studentCourses.add(studentCourse);
+//	}
+	
+
 	@Override
 	public String toString() {
 		return "Course [courseId=" + courseId + ", courseName=" + courseName + ", description=" + description
-				+ ", faculty=" + faculty + ", credits=" + credits + ", lecturer=" + lecturer + ", size=" + size + "]";
+				+ ", faculty=" + faculty + ", credits=" + credits + ", courseStartDate=" + courseStartDate
+				+ ", lecturer=" + lecturer + ", size=" + size + ", studentCourses=" + studentCourses + "]";
 	}
+
 
 	@Override
 	public int hashCode() {

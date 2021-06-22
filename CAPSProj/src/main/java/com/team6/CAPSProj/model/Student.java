@@ -68,14 +68,14 @@ public class Student {
 		return studentCourses;
 	}
 
-	@OneToMany(mappedBy = "student", cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy = "student")
 	public void setStudentCourses(HashSet<StudentCourse> studentCourse) {
 		this.studentCourses = studentCourse;
 	}
 	
-	public void addStudentCourse(StudentCourse studentCourse) {
-		this.studentCourses.add(studentCourse);
-	}
+//	public void addStudentCourse(StudentCourse studentCourse) {
+//		this.studentCourses.add(studentCourse);
+//	}
 
 	public String getFirstName() {
 		return firstName;
