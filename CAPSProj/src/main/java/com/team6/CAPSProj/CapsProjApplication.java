@@ -49,7 +49,7 @@ public class CapsProjApplication {
 	CommandLineRunner runner() {
 		return args ->{
 			
-			Student s1 = new Student("Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
+			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
 			srepo.save(s1);
 			
 			Course c1 = new Course("SA4102", "C#", "COM", 5,LocalDate.of(2021, 6, 22), 100);

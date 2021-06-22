@@ -3,9 +3,6 @@ package com.team6.CAPSProj.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +19,8 @@ public class Student {
 	
 	private HashSet<StudentCourse> studentCourses= new HashSet<StudentCourse>();
 
+	private String matricNo;
+	
 	private String firstName;
 
 	private String lastName;
@@ -43,9 +42,10 @@ public class Student {
 	
 
 
-	public Student(String firstName, String lastName, String personEmail, String email, String password,
+	public Student(String matricNo, String firstName, String lastName, String personEmail, String email, String password,
 			LocalDate matrDate) {
 		super();
+		this.matricNo = matricNo;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.personEmail = personEmail;
@@ -64,6 +64,19 @@ public class Student {
 		this.studentId = studentId;
 	}
 	
+	
+	public String getMatricNo() {
+		return matricNo;
+	}
+
+
+
+	public void setMatricNo(String matricNo) {
+		this.matricNo = matricNo;
+	}
+
+
+
 	public HashSet<StudentCourse> getStudentCourse() {
 		return studentCourses;
 	}
@@ -140,10 +153,14 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Student [studentId=" + studentId + ", studentCourse=" + studentCourses + ", firstName=" + firstName
+		return "Student [studentCourses=" + studentCourses + ", matricNo=" + matricNo + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", personEmail=" + personEmail + ", email=" + email + ", password="
 				+ password + ", matrDate=" + matrDate + "]";
 	}
+
+
+
+	
 
 	
 	

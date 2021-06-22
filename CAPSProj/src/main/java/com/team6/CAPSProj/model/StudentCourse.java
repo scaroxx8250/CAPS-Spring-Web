@@ -2,11 +2,8 @@ package com.team6.CAPSProj.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -27,6 +24,7 @@ private Student student;
 private Course course;
 
 //additional fields
+@Column(nullable = true)
 private Grade grade;
 
 public Student getStudent() {
