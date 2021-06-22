@@ -2,6 +2,9 @@ package com.team6.CAPSProj.model;
 
 import java.util.HashSet;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,13 +18,20 @@ public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int courseId;
+
 	private String courseName;
+
 	private String description;
+
 	private String faculty;
+
 	private int credits;
+	
 	@ManyToOne
 	private Lecturer lecturer;
+
 	private int size;
+	
 	private HashSet<StudentCourse> studentCourses = new HashSet<StudentCourse>();
 
 	
@@ -94,11 +104,11 @@ public class Course {
 		this.size = size;
 	}
 	
-
-	@OneToMany(mappedBy="course")
 	public HashSet<StudentCourse> getStudentCourses() {
 		return studentCourses;
 	}
+	
+	@OneToMany(mappedBy = "course", cascade=CascadeType.PERSIST)
 	public void setStudentCourses(HashSet<StudentCourse> studentCourse) {
 		this.studentCourses = studentCourse;
 	}
