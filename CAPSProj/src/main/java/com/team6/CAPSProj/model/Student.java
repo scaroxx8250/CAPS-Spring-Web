@@ -3,6 +3,9 @@ package com.team6.CAPSProj.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,13 +21,17 @@ public class Student {
 	private int studentId;
 	
 	private HashSet<StudentCourse> studentCourses= new HashSet<StudentCourse>();
-	
 
 	private String firstName;
+
 	private String lastName;
+
 	private String personEmail;
+
 	private String email;
+
 	private String password;
+
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate matrDate;
 	
@@ -57,12 +64,11 @@ public class Student {
 		this.studentId = studentId;
 	}
 	
-	@OneToMany(mappedBy="student")
 	public HashSet<StudentCourse> getStudentCourse() {
 		return studentCourses;
 	}
 
-
+	@OneToMany(mappedBy = "student", cascade=CascadeType.PERSIST)
 	public void setStudentCourses(HashSet<StudentCourse> studentCourse) {
 		this.studentCourses = studentCourse;
 	}
