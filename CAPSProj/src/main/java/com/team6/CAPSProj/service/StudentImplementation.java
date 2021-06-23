@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
-import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.repo.StudentRepository;
 
 @Service
