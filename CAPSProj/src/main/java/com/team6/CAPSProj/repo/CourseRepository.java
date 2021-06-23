@@ -21,16 +21,16 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	@Query("select c from Course c where c.id = ?1")
 	Course findCourseByid(int CourseId);
 	
-	@Query("Select c from Course c where YEAR(c.courseStartDate) == ?1")
+	@Query("Select c from Course c where YEAR(c.courseStartDate) = ?1")
 	List<Course> findCoursesByYear(String year);
 
-	@Query("Select c from Course c where YEAR(c.courseStartDate) == :year")
+	@Query("Select c from Course c where YEAR(c.courseStartDate) = :year")
 	List<Course> findCourseByCurrentYear(@Param("year") String year);
 	
-	@Query("Select c from Course where c.lecturer.lecturerId = :lecId")
+	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId")
 	List<Course> findCourseByLecturer(@Param("lecId") Integer lecId);
 	
-	@Query("Select c from Course where c.lecturer.lecturerId = :lecId and YEAR(c.courseStartDate) == :year ")
+	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId and YEAR(c.courseStartDate) =:year ")
 	List<Course> findCourseByYearAndLecturer(@Param("year") String year,@Param("lecId") Integer lecId);
 	
 }
