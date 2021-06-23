@@ -45,10 +45,7 @@ public class CourseTest {
 	public void setCourseService(CourseServiceImpl cserviceImpl) {
 		this.cservice = cserviceImpl;
 	}
-	@Autowired
-	public void setLecturerService(LecturerServiceImpl lserviceImpl) {
-		this.lservice = lserviceImpl;
-	}
+
 	@Autowired
 	private CourseRepository crepo;
 	
@@ -58,10 +55,7 @@ public class CourseTest {
 	
 	public DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
-	@Autowired
-	private LecturerInterface lservice;
-	@Autowired
-	private LecturerRepository lrepo;
+	
 	@Autowired
 	public void setLecturerService(LecturerServiceImpl lserviceImpl)
 	{
@@ -69,58 +63,45 @@ public class CourseTest {
 	}
 	
 
-//	@Test
-//	@Order(1)
-//	public void testCourseCreation() {
-//		
-//	
-//		LocalDate dt = LocalDate.parse("22/05/2021",df);
-//		Course c = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, dt, 0);
-//		cservice.addCourse(c);
-//		assertNotNull(crepo.findByCourseName("ADProject"));
-//	}
-	
-
-//	
-//	@Test
-//	@Order(2)
-//	public void testfindAllCourses() {
-//		
-//		List<Integer> list = new ArrayList<Integer> (1);
-//		List<Course> test = cservice.findAllCourses(list);
-//		assertNotNull(test);
-//
-//	}
-//	
-//	@Test
-//	@Order(3)
-//	public void testfindAllCourseforCurrentYear() {	
-//		List<Course> test = cservice.findAllCourseforCurrentYear();
-//		assertNotNull(test);
-//	}
-//	
-//	@Test
-//	@Order(4)
-//	public void findCourseByCourseName() {	
-//		String courseName = "ADProject";
-//		Course c = cservice.findCourseByCourseName(courseName);
-//		assertNotNull(c);
-//	}
-
 	@Test
-	@Order(5)
-	public void addLecturer() {
-	Lecturer l1 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com");
-	lservice.addLecturer(l1);
-
+	@Order(1)
+	public void testCourseCreation() {
+		
+	
 		LocalDate dt = LocalDate.parse("22/05/2021",df);
 		Course c = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, dt, 0);
 		cservice.addCourse(c);
 		assertNotNull(cservice.findCourseByCourseName("ADProject"));
+	}
+	
+
+
+	@Test
+	@Order(2)
+	public void testfindAllCourses() {
 		
+		List<Integer> list = new ArrayList<Integer> (1);
+		List<Course> test = cservice.findAllCourses(list);
+		assertNotNull(test);
+
+	}
+	
+	@Test
+	@Order(3)
+	public void testfindAllCourseforCurrentYear() {	
+		List<Course> test = cservice.findAllCourseforCurrentYear();
+		assertNotNull(test);
+	}
+	
+	@Test
+	@Order(4)
+	public void findCourseByCourseName() {	
+		String courseName = "ADProject";
+		Course c = cservice.findCourseByCourseName(courseName);
+		assertNotNull(c);
 	}
 	@Test
-	@Order(6)
+	@Order(5)
 	public void testCourseUpdate() {
 	Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
 	lrepo.save(l1);
@@ -140,6 +121,20 @@ public class CourseTest {
 		assertTrue(c.equals(d));
 		
 	}
+
+	@Test
+	@Order(6)
+	public void addLecturer() {
+	Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com");
+	lservice.addLecturer(l2);
+
+		LocalDate dt = LocalDate.parse("22/05/2021",df);
+		Course c = new Course("ADProject2", "ADProject2", Faculty.COMPUTING, 5, dt, 0);
+		cservice.addCourse(c);
+		assertNotNull(cservice.findCourseByCourseName("ADProject2"));
+		
+	}
+
 	@Test
 	@Order(7)
 	public void testCourseDelete() {
@@ -149,13 +144,29 @@ public class CourseTest {
 	   
 	   assertNull(cservice.findCourseByCourseName("ADProject"));
 	}
+	
+	@Test
+	@Order(8)
+	public void testFindCoursesByLecturer() {
+		List<Course> clist = cservice.findCoursesByLecturerId(1);
+		assertNotNull(clist);
+		
+	}
 
-
-//	@Test
-//	@Order(8)
-//	public void findAllCourseByYear() {	
-//		List<Course> test = cservice.findAllCourseByYear(2021);
-//		assertNotNull(test);
-//	}
-//	
+	@Test
+	@Order(9)
+	public void findAllCourseByYear() {	
+		List<Course> test = cservice.findAllCourseByYear(2021);
+		assertNotNull(test);
+	}
+	
+	@Test
+	@Order(10)
+	public void findAllCourseByYearAndLecturer() {	
+		List<Course> test = cservice.findAllCourseByYearAndLecturerId(2021,1);
+		assertNotNull(test);
+	}
+	
+	
+	
 }
