@@ -69,8 +69,10 @@ public class CourseTest {
 		
 	
 		LocalDate dt = LocalDate.parse("22/05/2021",df);
-		Course c = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, dt, 0);
-		cservice.addCourse(c);
+		Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, dt, 0);
+		Course c2 = new Course("ADProject2", "ADProject2", Faculty.COMPUTING, 5, dt, 0);
+		cservice.addCourse(c1);
+		cservice.addCourse(c2);
 		assertNotNull(cservice.findCourseByCourseName("ADProject"));
 	}
 	
@@ -79,10 +81,15 @@ public class CourseTest {
 	@Test
 	@Order(2)
 	public void testfindAllCourses() {
+		List<Course> clist = crepo.findAll();
+		List<Integer> list = new ArrayList<Integer>();
 		
-		List<Integer> list = new ArrayList<Integer> (1);
+		for(Course c: clist) {
+		   list.add(c.getCourseId());	
+		}
+		
 		List<Course> test = cservice.findAllCourses(list);
-		assertNotNull(test);
+		assertTrue(test.size() > 0);
 
 	}
 	
@@ -104,6 +111,8 @@ public class CourseTest {
 	@Order(5)
 	public void testCourseUpdate() {
 	Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
+	Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com");
+	lservice.addLecturer(l2);
 	lrepo.save(l1);
 		
 		l1  = lrepo.findById(1).get();
@@ -122,21 +131,9 @@ public class CourseTest {
 		
 	}
 
+
 	@Test
 	@Order(6)
-	public void addLecturer() {
-	Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com");
-	lservice.addLecturer(l2);
-
-		LocalDate dt = LocalDate.parse("22/05/2021",df);
-		Course c = new Course("ADProject2", "ADProject2", Faculty.COMPUTING, 5, dt, 0);
-		cservice.addCourse(c);
-		assertNotNull(cservice.findCourseByCourseName("ADProject2"));
-		
-	}
-
-	@Test
-	@Order(7)
 	public void testCourseDelete() {
 		
 	   Course c = cservice.findCourseByCourseName("ADProject");
@@ -146,7 +143,7 @@ public class CourseTest {
 	}
 	
 	@Test
-	@Order(8)
+	@Order(7)
 	public void testFindCoursesByLecturer() {
 		List<Course> clist = cservice.findCoursesByLecturerId(1);
 		assertNotNull(clist);
@@ -154,16 +151,17 @@ public class CourseTest {
 	}
 
 	@Test
-	@Order(9)
+	@Order(8)
 	public void findAllCourseByYear() {	
-		List<Course> test = cservice.findAllCourseByYear(2021);
+		
+		List<Course> test = cservice.findAllCourseByYear(LocalDate.now().getYear());
 		assertNotNull(test);
 	}
 	
 	@Test
-	@Order(10)
+	@Order(9)
 	public void findAllCourseByYearAndLecturer() {	
-		List<Course> test = cservice.findAllCourseByYearAndLecturerId(2021,1);
+		List<Course> test = cservice.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(),1);
 		assertNotNull(test);
 	}
 	
