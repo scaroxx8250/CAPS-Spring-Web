@@ -52,6 +52,14 @@ public StudentCourse(Student student, Course course, Grade grade) {
 	this.course = course;
 	this.grade = grade;
 }
+
+
+public StudentCourse(Course course, Student student) {
+	super();
+	this.student = student;
+	this.course = course;
+}
+
 public StudentCourse() {
 	super();
 }
