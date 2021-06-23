@@ -98,6 +98,8 @@ public class CapsProjApplication {
 		//Lecturer l1 = new Lecturer("Tin", "Nguyen", "COM", null, null, null)
 		
 //		};
+//}
+	
 }
 
 
