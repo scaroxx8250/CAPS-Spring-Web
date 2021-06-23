@@ -3,9 +3,6 @@ package com.team6.CAPSProj.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,16 +41,20 @@ public class Course {
 		super();
 	}
 	
-		
-	public Course(String courseName, String description, Faculty faculty, int credits, LocalDate courseStartDate, int size) {
-	super();
-	this.courseName = courseName;
-	this.description = description;
-	this.faculty = faculty;
-	this.credits = credits;
-	this.courseStartDate = courseStartDate;
-	this.size = size;
-}
+
+	public Course(String courseName, String description, Faculty faculty, int credits, LocalDate courseStartDate,
+			int size) {
+		super();
+		this.courseName = courseName;
+		this.description = description;
+		this.faculty = faculty;
+		this.credits = credits;
+		this.courseStartDate = courseStartDate;
+		this.size = size;
+	}
+
+
+
 
 	public int getCourseId() {
 		return courseId;
@@ -87,13 +88,18 @@ public class Course {
 		this.faculty = faculty;
 	}
 	
+	
+	
 	public int getCredits() {
 		return credits;
 	}
+
+
 	public void setCredits(int credits) {
 		this.credits = credits;
 	}
-	
+
+
 	public LocalDate getCourseStartDate() {
 		return courseStartDate;
 	}
@@ -132,13 +138,14 @@ public class Course {
 //		this.studentCourses.add(studentCourse);
 //	}
 	
-
 	@Override
 	public String toString() {
 		return "Course [courseId=" + courseId + ", courseName=" + courseName + ", description=" + description
-				+ ", faculty=" + faculty + ", credits=" + credits + ", courseStartDate=" + courseStartDate
-				+ ", lecturer=" + lecturer + ", size=" + size + ", studentCourses=" + studentCourses + "]";
+				+ ", faculty=" + faculty + ", credits=" + credits + ", courseStartDate=" + courseStartDate + ", size="
+				+ size + "]";
 	}
+
+	
 
 
 	@Override
@@ -149,6 +156,8 @@ public class Course {
 		result = prime * result + ((courseName == null) ? 0 : courseName.hashCode());
 		return result;
 	}
+
+	
 
 	@Override
 	public boolean equals(Object obj) {

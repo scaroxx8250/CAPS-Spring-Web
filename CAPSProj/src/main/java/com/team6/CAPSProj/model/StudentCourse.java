@@ -63,5 +63,10 @@ public StudentCourse(Course course, Student student) {
 public StudentCourse() {
 	super();
 }
+@Override
+public String toString() {
+	return "StudentCourse [student=" + student + ", course=" + course + ", grade=" + grade + "]";
+}
+
 
 }
