@@ -7,7 +7,7 @@ import com.team6.CAPSProj.model.Student;
 public interface StudentInterface {
 	public List<Student>findAllStudents();
 	public  List<Student>findAllStudentsById(List<Integer>Id);
-	public Student findStudentByMatricNo(int StudentNo);
+	public Student findStudentByMatricNo(String matrNo);
 	public Student findStudentByEmail(String Email);
 	public List<Student> findStudentByMatric_FirstName(String input);
 	public void addStudent(Student student);
