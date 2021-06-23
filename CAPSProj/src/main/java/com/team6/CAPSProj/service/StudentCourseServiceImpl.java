@@ -1,6 +1,7 @@
 package com.team6.CAPSProj.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,25 +39,43 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 
 	
 	public List<StudentCourse> findAllGradeByYearAndStudent(List<Course> course, Student student) {
-		// TODO Auto-generated method stub
-		return null;
+		List<StudentCourse> sc = new ArrayList<StudentCourse>(); 
+		for (Course c: course) {
+			StudentCourse retrieved = screpo.findByCourseIdAndStudentId(c, student).get(0);
+			if (retrieved != null) {
+				sc.add(retrieved);
+			}
+		}
+		return sc; 	
+		
 	}
 
 	
 	public void addStudentToCourse(Course course, Student student) {
-		// TODO Auto-generated method stub
+		StudentCourse sc = new StudentCourse(course, student); 
+		screpo.save(sc); 
 
 	}
 
 	
 	public void removeStudentFromCourse(Course course, Student student) {
-		// TODO Auto-generated method stub
+		StudentCourse toDelete = screpo.findByCourseIdAndStudentId(course, student).get(0);
+		if (toDelete != null) {
+			screpo.delete(toDelete);
+		}
 
 	}
 
 	
 	public void updateStudentGrade(List<StudentCourse> studentCourse) {
-		// TODO Auto-generated method stub
+		for (StudentCourse sc : studentCourse) {
+			if(screpo.findStudentCourseByCourseAndStudent(sc.getCourse(), sc.getStudent()) != null) {
+				StudentCourse sc1 = screpo.findStudentCourseByCourseAndStudent(sc.getCourse(), sc.getStudent());
+				sc1.setGrade(sc.getGrade());
+				screpo.save(sc1);
+			}
+			
+		}
 
 	}
 

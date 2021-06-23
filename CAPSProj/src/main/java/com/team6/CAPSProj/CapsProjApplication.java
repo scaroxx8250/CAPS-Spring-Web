@@ -44,21 +44,21 @@ public class CapsProjApplication {
 		
 	}
 	
-	@Bean
-	@Transactional
-	CommandLineRunner runner() {
-		return args ->{
-			
-			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
-			srepo.save(s1);
-			
-			Course c1 = new Course("SA4102", "C#", "COM", 5,LocalDate.of(2021, 6, 22), 100);
-			crepo.save(c1);
-			
-			Grade B = Grade.B;
-			
-			StudentCourse sc1 = new StudentCourse(s1, c1, B );
-			screpo.save(sc1);
+//	@Bean
+//	@Transactional
+//	CommandLineRunner runner() {
+//		return args ->{
+//			
+//			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
+//			srepo.save(s1);
+//			
+//			Course c1 = new Course("SA4102", "C#", "COM", 5,LocalDate.of(2021, 6, 22), 100);
+//			crepo.save(c1);
+//			
+//			Grade B = Grade.B;
+//			
+//			StudentCourse sc1 = new StudentCourse(s1, c1, B );
+//			screpo.save(sc1);
 			
 //			Book b1 = new Book("Spring Boot");
 //	        Book b2 = new Book("Spring Data JPA");
@@ -97,7 +97,7 @@ public class CapsProjApplication {
 		
 		//Lecturer l1 = new Lecturer("Tin", "Nguyen", "COM", null, null, null)
 		
-		};
+//		};
 }
 
-}
+

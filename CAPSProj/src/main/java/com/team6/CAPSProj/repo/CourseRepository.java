@@ -11,6 +11,10 @@ import com.team6.CAPSProj.model.Course;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
+	Course findByCourseId(int courseId);
+
+	Course findByCourseName(String courseName); 
+	
 	@Query("Select c from Course c where c.courseName = :courseName")
 	 Course findCourseByName(@Param("courseName") String courseName);
 	
