@@ -19,7 +19,6 @@ public class LecturerServiceImpl implements LecturerInterface {
 	public List<Lecturer> GetAllLecturers() {
 		return lrepo.findAll(); 
 	}
-
 	
 	public void addLecturer(Lecturer lecturer) {
 		lrepo.save(lecturer);
