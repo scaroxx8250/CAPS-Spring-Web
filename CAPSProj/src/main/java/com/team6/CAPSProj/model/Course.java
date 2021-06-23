@@ -145,8 +145,6 @@ public class Course {
 				+ size + "]";
 	}
 
-	
-
 
 	@Override
 	public int hashCode() {
@@ -154,10 +152,15 @@ public class Course {
 		int result = 1;
 		result = prime * result + courseId;
 		result = prime * result + ((courseName == null) ? 0 : courseName.hashCode());
+		result = prime * result + ((courseStartDate == null) ? 0 : courseStartDate.hashCode());
+		result = prime * result + credits;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((faculty == null) ? 0 : faculty.hashCode());
+		result = prime * result + ((lecturer == null) ? 0 : lecturer.hashCode());
+		result = prime * result + size;
 		return result;
 	}
 
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -175,7 +178,34 @@ public class Course {
 				return false;
 		} else if (!courseName.equals(other.courseName))
 			return false;
+		if (courseStartDate == null) {
+			if (other.courseStartDate != null)
+				return false;
+		} else if (!courseStartDate.equals(other.courseStartDate))
+			return false;
+		if (credits != other.credits)
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (faculty != other.faculty)
+			return false;
+		if (lecturer == null) {
+			if (other.lecturer != null)
+				return false;
+		} else if (!lecturer.equals(other.lecturer))
+			return false;
+		if (size != other.size)
+			return false;
 		return true;
 	}
+
+
+	
+	
+	
+
 	
 }
