@@ -53,7 +53,17 @@ public class Course {
 		this.size = size;
 	}
 
-
+	public Course(String courseName, String description, Faculty faculty, int credits, LocalDate courseStartDate,
+			Lecturer lecturer, int size) {
+		super();
+		this.courseName = courseName;
+		this.description = description;
+		this.faculty = faculty;
+		this.credits = credits;
+		this.courseStartDate = courseStartDate;
+		this.lecturer = lecturer;
+		this.size = size;
+	}
 
 
 	public int getCourseId() {
@@ -134,9 +144,6 @@ public class Course {
 	public void setStudentCourses(HashSet<StudentCourse> studentCourse) {
 		this.studentCourses = studentCourse;
 	}
-//	public void addStudentCourse(StudentCourse studentCourse) {
-//		this.studentCourses.add(studentCourse);
-//	}
 	
 	@Override
 	public String toString() {

@@ -39,10 +39,10 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 	}
 
 	
-	public List<StudentCourse> findAllGradeByYearAndStudent(List<Course> course, Student student) {
+	public List<StudentCourse> findAllGradeByYearAndStudent(List<Course> course, Student student, int year) {
 		List<StudentCourse> sc = new ArrayList<StudentCourse>(); 
 		for (Course c: course) {
-			StudentCourse retrieved = screpo.findByCourseIdAndStudentId(c, student).get(0);
+			StudentCourse retrieved = screpo.findByCourseIdAndStudentId(c, student,year).get(0);
 			if (retrieved != null) {
 				sc.add(retrieved);
 			}
@@ -60,7 +60,7 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 
 	
 	public void removeStudentFromCourse(Course course, Student student) {
-		StudentCourse toDelete = screpo.findByCourseIdAndStudentId(course, student).get(0);
+		StudentCourse toDelete = screpo.findByCourseIdAndStudentId(course, student,2021).get(0);
 		if (toDelete != null) {
 			screpo.delete(toDelete);
 		}

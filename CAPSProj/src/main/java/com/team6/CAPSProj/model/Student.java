@@ -86,10 +86,6 @@ public class Student {
 		this.studentCourses = studentCourse;
 	}
 	
-//	public void addStudentCourse(StudentCourse studentCourse) {
-//		this.studentCourses.add(studentCourse);
-//	}
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -164,8 +160,6 @@ public class Student {
 		return result;
 	}
 
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -200,8 +194,6 @@ public class Student {
 		return true;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Student [studentCourses=" + studentCourses + ", matricNo=" + matricNo + ", firstName=" + firstName
@@ -209,10 +201,4 @@ public class Student {
 				+ password + ", matrDate=" + matrDate + "]";
 	}
 
-
-
-	
-
-	
-	
 }
