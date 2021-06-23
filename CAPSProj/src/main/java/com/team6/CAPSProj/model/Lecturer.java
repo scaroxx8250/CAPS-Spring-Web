@@ -54,15 +54,6 @@ public class Lecturer {
 		this.email = email;
 		this.password = password;
 	}
-	
-	
-	public Lecturer(String firstName, String lastName, Faculty faculty, String personalEmail) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.faculty = faculty;
-		this.personalEmail = personalEmail;
-	}
 
 	public Lecturer() {
 		super();
