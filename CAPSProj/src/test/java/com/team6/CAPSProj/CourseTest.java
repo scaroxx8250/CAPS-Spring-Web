@@ -57,17 +57,6 @@ public class CourseTest {
 
 	
 	public DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
-	@Autowired
-	private LecturerInterface lservice;
-	@Autowired
-	private LecturerRepository lrepo;
-	@Autowired
-	public void setLecturerService(LecturerServiceImpl lserviceImpl)
-	{
-		this.lservice = lserviceImpl;
-	}
-	
 
 //	@Test
 //	@Order(1)
