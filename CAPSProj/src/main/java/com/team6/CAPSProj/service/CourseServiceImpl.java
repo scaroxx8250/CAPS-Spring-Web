@@ -31,14 +31,15 @@ public class CourseServiceImpl implements CourseInterface {
 	public List<Course>findAllCourseforCurrentYear()
 	{
 		LocalDate lt = LocalDate.now();
-		String year = String.valueOf(lt.getYear());
-		return crepo.findCoursesByYear(year);
+		
+		return crepo.findCoursesByYear(lt.getYear());
 	}
 	
 
 	public Course findCourseByCourseName(String courseName)
 	{
-		Course c1 = crepo.findCourseByName(courseName);
+		LocalDate lt1 = LocalDate.now();
+		Course c1 = crepo.findCourseByName(courseName, lt1.getYear());
 		return c1;
 	}
 
@@ -80,7 +81,7 @@ public class CourseServiceImpl implements CourseInterface {
 	}
 
 
-	public List<Course> findAllCourseByYear(String currentYear) {
+	public List<Course> findAllCourseByYear(int currentYear) {
 		
 		return crepo.findCourseByCurrentYear(currentYear);
 		
@@ -88,11 +89,13 @@ public class CourseServiceImpl implements CourseInterface {
 	}
 
 
-	public List<Course> findAllCourseByYearAndLecturerId(String year, int lecturerId) {
+	public List<Course> findAllCourseByYearAndLecturerId(int year, int lecturerId) {
 		
 		return crepo.findCourseByYearAndLecturer(year, lecturerId);
 
 	}
+	
+	
 
 }
 

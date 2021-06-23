@@ -15,22 +15,22 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 
 	Course findByCourseName(String courseName); 
 	
-	@Query("Select c from Course c where c.courseName = :courseName")
-	 Course findCourseByName(@Param("courseName") String courseName);
+	@Query("Select c from Course c where c.courseName = :courseName and YEAR(c.courseStartDate) = :year")
+	Course findCourseByName(@Param("courseName") String courseName, @Param("year") int year );
 	
 	@Query("select c from Course c where c.id = ?1")
 	Course findCourseByid(int CourseId);
 	
 	@Query("Select c from Course c where YEAR(c.courseStartDate) = ?1")
-	List<Course> findCoursesByYear(String year);
+	List<Course> findCoursesByYear(Integer year);
 
 	@Query("Select c from Course c where YEAR(c.courseStartDate) = :year")
-	List<Course> findCourseByCurrentYear(@Param("year") String year);
+	List<Course> findCourseByCurrentYear(@Param("year") Integer year);
 	
 	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId")
 	List<Course> findCourseByLecturer(@Param("lecId") Integer lecId);
 	
 	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId and YEAR(c.courseStartDate) =:year ")
-	List<Course> findCourseByYearAndLecturer(@Param("year") String year,@Param("lecId") Integer lecId);
+	List<Course> findCourseByYearAndLecturer(@Param("year") Integer year,@Param("lecId") Integer lecId);
 	
 }

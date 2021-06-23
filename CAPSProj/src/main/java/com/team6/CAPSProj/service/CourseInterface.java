@@ -13,6 +13,6 @@ public interface CourseInterface {
 	public void updateCourse(Course course);
 	public void deleteCourse(Course course);
 	public List<Course>findCoursesByLecturerId(int lecturerId);
-	public List<Course>findAllCourseByYear(String year);
-	public List<Course>findAllCourseByYearAndLecturerId(String year, int lecturerId);
+	public List<Course>findAllCourseByYear(int year);
+	public List<Course>findAllCourseByYearAndLecturerId(int year, int lecturerId);
 }
