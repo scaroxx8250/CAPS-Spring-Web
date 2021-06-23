@@ -1,5 +1,7 @@
 package com.team6.CAPSProj.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,24 +15,32 @@ public class CourseServiceImpl implements CourseInterface {
 	@Autowired
 	CourseRepository crepo;
 	
-
-	public List<Course> findAllCourses(List<Integer> CourseId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Course>findAllCourses(List<Integer> CourseId)
+	{
+		List<Course> clist= new ArrayList<Course>();
+		
+		for(Integer id : CourseId)
+		{
+			clist.add(crepo.findCourseByid(id));
+		}
+		
+		return clist;
 	}
+	
 
-
-	public List<Course> findAllCourseforCurrentYear() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Course>findAllCourseforCurrentYear()
+	{
+		LocalDate lt = LocalDate.now();
+		String year = String.valueOf(lt.getYear());
+		return crepo.findCoursesByYear(year);
 	}
+	
 
-
-	public Course findCourseByCourseName(String courseName) {
-		// TODO Auto-generated method stub
-		return null;
+	public Course findCourseByCourseName(String courseName)
+	{
+		Course c1 = crepo.findCourseByName(courseName);
+		return c1;
 	}
-
 
 	public void addCourse(Course course) {
 		crepo.save(course);
@@ -85,3 +95,4 @@ public class CourseServiceImpl implements CourseInterface {
 	}
 
 }
+
