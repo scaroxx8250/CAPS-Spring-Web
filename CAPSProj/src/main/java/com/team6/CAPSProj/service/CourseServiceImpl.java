@@ -21,7 +21,7 @@ public class CourseServiceImpl implements CourseInterface {
 		
 		for(Integer id : CourseId)
 		{
-			clist.add(crepo.findCourseByid(id));
+			clist.add(crepo.findByCourseId(id));
 		}
 		
 		return clist;
@@ -31,15 +31,13 @@ public class CourseServiceImpl implements CourseInterface {
 	public List<Course>findAllCourseforCurrentYear()
 	{
 		LocalDate lt = LocalDate.now();
-		
 		return crepo.findCoursesByYear(lt.getYear());
 	}
 	
 
 	public Course findCourseByCourseName(String courseName)
 	{
-		LocalDate lt1 = LocalDate.now();
-		Course c1 = crepo.findCourseByName(courseName, lt1.getYear());
+		Course c1 = crepo.findByCourseNameWithCurrentYear(courseName,LocalDate.now().getYear());
 		return c1;
 	}
 
@@ -48,6 +46,7 @@ public class CourseServiceImpl implements CourseInterface {
 	}
 
 
+	
 	public void updateCourse(Course course) {
 		
 		int courseId = course.getCourseId();
@@ -59,7 +58,7 @@ public class CourseServiceImpl implements CourseInterface {
 			
 			courseFromDB.setCourseName(course.getCourseName());
 			courseFromDB.setCourseStartDate(course.getCourseStartDate());
-			courseFromDB.setCredits(course.getCourseId());
+			courseFromDB.setCredits(course.getCredits());
 			courseFromDB.setDescription(course.getDescription());
 			courseFromDB.setFaculty(course.getFaculty());
 			courseFromDB.setLecturer(course.getLecturer());
@@ -96,6 +95,7 @@ public class CourseServiceImpl implements CourseInterface {
 	}
 	
 	
+
 
 }
 

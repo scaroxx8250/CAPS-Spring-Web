@@ -1,6 +1,7 @@
 package com.team6.CAPSProj;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
@@ -38,11 +39,21 @@ public class CourseTest {
 	private CourseInterface cservice;
 	
 	@Autowired
+	private LecturerInterface lservice;
+	
+	@Autowired
 	public void setCourseService(CourseServiceImpl cserviceImpl) {
 		this.cservice = cserviceImpl;
 	}
 	@Autowired
+	public void setLecturerService(LecturerServiceImpl lserviceImpl) {
+		this.lservice = lserviceImpl;
+	}
+	@Autowired
 	private CourseRepository crepo;
+	
+	@Autowired
+	private LecturerRepository lrepo;
 
 	
 	public DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -57,6 +68,7 @@ public class CourseTest {
 		this.lservice = lserviceImpl;
 	}
 	
+
 //	@Test
 //	@Order(1)
 //	public void testCourseCreation() {
@@ -100,16 +112,47 @@ public class CourseTest {
 	public void addLecturer() {
 	Lecturer l1 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com");
 	lservice.addLecturer(l1);
+
+		LocalDate dt = LocalDate.parse("22/05/2021",df);
+		Course c = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, dt, 0);
+		cservice.addCourse(c);
+		assertNotNull(cservice.findCourseByCourseName("ADProject"));
+		
+	}
+	@Test
+	@Order(6)
+	public void testCourseUpdate() {
+	Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
+	lrepo.save(l1);
+		
+		l1  = lrepo.findById(1).get();
+		
+		Course c = cservice.findCourseByCourseName("ADProject");
+		
+		c.setCourseStartDate(LocalDate.parse("02/03/2021",df));
+		c.setCredits(50);
+		c.setDescription("testing1");
+		c.setFaculty(Faculty.BUSINESS);
+		c.setSize(12);
+		c.setLecturer(l1);
+		cservice.updateCourse(c);
+		Course d = cservice.findCourseByCourseName("ADProject");
+		assertTrue(c.equals(d));
+		
+	}
+	@Test
+	@Order(7)
+	public void testCourseDelete() {
+		
+	   Course c = cservice.findCourseByCourseName("ADProject");
+	   cservice.deleteCourse(c);
+	   
+	   assertNull(cservice.findCourseByCourseName("ADProject"));
 	}
 
+
 //	@Test
-//	@Order(6)
-//	public void findCoursesByLecturerId() {	
-//
-//	}
-//	
-//	@Test
-//	@Order(7)
+//	@Order(8)
 //	public void findAllCourseByYear() {	
 //		List<Course> test = cservice.findAllCourseByYear(2021);
 //		assertNotNull(test);
