@@ -1,6 +1,7 @@
 package com.team6.CAPSProj.service;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 
 	
 	public List<StudentCourse> findAllStudentsByCourse(String CourseName) {
-		Course course = crepo.findByCourseName(CourseName);
+		Course course = crepo.findByCourseNameWithCurrentYear(CourseName,LocalDate.now().getYear());
 		return screpo.findAllStudentsByCourse(course);
 	}
 
