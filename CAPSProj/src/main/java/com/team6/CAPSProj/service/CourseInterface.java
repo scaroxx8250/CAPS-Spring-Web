@@ -5,7 +5,8 @@ import java.util.List;
 import com.team6.CAPSProj.model.Course;
 
 public interface CourseInterface {
-
+	
+	public List<Course>findAllCourses(List<Integer> CourseId);
 	public List<Course>findAllCourseforCurrentYear();
 	public Course findCourseByCourseName(String courseName);
 	public void addCourse(Course course);
