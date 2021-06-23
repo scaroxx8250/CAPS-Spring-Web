@@ -68,9 +68,9 @@ public class CourseTest {
 	public void testCourseCreation() {
 		
 	
-		LocalDate dt = LocalDate.parse("22/05/2021",df);
-		Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, dt, 0);
-		Course c2 = new Course("ADProject2", "ADProject2", Faculty.COMPUTING, 5, dt, 0);
+		LocalDate ld = LocalDate.parse("22/05/2021",df);
+		Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 0);
+		Course c2 = new Course("ADProject2", "ADProject2", Faculty.COMPUTING, 5, ld, 0);
 		cservice.addCourse(c1);
 		cservice.addCourse(c2);
 		assertNotNull(cservice.findCourseByCourseName("ADProject"));
@@ -112,8 +112,8 @@ public class CourseTest {
 	public void testCourseUpdate() {
 	Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
 	Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com");
+	lservice.addLecturer(l1);
 	lservice.addLecturer(l2);
-	lrepo.save(l1);
 		
 		l1  = lrepo.findById(1).get();
 		
