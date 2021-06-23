@@ -33,4 +33,6 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	@Query("Select c from Course where c.lecturer.lecturerId = :lecId and YEAR(c.courseStartDate) == :year ")
 	List<Course> findCourseByYearAndLecturer(@Param("year") String year,@Param("lecId") Integer lecId);
 	
+	Course findByCourseId(int courseId);
+	Course findByCourseName(String courseName);
 }
