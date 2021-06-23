@@ -15,7 +15,6 @@ public class StudentImplementation implements StudentInterface {
 	@Autowired
 	StudentRepository srepo;
 	
-	//test
 	
 	public List<Student>findAllStudents() {
 		
