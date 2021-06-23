@@ -2,6 +2,7 @@ package com.team6.CAPSProj;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -83,9 +84,8 @@ public class CourseTest {
 		c.setSize(12);
 		c.setLecturer(l1);
 		cservice.updateCourse(c);
-		c = cservice.findCourseByCourseName("ADProject");
-		System.out.println(c);
-		assertNotNull(c);
+		Course d = cservice.findCourseByCourseName("ADProject");
+		assertTrue(c.equals(d));
 		
 	}
 	@Test
