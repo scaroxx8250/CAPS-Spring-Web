@@ -10,12 +10,11 @@ import org.springframework.stereotype.Service;
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.repo.CourseRepository;
 @Service
-public class CourseServiceImpl implements  CourseInterface{
-	
-	@Autowired 
+public class CourseServiceImpl implements CourseInterface {
+
+	@Autowired
 	CourseRepository crepo;
 	
-
 	public List<Course>findAllCourses(List<Integer> CourseId)
 	{
 		List<Course> clist= new ArrayList<Course>();
@@ -44,38 +43,56 @@ public class CourseServiceImpl implements  CourseInterface{
 	}
 
 	public void addCourse(Course course) {
-		// TODO Auto-generated method stub
-		
+		crepo.save(course);
 	}
 
-	
+
 	public void updateCourse(Course course) {
-		// TODO Auto-generated method stub
 		
+		int courseId = course.getCourseId();
+		
+		
+		Course courseFromDB = crepo.findById(courseId).get();
+		
+		if (courseFromDB !=null) {
+			
+			courseFromDB.setCourseName(course.getCourseName());
+			courseFromDB.setCourseStartDate(course.getCourseStartDate());
+			courseFromDB.setCredits(course.getCourseId());
+			courseFromDB.setDescription(course.getDescription());
+			courseFromDB.setFaculty(course.getFaculty());
+			courseFromDB.setLecturer(course.getLecturer());
+			courseFromDB.setSize(course.getSize());
+			courseFromDB.setStudentCourses(course.getStudentCourses());
+			crepo.save(courseFromDB);
+		}
+
 	}
 
 
 	public void deleteCourse(Course course) {
-		// TODO Auto-generated method stub
-		
+		crepo.delete(course);
 	}
 
-	
+
 	public List<Course> findCoursesByLecturerId(int lecturerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return crepo.findCourseByLecturer(lecturerId);
 	}
 
 
-	public List<Course> findAllCourseByYear(String year) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Course> findAllCourseByYear(String currentYear) {
+		
+		return crepo.findCourseByCurrentYear(currentYear);
+		
+
 	}
 
 
 	public List<Course> findAllCourseByYearAndLecturerId(String year, int lecturerId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return crepo.findCourseByYearAndLecturer(year, lecturerId);
+
 	}
 
 }
+

@@ -26,7 +26,7 @@ public class Course {
 
 	private String description;
 
-	private String faculty;
+	private Faculty faculty;
 
 	private int credits;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
@@ -45,7 +45,7 @@ public class Course {
 	}
 	
 		
-	public Course(String courseName, String description, String faculty, int credits, LocalDate courseStartDate, int size) {
+	public Course(String courseName, String description, Faculty faculty, int credits, LocalDate courseStartDate, int size) {
 	super();
 	this.courseName = courseName;
 	this.description = description;
@@ -79,11 +79,11 @@ public class Course {
 		this.description = description;
 	}
 	
-	public String getFaculty() {
+	public Faculty getFaculty() {
 		return faculty;
 	}
 	
-	public void setFaculty(String faculty) {
+	public void setFaculty(Faculty faculty) {
 		this.faculty = faculty;
 	}
 	
