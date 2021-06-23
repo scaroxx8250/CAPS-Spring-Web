@@ -15,7 +15,7 @@ public class Lecturer {
 	private int lecturerId;
 	private String firstName;
 	private String lastName;
-	private String faculty;
+	private Faculty faculty;
 	private String personalEmail;
 	private String email;
 	private String password;
@@ -23,7 +23,7 @@ public class Lecturer {
 	private List<Course> courses;
 	
 	
-	public Lecturer(int lecturerId, List<Course> courses, String firstName, String lastName, String faculty,
+	public Lecturer(int lecturerId, List<Course> courses, String firstName, String lastName, Faculty faculty,
 			String personalEmail, String email, String password) {
 		super();
 		this.lecturerId = lecturerId;
@@ -36,7 +36,7 @@ public class Lecturer {
 		this.password = password;
 	}
 
-	public Lecturer(String firstName, String lastName, String faculty, String personalEmail, String email,
+	public Lecturer(String firstName, String lastName, Faculty faculty, String personalEmail, String email,
 			String password) {
 		super();
 		this.firstName = firstName;
@@ -84,11 +84,11 @@ public class Lecturer {
 		this.lastName = lastName;
 	}
 
-	public String getFaculty() {
+	public Faculty getFaculty() {
 		return faculty;
 	}
 
-	public void setFaculty(String faculty) {
+	public void setFaculty(Faculty faculty) {
 		this.faculty = faculty;
 	}
 
