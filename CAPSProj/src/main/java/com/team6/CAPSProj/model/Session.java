@@ -13,7 +13,6 @@ public class Session {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int sessionId; 
 	
-
 	private long timestamp;
 	
 	private String email;
