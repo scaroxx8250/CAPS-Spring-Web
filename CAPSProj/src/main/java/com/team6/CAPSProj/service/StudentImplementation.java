@@ -44,10 +44,11 @@ public class StudentImplementation implements StudentInterface {
 
 	public List<Student> findStudentByMatric_FirstName(String input) {
 		//Substring the number part of the entered String
-		String s = input.substring(1,-1);
+		String s = input.substring(1,4);
 		List<Student> studentlist = new ArrayList<Student>();
 		try {
-			if(Integer.parseInt(s) != 0 ) {
+			int num = Integer.parseInt(s);
+			if(num != 0 ) {
 				Student student = srepo.findByMatricNo(input);
 				studentlist.add(student);
 		}
