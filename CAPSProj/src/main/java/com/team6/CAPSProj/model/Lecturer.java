@@ -21,15 +21,7 @@ public class Lecturer {
 	private String password;
 	@OneToMany(mappedBy = "lecturer")
 	private List<Course> courses;
-	
-	
-	public Lecturer(String firstName, String lastName, Faculty faculty, String personalEmail) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.faculty = faculty;
-		this.personalEmail = personalEmail;
-	}
+
 
 	public Lecturer(int lecturerId, List<Course> courses, String firstName, String lastName, Faculty faculty,
 			String personalEmail, String email, String password) {
