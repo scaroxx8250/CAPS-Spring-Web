@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table, td, th {  
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 15px;
+ }
+</style>
+<meta charset="ISO-8859-1">
+<title>View Courses Taught</title>
+</head>
+<body>
+	<h1>View Courses Taught</h1>
+	<!-- <table id="listCourses" th:if="${not #lists.isEmpty(courses)}"> -->
+	<table>
+		<tr>
+			<th>Course Id</th>
+			<th>Course Name</th>
+			<th>Credits</th>
+			<th>Size</th>
+			<th>Students Enrolled</th>
+		</tr>
+		<tr th:each="course:${courses}" class="table-row">	
+			<td th:text=${course.courseId}>Course Id</td>
+			<td th:text=${course.courseName}>Course Name</td>
+			<td th:text=${course.credits}>Credits</td>
+			<td th:text=${course.size}>Size</td>
+			<td th:text=${studentsEnrolled}>Students Enrolled</td>
+		</tr>
+	</table>
+
+	
+</body>
+</html>
