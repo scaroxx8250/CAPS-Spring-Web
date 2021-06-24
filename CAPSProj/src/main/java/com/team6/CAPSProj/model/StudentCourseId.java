@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class StudentCourseId implements Serializable {
 
-	private int student;
-	private int course;
-	public int getStudent() {
+	private Integer student;
+	private Integer course;
+	public Integer getStudent() {
 		return student;
 	}
-	public void setStudent(int student) {
+	public void setStudent(Integer student) {
 		this.student = student;
 	}
-	public int getCourse() {
+	public Integer getCourse() {
 		return course;
 	}
-	public void setCourse(int course) {
+	public void setCourse(Integer course) {
 		this.course = course;
 	}
 	

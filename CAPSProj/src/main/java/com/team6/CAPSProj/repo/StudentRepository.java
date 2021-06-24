@@ -11,7 +11,6 @@ import com.team6.CAPSProj.model.StudentCourse;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 	
-
 	Student findByStudentId (int studentId); 
 
 	Student findByMatricNo(String matricNo);

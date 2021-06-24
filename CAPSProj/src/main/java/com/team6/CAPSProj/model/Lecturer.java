@@ -55,7 +55,6 @@ public class Lecturer {
 		this.password = password;
 	}
 	
-
 	public Lecturer() {
 		super();
 	}
