@@ -83,6 +83,7 @@ public class CapsProjApplication {
 			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
 			srepo.save(s1);
 			 
+			
 			Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 10);
 			Course c2 = new Course("SCI101", "Anontomy", Faculty.MEDICINE, 5, ld, 80);
 			Course c3 = new Course("SA4101", "design", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 10), 80);
