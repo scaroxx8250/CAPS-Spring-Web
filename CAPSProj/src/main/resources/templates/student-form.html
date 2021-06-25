@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Facility Form</title>
+<title>Create Student</title>
 </head>
 <body>
 
-	<h1>Student Form</h1>
+	<h1>Create Student</h1>
 	<form action="#" th:object="${student}" th:action="@{/admin/save}"
 		method="post">
 		<fieldset>
@@ -21,19 +21,16 @@
 			Personal Email <input type="text" th:field="*{personEmail}">
 			<p th:if="${#fields.hasErrors('personEmail')}" th:errors="*{personEmail}"></p>
 		</fieldset>
-		<!--
 		<fieldset>
 			Matriculation Date:
-			<input type="date" th:field="*{matrDate}"
-				placeholder="dd-MM-yyyy"
-				th:text ="${#dates.format(Student.matrDate, 'dd-MM-yyyy')}" />
+			<input type="text" th:field="*{matrDate}"
+				placeholder="dd-MM-yyyy" />
 				
 			<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>	
 		</fieldset>
-		-->
 		<fieldset>
 			<input type="submit" value="Save"/>
-			<input type="reset" value="Cancel"/>
+			<input type="reset" value="Reset"/>
 		</fieldset>
 	</form>
 
