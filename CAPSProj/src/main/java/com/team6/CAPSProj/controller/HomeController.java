@@ -23,10 +23,7 @@ public class HomeController {
 	@Autowired
 	StudentInterface stservice;
 	
-	@Autowired
-	public void setStudent(StudentInterface st) {
-		this.stservice = st;
-	}
+
 	@RequestMapping("/home")
 	public String login(Model model) {
 		User user = new User();
