@@ -3,6 +3,7 @@ package com.team6.CAPSProj.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
