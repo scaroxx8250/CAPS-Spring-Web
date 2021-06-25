@@ -111,9 +111,9 @@ public class CourseTest {
 	@Order(5)
 	public void testCourseUpdate() {
 	Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
-	//Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com");
+	Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com", null, null);
 	lservice.addLecturer(l1);
-	//lservice.addLecturer(l2);
+	lservice.addLecturer(l2);
 		
 		l1  = lrepo.findById(1).get();
 		

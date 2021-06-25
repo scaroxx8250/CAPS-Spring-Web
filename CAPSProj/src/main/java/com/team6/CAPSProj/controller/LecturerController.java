@@ -38,10 +38,10 @@ public class LecturerController {
 	@Autowired 
 	private StudentInterface sinterface; 
 	
-	@Autowired
-	public void setLecturerInterface(LecturerServiceImpl lserviceImpl) {
-		this.linterface = lserviceImpl;
-	}
+//	@Autowired
+//	public void setLecturerInterface(LecturerServiceImpl lserviceImpl) {
+//		this.linterface = lserviceImpl;
+//	}
 	
 	@RequestMapping(value = "/Courses")
 	public String listCourses (@ModelAttribute("lecturer") @Valid Lecturer lecturer, BindingResult bindingResult, Model model ) {
