@@ -37,10 +37,11 @@
 				<td th:text=${student.lastName}>lastName</td>
 				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
 				<td>
-					<input type="button" value="Edit"
-						onclick="window.location.href='/test/test'; return false"
-						class="button" />
-					    <a th:href="@{/admin/deletestudent/{id}(id=${student.matricNo})}"> 
+						<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}"> 
+        					<button type="button">Edit</button> 
+   						</a>
+		
+					    <a th:href="@{/admin/deletestudent/{Id}(Id=${student.matricNo})}"> 
         					<button type="button">Delete</button> 
    						</a>
 				</td>
