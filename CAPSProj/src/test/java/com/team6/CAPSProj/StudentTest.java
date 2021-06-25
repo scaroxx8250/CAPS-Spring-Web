@@ -149,15 +149,15 @@ public class StudentTest {
 	}
 	
 	
-	@Test
-	@Order(9)
-	public void testDeleteStudent() {
-		List<Student> students = srepo.findAll();
-		for(Student s : students) {
-			stservice.deleteStudent(s);
-		}
-		assertTrue(srepo.findAll().size() == 0);
-	}
+//	@Test
+//	@Order(9)
+//	public void testDeleteStudent() {
+//		List<Student> students = srepo.findAll();
+//		for(Student s : students) {
+//			stservice.deleteStudent(s);
+//		}
+//		assertTrue(srepo.findAll().size() == 0);
+//	}
 	
 
 }
