@@ -1,9 +1,7 @@
 package com.team6.CAPSProj.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,13 +10,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
+import com.team6.CAPSProj.model.StudentSelectedCourses;
 import com.team6.CAPSProj.service.CourseInterface;
-import com.team6.CAPSProj.service.CourseServiceImpl;
 import com.team6.CAPSProj.service.StudentCourseInterface;
 import com.team6.CAPSProj.service.StudentInterface;
 
@@ -35,9 +36,12 @@ public class StudentController {
 	private CourseInterface cservice;
 
 	
-	@RequestMapping(value="/list")
+	@GetMapping(value="/list")
 	public String ViewCourses(HttpSession session, Model model) {
 		Student s = (Student) session.getAttribute("usession");
+		if(s == null) {
+			return "redirect:/home"; 
+		}
 		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
 		List<Course> clist = new ArrayList<Course>();
 		for(StudentCourse sc : scList) {
@@ -50,6 +54,10 @@ public class StudentController {
 	@RequestMapping(value="/enrolCourse")
 	public String EnrolCourses(HttpSession session, Model model) {
 		Student s = (Student) session.getAttribute("usession");
+		
+		if(s == null) {
+			return "redirect:/home";
+		}
 		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
 		List<Course> allCourses = cservice.findAllCourseforCurrentYear();
 		
@@ -73,14 +81,19 @@ public class StudentController {
 		availableCourses = availableCourses.stream().
 				filter(c->c.getCourseStartDate().isAfter(LocalDate.now()))
 				.collect(Collectors.toList());
-	
-
-		
+			
 		
 		model.addAttribute("notEnrolCourses",availableCourses);
 		return "enrolCourse";
 	}
 	
+	@PostMapping(value="/submitEnrol")
+	public String submitEnrolCourse(@ModelAttribute("selectCourse") StudentSelectedCourses course, HttpSession session, Model model) {
+		Student s = (Student) session.getAttribute("usession");
+		return "studentlist";
+		
 	
+	}
+
 	
 }

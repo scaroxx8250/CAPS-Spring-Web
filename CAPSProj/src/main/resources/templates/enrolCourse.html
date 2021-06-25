@@ -2,26 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Enrol Course</title>
+<title>Enroll Course</title>
 </head>
 <body>
  
-  <h1>Enrol for a Course</h1>
+  <h1>Enroll for a Course</h1>
+<form action="" th:object="${selectCourse}" th:action="@{/student/submitEnrol}" method="post">
 <table>
  <tr>
    <th>Course NAME</th>
    <th>Lecture Name</th>
    <th>Credits</th>
    <th>Course Description</th>
+   <th>Enroll</th>
  </tr>
  <tr th:each="course: ${notEnrolCourses}">
    <td th:text="${course.courseName}">Course NAME</td>
    <td th:text="${course.lecturer.firstName} +' '+ ${course.lecturer.lastName}  ">Lecture Name</td>
    <td th:text="${course.credits}">Credits</td>
    <td th:text="${course.description}">Course Description</td>
-  
-   
+   <td><input type = "checkbox" th:field="${course.courseId}" th:value="${course.Id}"/></td>
  </tr>
 </table>
+<fieldset>
+<input type="submit"value ="Save"/>
+&nbsp; &nbsp; 
+<input type="reset" value="Reset"/>
+</fieldset>
+
+</form>
+
 </body>
 </html>
