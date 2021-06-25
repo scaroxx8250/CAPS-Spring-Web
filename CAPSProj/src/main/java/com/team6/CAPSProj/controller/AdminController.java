@@ -1,17 +1,25 @@
 package com.team6.CAPSProj.controller;
 
+
+import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
+
 import com.team6.CAPSProj.service.CourseInterface;
 import com.team6.CAPSProj.service.CourseServiceImpl;
 import com.team6.CAPSProj.service.LecturerInterface;
@@ -59,7 +67,23 @@ public class AdminController {
 		return "student";
 	}
 	
+	@RequestMapping(value = "/addstudent")
+	public String addStudent(Model model) {
+		model.addAttribute("student", new Student());
+		return "student-form";
+	}
 	
+
+	@RequestMapping(value = "/save")
+	public String saveStudent(@ModelAttribute("student") @Valid Student student, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "student-form";
+		}
+		stservice.addStudent(student);
+		return "forward:/admin/studentlist";
+	}
+
 	@RequestMapping(value = "/deletestudent/{matricNo}")
 	public String deleteStudent(@PathVariable("matricNo") String matricNo) {
 		//find student
@@ -80,16 +104,5 @@ public class AdminController {
 		stservice.deleteStudent(stservice.findStudentByMatricNo(matricNo));
 		return "forward:/admin/studentlist";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	
 	
 }
