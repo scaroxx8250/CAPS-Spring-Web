@@ -168,16 +168,16 @@ public class StudentCourseTest {
 		assertTrue( scservice.CountTotalStudentEnrol(c.getCourseId())== 2);
 	}
 	
-	@Test
-	@Order(7)
-	public void testRemoveStudentFromCourse() {
-		Course c = cservice.findCourseByCourseName("ADProject");
-		Student s1 = stservice.findStudentByMatricNo("A2345B");
-		
-		scservice.removeStudentFromCourse(c, s1);
-		assertTrue(screpo.findAll().size()==1);
-	}
-	
+//	@Test
+//	@Order(7)
+//	public void testRemoveStudentFromCourse() {
+//		Course c = cservice.findCourseByCourseName("ADProject");
+//		Student s1 = stservice.findStudentByMatricNo("A2345B");
+//		
+//		scservice.removeStudentFromCourse(c, s1);
+//		assertTrue(screpo.findAll().size()==1);
+//	}
+//	
 	
 	
 }
