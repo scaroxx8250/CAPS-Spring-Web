@@ -89,7 +89,7 @@ public class CapsProjApplication {
 			crepo.save(c1);crepo.save(c2);crepo.save(c3);
 			
 			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
-			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com");
+			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com", null, null);
 			
 			lservice.addLecturer(l1);
 			lservice.addLecturer(l2);
