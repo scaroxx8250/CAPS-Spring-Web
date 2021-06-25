@@ -86,7 +86,8 @@ public class CapsProjApplication {
 			Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 10);
 			Course c2 = new Course("SCI101", "Anontomy", Faculty.MEDICINE, 5, ld, 80);
 			Course c3 = new Course("SA4101", "design", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 10), 80);
-			crepo.save(c1);crepo.save(c2);crepo.save(c3);
+			Course c4 = new Course("SA4105", "SQL", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11), 80);
+			crepo.save(c1);crepo.save(c2);crepo.save(c3);crepo.save(c4);
 			
 			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
 			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com",null, null);
@@ -111,6 +112,10 @@ public class CapsProjApplication {
 			c3 = cservice.findCourseByCourseName("SA4101");		
 			c3.setLecturer(l2);
 			cservice.updateCourse(c3);
+			
+			c4 = cservice.findCourseByCourseName("SA4105");		
+			c4.setLecturer(l2);
+			cservice.updateCourse(c4);
 			
 			
 //			

@@ -10,4 +10,12 @@ public class StudentSelectedCourses {
 		this.course = course;
 	}
 
+	public List<Course> getCourse() {
+		return course;
+	}
+
+	public void setCourse(List<Course> course) {
+		this.course = course;
+	}
+
 }

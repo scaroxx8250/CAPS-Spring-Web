@@ -21,7 +21,7 @@
    <td th:text="${course.lecturer.firstName} +' '+ ${course.lecturer.lastName}  ">Lecture Name</td>
    <td th:text="${course.credits}">Credits</td>
    <td th:text="${course.description}">Course Description</td>
-   <td><input type = "checkbox" th:field="${course.courseId}" th:value="${course.Id}"/></td>
+   <td><input type = "checkbox" th:field="*{course}" th:value="${course.courseId}"/></td>
  </tr>
 </table>
 <fieldset>
