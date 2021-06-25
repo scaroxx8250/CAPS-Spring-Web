@@ -2,6 +2,7 @@ package com.team6.CAPSProj;
 
 import org.junit.jupiter.api.TestMethodOrder;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -54,37 +55,44 @@ public class LecturerTest {
 //		  assertTrue(lecturers.size() == 4);
 //	  }
 	 
+//	  @Test
+//	  @Order(2) 
+//	  public void testFindMethod()
+//	  {
+//		  Lecturer l1 = lservice.findLecturerById(1);
+//		  assertNotNull(l1);
+//	  }
+//	
 	
-	
-	  @Test
-	  @Order(2) 
-	  public void testUpdateLecturer() { 
-		  Lecturer lecturer = lrepo.findByLecturerId(2); 
-		  lecturer.setFirstName("Grace");
-		  lecturer.setLastName("Huang");
-		  lecturer.setPersonalEmail("gracehuang@gmail.com");
-		  lservice.updateLecturer(lecturer);
-		  Lecturer updated = lrepo.findByLecturerId(2); 
-		  assertTrue(updated.equals(lecturer)); 
-		  
-	}
-	 
-	
-	@Test
-	@Order(3)
-	public void testDeleteLecturer() {
-		Lecturer lecturer = lrepo.findByLecturerId(2); 
-		lservice.deleteLecturer(lecturer); 
-		List<Lecturer> lecturers = lrepo.findAll(); 
-		assertTrue(lecturers.size() == 3); 
-	}
-	
-	@Test
-	@Order(4)
-	public void testGetAllLecturers() {
-		lservice.GetAllLecturers();
-		List<Lecturer> lecturers = lrepo.findAll(); 
-		assertTrue(lecturers.size() == 3); 
-	}
+//	  @Test
+//	  @Order(3) 
+//	  public void testUpdateLecturer() { 
+//		  Lecturer lecturer = lrepo.findByLecturerId(2); 
+//		  lecturer.setFirstName("Grace");
+//		  lecturer.setLastName("Huang");
+//		  lecturer.setPersonalEmail("gracehuang@gmail.com");
+//		  lservice.updateLecturer(lecturer);
+//		  Lecturer updated = lrepo.findByLecturerId(2); 
+//		  assertTrue(updated.equals(lecturer)); 
+//		  
+//	}
+//	 
+//	
+//	@Test
+//	@Order(4)
+//	public void testDeleteLecturer() {
+//		Lecturer lecturer = lrepo.findByLecturerId(2); 
+//		lservice.deleteLecturer(lecturer); 
+//		List<Lecturer> lecturers = lrepo.findAll(); 
+//		assertTrue(lecturers.size() == 3); 
+//	}
+//	
+//	@Test
+//	@Order(5)
+//	public void testGetAllLecturers() {
+//		lservice.GetAllLecturers();
+//		List<Lecturer> lecturers = lrepo.findAll(); 
+//		assertTrue(lecturers.size() == 3); 
+//	}
 	
 }
