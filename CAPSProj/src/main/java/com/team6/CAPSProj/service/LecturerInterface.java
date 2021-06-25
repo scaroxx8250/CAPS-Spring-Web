@@ -10,5 +10,6 @@ public interface LecturerInterface {
 	public void addLecturer(Lecturer lecturer);
 	public void updateLecturer(Lecturer lecturer);
 	public void deleteLecturer(Lecturer lecturer);
+	public Lecturer findLecturerById(int lecturerId);
 
 }
