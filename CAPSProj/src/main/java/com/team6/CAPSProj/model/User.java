@@ -1,19 +1,19 @@
 package com.team6.CAPSProj.model;
 
-public class LoginTransfer {
+public class User {
 
 	private String emailAdd;
 	private String password;
 	private Role role;
 	
-	public LoginTransfer(String emailAdd, String password, Role role) {
+	public User(String emailAdd, String password, Role role) {
 		super();
 		this.emailAdd = emailAdd;
 		this.password = password;
 		this.role = role;
 	}
 
-	public LoginTransfer() {
+	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

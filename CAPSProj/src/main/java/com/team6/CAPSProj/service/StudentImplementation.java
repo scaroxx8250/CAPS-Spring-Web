@@ -15,6 +15,9 @@ public class StudentImplementation implements StudentInterface {
 	@Autowired
 	StudentRepository srepo;
 	
+	public Student findByEmailAndPassword(String email, String password) {
+		return srepo.findByEmailAndPassword(email, password);
+	}
 	
 	public List<Student>findAllStudents() {
 		
