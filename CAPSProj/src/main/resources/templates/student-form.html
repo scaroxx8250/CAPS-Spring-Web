@@ -21,16 +21,10 @@
 			Personal Email <input type="text" th:field="*{personEmail}">
 			<p th:if="${#fields.hasErrors('personEmail')}" th:errors="*{personEmail}"></p>
 		</fieldset>
-		<!--
 		<fieldset>
-			Matriculation Date:
-			<input type="date" th:field="*{matrDate}"
-				placeholder="dd-MM-yyyy"
-				th:text ="${#dates.format(Student.matrDate, 'dd-MM-yyyy')}" />
-				
-			<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>	
+			Matriculation Date: <input type="text" th:field="*{matrDate}" placeholder="dd-MM-yyyy">
+			<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
 		</fieldset>
-		-->
 		<fieldset>
 			<input type="submit" value="Save"/>
 			<input type="reset" value="Cancel"/>

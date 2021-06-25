@@ -2,6 +2,7 @@ package com.team6.CAPSProj.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,33 @@ public class StudentImplementation implements StudentInterface {
 	
 	public void addStudent(Student student) {
 			srepo.save(student);
+				
+			///generate matriculation number
+			if(student.getMatricNo() == null) 
+			{
+				int studentID = student.getStudentId();
+				//Generate four centre decimal places, e.g. 1234 for MatrNo A1234B
+				String centreDecimal = String.valueOf(9999 - studentID);
+				//Concatenate to String following format AXXXXB
+				String matrNo = "A" + centreDecimal + "B";
+				student.setMatricNo(matrNo);
+				srepo.save(student);	
+			}
+			
+			///generate email
+			if(student.getEmail() == null) {
+				String uuid = UUID.randomUUID().toString().substring(0, 5);
+				String email = uuid + "@gmail.com";
+				student.setEmail(email);
+				srepo.save(student);
+			}
+			///generate password
+			if(student.getPassword() == null) {
+				String uuid = UUID.randomUUID().toString().substring(0, 10);
+				String pw = uuid;
+				student.setPassword(pw);
+				srepo.save(student);
+			}		
 	}
 	
 	
