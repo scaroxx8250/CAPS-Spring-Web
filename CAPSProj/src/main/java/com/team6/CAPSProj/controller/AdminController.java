@@ -115,14 +115,34 @@ public class AdminController {
 	
 	@RequestMapping(value = "/editLecturer/{lecturerId}")
 	public String editLecturer(Model model, @PathVariable("lecturerId") int lecturerId) {
-		model.addAttribute("student", lservice.findLecturerById(lecturerId));
+		model.addAttribute("lecturer", lservice.findLecturerById(lecturerId));
 		return "editlecturerform";
 	}
 	
 	@RequestMapping(value = "/deletelecturer/{lecturerId}")
 	public String deleteLecturer(@PathVariable("lecturerId") Integer lecturerId) {
+		List <Course> course_delete = cservice.findCoursesByLecturerId(lecturerId);
+		for(Course course: course_delete) {
+			course.setLecturer(null);
+			cservice.updateCourse(course);
+//			st_cs_service.DeleteCourse(course);
+//			cservice.deleteCourse(course);
+		}
 		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
-		return "forward:/facility/list";
+		return "forward:/admin/lecturerlist";
 	}
 	
+	
+//	@RequestMapping(value = "/enrollmentlist")
+//	public String listEnrollment(Model model)
+	{
+		
+	}
+
+
+
+
+
+
+
 }

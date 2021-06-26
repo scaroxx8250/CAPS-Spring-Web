@@ -19,10 +19,10 @@
 		  <input type="search" id="form1" class="form-control" placeholder="Type query"
 		  aria-label="Search" />
 		</div>
-	    <input type="button" value="Add Student"
-					onclick="window.location.href='/admin/addstudent'; return false"
+	    <input type="button" value="Add Lecturer"
+					onclick="window.location.href='/admin/addlecturer'; return false"
 					class="button" />
-	    <table th:if="${not #lists.isEmpty(students)}" class="table">
+	    <table th:if="${not #lists.isEmpty(lecturers)}" class="table">
 			<tr >
 				<th>First Name</th>
 				<th>Last Name</th>
@@ -35,7 +35,7 @@
 				<td th:text=${lecturer.faculty}>faculty</td>
 				<td th:text=${lecturer.email}>email</td>
 				<td>
-						<a th:href="@{/admin/editstudent/{Id}(Id=${lecturer.lecturerId})}"> 
+						<a th:href="@{/admin/editLecturer/{Id}(Id=${lecturer.lecturerId})}"> 
         					<button type="button">Edit</button> 
    						</a>
 		

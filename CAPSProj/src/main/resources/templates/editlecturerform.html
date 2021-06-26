@@ -4,16 +4,19 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" media="all" 
           th:href="@{/css/style.css}" />
-<title>Edit Student</title>
+<title>Edit Lecturer</title>
 </head>
 <body>
 <h1>Edit Student</h1>
-<form action="" th:object="${student}" th:action="@{/admin/save}" method="get">
+<form action="" th:object="${lecturer}" th:action="@{/admin/saveLecturer}" method="get">
         <fieldset>
-		     <input type="hidden" th:field="*{studentId}">  
+		     <input type="hidden" th:field="*{lecturerId}">  
 		</fieldset>
 		<fieldset>
-		     <input type="hidden" th:field="*{matricNo}">  
+		     <input type="hidden" th:field="*{email}">  
+		</fieldset>
+		<fieldset>
+		     <input type="hidden" th:field="*{password}">  
 		</fieldset>
 		<fieldset>
 			First Name: <input type="text" th:field="*{firstName}">
@@ -24,12 +27,12 @@
 			<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 		</fieldset>
 		<fieldset>
-			Matriculation Date: <input type="text" th:field="*{matrDate}">
-			<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
+			Last Name: <input type="text" th:field="*{faculty}">
+			<p th:if="${#fields.hasErrors('faculty')}" th:errors="*{faculty}"></p>
 		</fieldset>
 		<fieldset>
-			Personal Email <input type="text" th:field="*{personEmail}">
-			<p th:if="${#fields.hasErrors('personEmail')}" th:errors="*{personEmail}"></p>
+			Personal Email <input type="text" th:field="*{personalEmail}">
+			<p th:if="${#fields.hasErrors('personalEmail')}" th:errors="*{personalEmail}"></p>
 		</fieldset>
 		<fieldset>
 			<input type="submit" value="Save"/>	
