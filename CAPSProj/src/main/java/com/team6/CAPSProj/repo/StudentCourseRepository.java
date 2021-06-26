@@ -22,7 +22,10 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, In
 		List<StudentCourse> findAllStudentsByCourse(@Param("course") Course course); 
 	
 	@Query("SELECT sc FROM StudentCourse sc join sc.course c WHERE sc.course = :course AND sc.student = :student and YEAR(c.courseStartDate) =:year")
-		List<StudentCourse> findByCourseIdAndStudentId(@Param("course") Course course, @Param("student") Student student, @Param("year") int year) ;
+		List<StudentCourse> findByCourseIdAndStudentIdAndYear(@Param("course") Course course, @Param("student") Student student, @Param("year") int year) ;
+	
+	@Query("SELECT sc FROM StudentCourse sc join sc.course c WHERE sc.course = :course AND sc.student = :student")
+	List<StudentCourse> findByCourseIdAndStudentId(@Param("course") Course course, @Param("student") Student student) ;
 	
 	@Query("SELECT sc FROM StudentCourse sc WHERE sc.course = :course AND sc.student = :student")
 		StudentCourse findStudentCourseByCourseAndStudent(@Param("course") Course course, @Param("student") Student student);

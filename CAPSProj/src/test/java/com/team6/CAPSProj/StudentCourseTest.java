@@ -20,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Faculty;
-import com.team6.CAPSProj.model.Grade;
 import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
@@ -148,7 +147,7 @@ public class StudentCourseTest {
 		for(Course course : courseList) {
 			scList = scservice.findAllStudentsByCourse(course.getCourseName());
 			for (StudentCourse sc: scList) {
-				sc.setGrade(Grade.Aplus);
+				sc.setGrade(4.7);
 			}
 			
 		}	

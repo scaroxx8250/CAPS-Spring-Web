@@ -15,6 +15,7 @@ public class CourseServiceImpl implements CourseInterface {
 	@Autowired
 	CourseRepository crepo;
 	
+	
 	public List<Course>findAllCourses(List<Integer> CourseId)
 	{
 		List<Course> courseList= new ArrayList<Course>();
@@ -94,6 +95,8 @@ public class CourseServiceImpl implements CourseInterface {
 		
 		return crepo.findCourseByYearAndLecturer(year, lecturerId);
 	}
+	
+	
 	
 }
 
