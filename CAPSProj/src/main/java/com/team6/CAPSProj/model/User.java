@@ -12,7 +12,7 @@ public class User {
 	@Email
 	@NotEmpty
 	private String emailAdd;
-	@Length(min =8, max=16)
+	@Length(min =4, max=16)
 	private String password;
 	private Role role;
 	
