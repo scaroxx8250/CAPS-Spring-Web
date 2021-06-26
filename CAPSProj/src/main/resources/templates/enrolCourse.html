@@ -7,10 +7,11 @@
 <body>
  
   <h1>Enroll for a Course</h1>
+  <h3 th:text="'Total Records: ' + ${notEnrolCourses.size()}">Total Records</h3>
 <form action="" th:object="${selectCourse}" th:action="@{/student/submitEnrol}" method="post">
 <table>
  <tr>
-   <th>Course NAME</th>
+   <th>Course Name</th>
    <th>Lecture Name</th>
    <th>Credits</th>
    <th>Course Description</th>

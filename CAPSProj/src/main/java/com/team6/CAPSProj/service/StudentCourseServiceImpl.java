@@ -63,6 +63,13 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		}
 		return sc; 	
 	}
+	
+	public double findGradeByStudentAndCourse(Student student, Course course) {
+		StudentCourse retrieved = screpo.findByCourseIdAndStudentId(course, student).get(0);
+		double grade = retrieved.getGrade();
+		return grade; 
+	}
+
 
 	
 	public void addStudentToCourse(Course course, Student student) {

@@ -1,17 +1,23 @@
 package com.team6.CAPSProj.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.team6.CAPSProj.model.Admin;
+import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Role;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.User;
+import com.team6.CAPSProj.service.AdminService;
+import com.team6.CAPSProj.service.LecturerInterface;
 import com.team6.CAPSProj.service.StudentInterface;
 
 
@@ -21,8 +27,14 @@ import com.team6.CAPSProj.service.StudentInterface;
 public class HomeController {
 
 	@Autowired
-	StudentInterface stservice;
+	private StudentInterface stservice;
 	
+	@Autowired 
+	private LecturerInterface lservice; 
+	
+	@Autowired 
+	private AdminService aservice; 
+
 
 	@RequestMapping("/home")
 	public String login(Model model) {
@@ -32,8 +44,12 @@ public class HomeController {
 		
 	}
 	
-	@PostMapping(path = "/authenticate")
-	public String authenticate(@ModelAttribute("user")User user, Model model, HttpSession session) {
+	@RequestMapping(path = "/authenticate", method=RequestMethod.POST)
+	public String authenticate(@Valid @ModelAttribute("user")User user, BindingResult bindingResult, HttpSession session,Model model) {
+		
+		if(bindingResult.hasErrors()) {
+			return "index";
+		}
 		
 		Role role = user.getRole();
 		if(role == Role.STUDENT)
@@ -44,29 +60,29 @@ public class HomeController {
 				session.setAttribute("usession", s);
 				return "redirect:/student/list";
 			}
-			else {
-				return "index";
-			}
 			
+				return "index";
 		}
 		else if(role == Role.LECTURER)
 		{
+			Lecturer l = lservice.findByEmailAndPassword(user.getEmailAdd(), user.getPassword());
+			if( l!=null) {
+				session.setAttribute("usession", l);
+				return "redirect:/lecturer/Courses";
+			}
+			
 			return "index";
 		}
 		else
 		{
-			// Admin
+			Admin a = aservice.findByEmailAndPassword(user.getEmailAdd(), user.getPassword());
+			if( a!=null) {
+				session.setAttribute("usession", a);
+				return "redirect:/admin/studentlist";
+			}
 			return "index";
 		}
 		
-//		if(uservice.authenticate(user)) 
-//		{
-//			User u = uservice.findByName(user.getUserName());
-//			session.setAttribute("usession", u);
-//			return "welcome";
-//		}
-//		else
-//			return "login";
 	}
 	
 }
