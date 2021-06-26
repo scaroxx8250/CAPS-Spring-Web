@@ -21,24 +21,34 @@ th, td {
 </head>
 <body>
 	<h1>View Courses Taught</h1>
-	<!-- <table id="listCourses" th:if="${not #lists.isEmpty(courses)}"> -->
-	<table>
-		<tr>
-			<th>Course Id</th>
+	<h3 th:text="'Total Records: ' + ${courses.size()}">Total Records</h3>
+<!-- 	<table id="listCourses" th:if="${not #lists.isEmpty(courses)}">
+ -->	<table id="courses">
+	<tr>
 			<th>Course Name</th>
 			<th>Credits</th>
 			<th>Size</th>
 			<th>Students Enrolled</th>
-		</tr>
-		<tr th:each="course:${courses}" class="table-row">	
-			<td th:text=${course.courseId}>Course Id</td>
-			<td th:text=${course.courseName}>Course Name</td>
-			<td th:text=${course.credits}>Credits</td>
-			<td th:text=${course.size}>Size</td>
-			<td th:text=${students}>Students Enrolled</td>
-		</tr>
+	</tr>
+	 <tr th:each="course : ${courses}" class="table-row">
+			<td th:text=${course.key.courseName}>Course Name</td>
+			<td th:text=${course.key.credits}>Credits</td>
+			<td th:text=${course.key.size}>Size</td>
+			<td th:text=${course.value}>Students Enrolled</td>	
+	</tr>
 	</table>
-
-	
+	<script>
+	function countRows(){
+		var rowCount = 0;
+		var table = document.getElementById("courses"); 
+		var rows = table.getElementsByTagName("tr");
+		for(var i = 0; i < rows.length; i++){
+			if (rows[i].getElementsByTagName("td").length > 0){
+				rowCount++;
+			}
+		}
+		return "Total Records: " + rowCount;	
+	}
+	</script>
 </body>
 </html>
