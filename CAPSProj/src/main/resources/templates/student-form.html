@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Student Form</title>
+</head>
+<body>
+
+	<h1>Student Form</h1>
+	<form action="#" th:object="${student}" th:action="@{/admin/save}"
+		method="post">
+		<fieldset>
+			First Name <input type="text" th:field="*{firstName}">
+			<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+		</fieldset>
+		<fieldset>
+			Last Name <input type="text" th:field="*{lastName}">
+			<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+		</fieldset>
+		<fieldset>
+			Personal Email <input type="text" th:field="*{personEmail}">
+			<p th:if="${#fields.hasErrors('personEmail')}" th:errors="*{personEmail}"></p>
+		</fieldset>
+		<fieldset>
+			Matriculation Date: <input type="text" th:field="*{matrDate}" placeholder="dd-MM-yyyy">
+			<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
+		</fieldset>
+		<fieldset>
+			<input type="submit" value="Save"/>
+			<input type="reset" value="Cancel"/>
+		</fieldset>
+	</form>
+
+	<br />
+
+</body>
+</html>

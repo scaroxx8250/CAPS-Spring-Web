@@ -105,5 +105,5 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		Course course = crepo.findByCourseId(courseId);
 		return screpo.countStudents(course);
 	}
-
+	
 }
