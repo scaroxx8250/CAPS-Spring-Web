@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table, td, th {  
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 15px;
+}
+
+#input {
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 25%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+</style>
+<meta charset="ISO-8859-1">
+<title>View Course Enrolment</title>
+</head>
+<body onload="myFunction()">
+	<h1>View Course Enrolment</h1>
+	<div class="year-dropdown">
+	<form>
+		<label for="year">Year: </label>
+		<select id='date-dropdown'>
+  		</select>
+  		<script>
+    		let dateDropdown = document.getElementById('date-dropdown');
+
+    		let currentYear = new Date().getFullYear();
+    		let earliestYear = 2018;
+
+    		while (currentYear >= earliestYear) {
+      			let dateOption = document.createElement('option');
+      			dateOption.text = currentYear;
+      			dateOption.value = currentYear;
+      			dateDropdown.add(dateOption);
+      			currentYear -= 1;
+      		}
+  		</script>
+	</form>
+	</div>
+	<br>
+	<div class="course-dropdown">
+	<select id="courseNameDropdown" name="courseName">
+		<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:utext="${course.getCourseName()}" th:selected="${course.getCourseName()}"/>
+	</select>	
+	</div>
+	<br>
+	
+	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
+	
+	<table id="students">
+	<tr>
+   		<th>Student ID</th>
+   		<th>First Name</th>
+   		<th>Last Name</th>
+   		<th>Student Email</th>
+   		<th>Student Performance</th>
+ 	</tr>
+ 	<tr th:each="student: ${students}">
+   		<td th:text="${student.studentId}">Student Id</td>
+   		<td th:text="${student.firstName}">First Name</td>
+   		<td th:text="${student.lastName}">Last Name</td>
+   		<td th:text="${student.email}">Student Email</td>
+   		<td>
+   			<a href="">Click Here</a>
+   		</td>
+ 	</tr>
+</table>
+<script>
+var rows = document.getElementById("students").rows
+var count = 0;
+for (var i=0; i< rows.length; i++) {
+    if (rows[i].cells[0].tagName != 'th') 
+    	count++
+}
+console.log(count)
+</script>
+</body>
+</html>

@@ -1,6 +1,5 @@
 package com.team6.CAPSProj.controller;
 
-
 import javax.validation.Valid;
 
 import java.util.ArrayList;
@@ -17,16 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.team6.CAPSProj.model.Course;
+import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 
 import com.team6.CAPSProj.service.CourseInterface;
-import com.team6.CAPSProj.service.CourseServiceImpl;
 import com.team6.CAPSProj.service.LecturerInterface;
-import com.team6.CAPSProj.service.LecturerServiceImpl;
 import com.team6.CAPSProj.service.StudentCourseInterface;
-import com.team6.CAPSProj.service.StudentCourseServiceImpl;
-import com.team6.CAPSProj.service.StudentImplementation;
 import com.team6.CAPSProj.service.StudentInterface;
 
 @Controller
@@ -41,56 +37,44 @@ public class AdminController {
 	@Autowired CourseInterface cservice;
 	
 	@Autowired StudentCourseInterface st_cs_service;
-	
-	
-	public void setStudentInterface(StudentImplementation stImpl) {
-		this.stservice = stImpl;
-	}
-	
-	public void setLecturerInterface(LecturerServiceImpl lserviceImpl) {
-		this.lservice = lserviceImpl;
-	}
-	
-	public void setCourseInterface(CourseServiceImpl courseserviceImpl) {
-		this.cservice = courseserviceImpl;
-	}
-	
-	public void setStudentCourseInterface(StudentCourseServiceImpl st_cs_serviceImpl) {
-		this.st_cs_service= st_cs_serviceImpl;
-	}
-	
-	
+		
 
 	@RequestMapping(value = "/studentlist")
-	public String list(Model model) {
+	public String listStudent(Model model) {
 		model.addAttribute("students", stservice.findAllStudents());
-		return "student";
+		return "student_manage";
 	}
 	
 	@RequestMapping(value = "/addstudent")
 	public String addStudent(Model model) {
 		model.addAttribute("student", new Student());
-		return "student-form";
+		return "student_add";
 	}
 	
-
 	@RequestMapping(value = "/save")
 	public String saveStudent(@ModelAttribute("student") @Valid Student student, 
 			BindingResult bindingResult,  Model model) {
 		if (bindingResult.hasErrors()) {
-			return "student-form";
+			return "student_add";
 		}
 		stservice.addStudent(student);
 		return "forward:/admin/studentlist";
 	}
-
+	
+	@RequestMapping(value = "/editstudent/{matricNo}")
+	public String showEditForm(Model model, @PathVariable("matricNo") String matricNo) {
+		model.addAttribute("student", stservice.findStudentByMatricNo(matricNo));
+		return "student_edit";
+	}
+	
 	@RequestMapping(value = "/deletestudent/{matricNo}")
 	public String deleteStudent(@PathVariable("matricNo") String matricNo) {
+		//first we have to remove the student from all assigned courses
 		//find student
 		Student student = stservice.findStudentByMatricNo(matricNo);
 		//get list of studentcourses
 		List<StudentCourse> studentcourses = st_cs_service.findAllCoursesByStudent(student.getStudentId());
-		//get List of courses
+		//get ist of courses
 		List<Course> courseList = new ArrayList<Course>();
  		for(StudentCourse stcourse : studentcourses) {
 			courseList.add(stcourse.getCourse());
@@ -104,5 +88,41 @@ public class AdminController {
 		stservice.deleteStudent(stservice.findStudentByMatricNo(matricNo));
 		return "forward:/admin/studentlist";
 	}
+	
+	
+	
+//	@RequestMapping(value = "/lecturerlist")
+//	public String listLecturer(Model model) {
+//		model.addAttribute("lecturer", lservice.GetAllLecturers());
+//		return "lecturer";
+//	}
+//	
+//	@RequestMapping(value = "/addlecturer")
+//	public String addLecturer(Model model) {
+//		model.addAttribute("lecturer", new Lecturer());
+//		return "lecturer-form";
+//	}
+//
+//	@RequestMapping(value = "/save")
+//	public String saveLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
+//			BindingResult bindingResult,  Model model) {
+//		if (bindingResult.hasErrors()) {
+//			return "lecturer-form";
+//		}
+//		lservice.addLecturer(lecturer);
+//		return "forward:/admin/lecturerlist";
+//	}
+//	
+//	@RequestMapping(value = "/editstudent/{lecturerId}")
+//	public String editLecturer(Model model, @PathVariable("lecturerId") int lecturerId) {
+//		model.addAttribute("student", lservice.findLecturerById(lecturerId));
+//		return "editstudentform";
+//	}
+//	
+//	@RequestMapping(value = "/deletelecturer/{lecturerId}")
+//	public String deleteLecturer(@PathVariable("lecturerId") Integer lecturerId) {
+//		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
+//		return "forward:/facility/list";
+//	}
 	
 }
