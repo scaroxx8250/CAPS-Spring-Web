@@ -1,7 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Add Student</title>
+	<title>Add Course</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -15,10 +15,10 @@
     <nav>Navbar 1</nav>
     <main>
 		<h3>Student Form</h3>
-		<form action="#" th:object="${student}" th:action="@{/admin/save}"
+		<form action="#" th:object="${course}" th:action="@{/admin/savecourse}"
 			method="post">
 			<fieldset>
-				First Name <input type="text" th:field="*{firstName}">
+				Course Name <input type="text" th:field="*{firstName}">
 				<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
 			</fieldset>
 			<fieldset>
