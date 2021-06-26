@@ -1,8 +1,18 @@
 package com.team6.CAPSProj.model;
 
+
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 public class User {
 
+	@Email
+	@NotEmpty
 	private String emailAdd;
+	@Length(min =4, max=16)
 	private String password;
 	private Role role;
 	

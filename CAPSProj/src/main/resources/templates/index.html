@@ -12,13 +12,20 @@
 <form action="" th:object="${user}" th:action="@{/authenticate}" method="post">
         <fieldset>
 			Email address: <input type="text" th:field="*{emailAdd}">
+			<p th:if="${#fields.hasErrors('emailAdd')}" th:errors="*{emailAdd}"></p>
 		</fieldset>
 		<fieldset>
 			Password: <input type="password" th:field="*{password}">
+			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 		</fieldset>
 		<fieldset>
-			Role:<input type="text" th:field="*{role}">
-		</fieldset>
+			Role:
+			<select th:field="*{role}">
+			<option th:value="STUDENT" th:text="Student"></option>
+			<option th:value="LECTURER" th:text="Lecturer"></option>
+			<option th:value="ADMIN" th:text="Admin"></option>
+			</select>
+			</fieldset>
 		<fieldset>
 			<button type="submit" >Log In</button>
 		</fieldset>

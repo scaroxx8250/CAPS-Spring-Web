@@ -76,7 +76,9 @@ public class CapsProjApplication {
 		return args ->{
 			LocalDate ld = LocalDate.parse("22/05/2021",df);
 			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
-			srepo.save(s1);
+			Student s2 = new Student("e100001","Tan","Sharon", "sharonTan@gmail.com","e100024@u.nus.edu", "1234", LocalDate.of(2021, 6, 22));
+			Student s3 = new Student("e100002","Lim","Sharon", "sharonLim@gmail.com","e112024@u.nus.edu", "1234", LocalDate.of(2021, 6, 22));
+			srepo.save(s1);srepo.save(s2);srepo.save(s3);
 			 
 			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
 			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com",null, null);
@@ -84,12 +86,12 @@ public class CapsProjApplication {
 			lservice.addLecturer(l1);
 			lservice.addLecturer(l2);
 			
-			Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 10);
-			Course c2 = new Course("SCI101", "Anontomy", Faculty.MEDICINE, 5, ld, 80);
+			Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 2);
+			Course c2 = new Course("SCI101", "Anontomy", Faculty.MEDICINE, 5, ld, 2);
 			
-			Course c3 = new Course("SA4101", "design", Faculty.COMPUTING, 5,LocalDate.of(2019, 03, 10),l2, 80);
-			Course c4 = new Course("SA4105", "SQL", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11), 80);
-			Course c5 = new Course("SA4108", "Python", Faculty.COMPUTING, 5,LocalDate.of(2020, 07, 11),l2, 80);
+			Course c3 = new Course("SA4101", "design", Faculty.COMPUTING, 5,LocalDate.of(2019, 03, 10),l2, 2);
+			Course c4 = new Course("SA4105", "SQL", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11), 2);
+			Course c5 = new Course("SA4108", "Python", Faculty.COMPUTING, 5,LocalDate.of(2020, 07, 11),l2, 2);
 			crepo.save(c1);crepo.save(c2);crepo.save(c3);crepo.save(c4);crepo.save(c5);
 			
 			
@@ -117,10 +119,14 @@ public class CapsProjApplication {
 			StudentCourse sc2 = new StudentCourse(s1, c2, 4.3);
 			StudentCourse sc3 = new StudentCourse(s1, c3, 3.1);
 			StudentCourse sc4 = new StudentCourse(s1, c5, 3.6);
+			StudentCourse sc5 = new StudentCourse(s2, c4,null);
+			StudentCourse sc6 = new StudentCourse(s3, c4,null);
 			screpo.save(sc1);
 			screpo.save(sc2);
 			screpo.save(sc3);
 			screpo.save(sc4);
+			screpo.save(sc5);
+			screpo.save(sc6);
 			
 			
 //			
