@@ -91,10 +91,10 @@ public class StudentController {
 				}
 			}
 		}
-		
+
 		// filter the courses that student has not enrolled and is available to start tomorrow onwards
 		availableCourses = availableCourses.stream().
-				filter(c->c.getCourseStartDate().isAfter(LocalDate.now()))
+				filter(c->c.getCourseStartDate().isAfter(LocalDate.now()) && scservice.CountTotalStudentEnrol(c.getCourseId())<c.getSize())
 				.collect(Collectors.toList());
 		
 		// passing the data to view
@@ -170,11 +170,18 @@ public class StudentController {
 		cuGPA = cuGPA/cuCredits;
 		
 		// sort the acadYears in descending order
-		acadYears.stream().sorted();
+		acadYears = acadYears.stream().sorted((p1,p2) -> {
+			if(Integer.valueOf(p1) > Integer.valueOf(p2))
+				return -1;
+			else if (Integer.valueOf(p1)< Integer.valueOf(p2))
+				return 1;
+			else
+				return 0;
+		}).collect(Collectors.toList());
 		
 	
 		// passing the data to view
-		model.addAttribute("gradedCourse", scList);
+		model.addAttribute("gradedCourse", AyGradedCourses);
 		model.addAttribute("ayCredits", ayCredits);
 		model.addAttribute("ayGPA", ayGPA);
 		model.addAttribute("cuCredits", cuCredits);
