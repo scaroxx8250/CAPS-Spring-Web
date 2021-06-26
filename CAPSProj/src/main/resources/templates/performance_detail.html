@@ -53,33 +53,27 @@ th, td {
 	</form>
 	</div>
 	<br>
-	<div class="course-dropdown">
-	<select id="courseNameDropdown" name="courseName">
-		<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:utext="${course.getCourseName()}" th:selected="${course.getCourseName()}"/>
-	</select>	
-	</div>
-	<br>
 	
 	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
-	<p th:text="'Total Records: ' + ${studentgrade.size()}">Total Records</p>
-	<table id="students">
+	<p th:text="'Total Records: ' + ${size}">Total Records</p>
+	<table id="courses">
 	<tr>
 			<!-- <th>Student ID</th> -->
-			<th>Student ID</th>
-			<th>First Name</th>
-			<th>Last Name</th>
+			<th>Course ID</th>
+			<th>Course Name</th>
+			<th>Credits</th>
 			<th>Grade</th>
-			<th>Academic Records</th>
+			<th>Course Start Date</th>
 	</tr>
-	 <tr th:each="student : ${studentgrade}" class="table-row">
+	 <tr th:each="course : ${studentGrade}" class="table-row">
 			<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
-			<td th:text=${student.key.studentId}>Student ID</td>
-			<td th:text=${student.key.firstName}>First Name</td>
-			<td th:text=${student.key.lastName}>Last Name</td>
-			<td th:text=${student.value}>Grade</td>
-			<td>
-   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.key.studentId}">Select</a>
-   			</td>
+			<td th:text=${course.key.courseId}>Course ID</td>
+			<td th:text=${course.key.courseName}>Course Name</td>
+			<td th:text=${course.key.credits}>Credits</td>
+			<td th:text=${course.value}>Grade</td>
+			<!-- <td th:text=${course.key.courseStartDate>Course Start Date</td> -->
+			<td th:text="${#temporals.formatISO(course.key.courseStartDate)}"></td> 
+	
 	</tr>
 	</table>
 	

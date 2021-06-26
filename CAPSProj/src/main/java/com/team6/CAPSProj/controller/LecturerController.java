@@ -29,6 +29,7 @@ import com.team6.CAPSProj.service.LecturerServiceImpl;
 import com.team6.CAPSProj.service.StudentCourseInterface;
 import com.team6.CAPSProj.service.StudentInterface;
 
+
 @Controller
 @RequestMapping("/lecturer")
 public class LecturerController {
@@ -155,6 +156,28 @@ public class LecturerController {
 		
 		return "forward:/lecturer/gradeCourse";
 		
+	}
+	
+	@RequestMapping(value="/StudentPerformance/detail/{id}")
+	public String listPerformanceDetails (@PathVariable("id")int id, Model model) {
+
+				List<StudentCourse> scourses = scinterface.findAllCoursesByStudent(id);
+				List<Course> courses = new ArrayList<Course>(); 
+				Map<Course, Double> studentGrade = new HashMap<>();
+				for (StudentCourse sc : scourses) {
+					courses.add(sc.getCourse());
+				}
+				model.addAttribute("courses", courses);
+				
+				for (StudentCourse sc: scourses) {
+					studentGrade.put(sc.getCourse(), sc.getGrade());
+				}
+				
+				model.addAttribute("studentGrade", studentGrade);
+				int size = studentGrade.size();
+				model.addAttribute("size", size); 
+		
+		return "performance_detail";
 	}
 	
 }
