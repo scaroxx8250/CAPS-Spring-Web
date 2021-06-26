@@ -42,20 +42,20 @@ public class AdminController {
 	@RequestMapping(value = "/studentlist")
 	public String listStudent(Model model) {
 		model.addAttribute("students", stservice.findAllStudents());
-		return "student";
+		return "student_manage";
 	}
 	
 	@RequestMapping(value = "/addstudent")
 	public String addStudent(Model model) {
 		model.addAttribute("student", new Student());
-		return "student-form";
+		return "student_add";
 	}
 	
 	@RequestMapping(value = "/save")
 	public String saveStudent(@ModelAttribute("student") @Valid Student student, 
 			BindingResult bindingResult,  Model model) {
 		if (bindingResult.hasErrors()) {
-			return "student-form";
+			return "student_add";
 		}
 		stservice.addStudent(student);
 		return "forward:/admin/studentlist";
@@ -64,7 +64,7 @@ public class AdminController {
 	@RequestMapping(value = "/editstudent/{matricNo}")
 	public String showEditForm(Model model, @PathVariable("matricNo") String matricNo) {
 		model.addAttribute("student", stservice.findStudentByMatricNo(matricNo));
-		return "editstudentform";
+		return "student_edit";
 	}
 	
 	@RequestMapping(value = "/deletestudent/{matricNo}")

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Grades and GPA</title>
+</head>
+<body>
+ 
+  <h1>Grades and GPA</h1>
+  <div>
+  <label>Year</label>
+  <select th:field="*{ay}">
+  <option th:each="selectOption : ${ay}" th:value="${selectOption}"
+  th:text="${selectOption}">
+  selectedOption
+  </option>
+  </select>
+  </div>
+  <br>
+<table>
+ <tr>
+   <th>Course Name</th>
+   <th>Credits</th>
+   <th>Grade</th>
+ </tr>
+ <tr th:each="gc: ${gradedCourse}">
+   <td th:text="${gc.course.courseName}">Course Name</td>
+   <td th:text="${gc.course.credits}  ">Credits</td>
+   <td th:text="${gc.grade}">Grade</td>
+ </tr>
+</table>
+<br>
+<table>
+ <tr>
+   <td>AY Credits</td>
+   <td th:text="${ayCredits}"></td>
+ </tr>
+ <tr>
+   <td>AY GPA:</td>
+   <td th:text="${ayGPA}"></td>
+ </tr>
+ <tr>
+   <td>Cumulative Credits:</td>
+   <td th:text="${cuCredits}"></td>
+ </tr>
+ <tr>
+   <td>Cumulative GPA:</td>
+   <td th:text="${cuGPA}"></td>
+ </tr>
+ 
+</table>
+</body>
+</html>

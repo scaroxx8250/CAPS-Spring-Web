@@ -1,8 +1,12 @@
 package com.team6.CAPSProj.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Lecturer;
@@ -44,48 +49,88 @@ public class LecturerController {
 //	}
 	
 	@RequestMapping(value = "/Courses")
-	public String listCourses (@ModelAttribute("lecturer") @Valid Lecturer lecturer, BindingResult bindingResult, Model model ) {
-		//int lecturerId = lecturer.getLecturerId();
+	public String listCourses (HttpSession session, Model model ) {
+		//Lecturer l = (Lecturer) session.getAttribute("usession");
+		//int lecturerId = l.getLecturerId();
 		int lecturerId = 4;
 		List<Course> courselist = cinterface.findCoursesByLecturerId(lecturerId);
-		model.addAttribute("courses", courselist);
 		int studentsEnrolled = 0;
+		Map<Course, Integer> map = new HashMap<>();
 		for (Course c : courselist) {
 			studentsEnrolled = scinterface.CountTotalStudentEnrol(c.getCourseId());
+			map.put(c, studentsEnrolled);
 		}
-		model.addAttribute("students", studentsEnrolled);
+		model.addAttribute("courses", map);
 		
 		return "courses";
 	}
 	
 	@RequestMapping(value = "/CourseEnrolment")
-	public String listCourseEnrolment (@ModelAttribute("lecturer") @Valid Lecturer lecturer, BindingResult bindingResult, Model model) {
-		int lecturerId = lecturer.getLecturerId(); 
-		List<Course> courselist = cinterface.findCoursesByLecturerId(lecturerId); 
-		model.addAttribute("courses", courselist); 
-		for (Course c : courselist) {
-			scinterface.findAllStudentsByCourse(c.getCourseName());
+	public String listCourseEnrolment (Model model) {
+		//int lecturerId = lecturer.getLecturerId(); 
+		int lecturerId = 4; 
+		List<Course> courselist = cinterface.findCoursesByLecturerId(lecturerId);
+		model.addAttribute("courses", courselist);
+		
+	
+		String name = null;
+		for(int i = 0; i < courselist.size(); i++) {
+			name = courselist.get(i).getCourseName();
 		}
+		
+		int studentId = 0; 
+		String firstName = null; 
+		String lastName = null; 
+		String email = null;
+		
+		List<StudentCourse> studentslist = scinterface.findAllStudentsByCourse("SA4101");
+		List<Student> students  = new ArrayList<Student>(); 
+		for (StudentCourse sc: studentslist) {
+			students.add(sc.getStudent());
+		}
+		model.addAttribute("students", students);
+		
 		return "enrolment"; 
 	}
 	
-	@RequestMapping(value = "/StudentPerformance")
-	public String listPerformance (@ModelAttribute("lecturer") @Valid Lecturer lecturer, BindingResult bindingResult, Model model) {
-		int lecturerId = lecturer.getLecturerId(); 
-		List<Course> courselist = cinterface.findCoursesByLecturerId(lecturerId); 
-		model.addAttribute("courses", courselist); 
-		ArrayList<Student> students = new ArrayList<Student>(); 
-		for (Course c : courselist) {
-			students.add((Student) scinterface.findAllStudentsByCourse(c.getCourseName()));
-			for (Student s : students) {
-				scinterface.findAllGradeByYearAndStudent(courselist, s, c.getCourseStartDate().getYear());
-			}
-		}
-		return "performance"; 
-		
-	}
+//	@RequestMapping(value = "/StudentPerformance")
+//	public String listPerformance (Model model) {
+		//int lecturerId = lecturer.getLecturerId(); 
+//		int lecturerId = 4; 
+//		List<Course> courselist = cinterface.findCoursesByLecturerId(lecturerId);
+//		model.addAttribute("courses", courselist);
+//		
+//	
+//		String name = null;
+//		for(int i = 0; i < courselist.size(); i++) {
+//			name = courselist.get(i).getCourseName();
+//		}
+//		
+//		int studentId = 0; 
+//		String firstName = null; 
+//		String lastName = null; 
+//		String grade = null;
+//		
+//		List<StudentCourse> studentslist = scinterface.findAllStudentsByCourse("SA4101");
+//		for (StudentCourse sc: studentslist) {
+//			studentId = sc.getStudent().getStudentId();
+//			firstName = sc.getStudent().getFirstName();
+//			lastName = sc.getStudent().getLastName();
+//			grade = sc.getGrade().name();
+//		}
+//
+//		model.addAttribute("students", studentslist);
+//		model.addAttribute("studentId", studentId);
+//		model.addAttribute("firstname", firstName); 
+//		model.addAttribute("lastname", lastName);
+//		model.addAttribute("grade", grade); 
+//		
+//		return "performance"; 
+//	}
+	
+}
 
 		
-}
+
 
 
