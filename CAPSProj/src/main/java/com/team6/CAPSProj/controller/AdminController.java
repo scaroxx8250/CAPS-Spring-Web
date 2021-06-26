@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.team6.CAPSProj.model.Course;
@@ -133,11 +134,16 @@ public class AdminController {
 	}
 	
 	
-//	@RequestMapping(value = "/enrollmentlist")
-//	public String listEnrollment(Model model)
-	{
-		
-	}
+//	@RequestMapping(value = "/enrollmentlist", method = RequestMethod.GET)
+//	public String listEnrollment(Model model, @Valid Course course)
+//	{
+//		List<Course> courselist = cservice.getAllCourses();
+//		model.addAttribute("courses", courselist);
+//		
+//		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course.getCourseName());
+//		model.addAttribute("student_course", sclist);
+//		return "managementEnrolment";
+//	}
 
 
 

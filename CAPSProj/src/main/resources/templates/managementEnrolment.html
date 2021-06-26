@@ -19,31 +19,21 @@
 		  <input type="search" id="form1" class="form-control" placeholder="Type query"
 		  aria-label="Search" />
 		</div>
-	<input type="button" value="Add Lecturer"
-					onclick="window.location.href='/admin/addlecturer'; return false"
-					class="button" />
+		
+
+	<select class="course-dropdown" id="courseNameDropdown" name="courseName">
+		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
+	</select>	
+
 	
-	<table th:if="${not #lists.isEmpty(lecturers)}" class="table">
+	    <table th:if="${not #lists.isEmpty(lecturers)}" class="table">
 			<tr >
 				<th>First Name</th>
 				<th>Last Name</th>
-				<th>Matriculation Date</th>
-				<th>Email</th>
 			</tr>
-			<tr th:each="lecturer:${lecturers}" >
-				<td th:text=${lecturer.firstName}>firstName</td>
-				<td th:text="${lecturer.lastName}">lastName</td>
-				<td th:text=${lecturer.faculty}>faculty</td>
-				<td th:text=${lecturer.email}>email</td>
-				<td>
-						<a th:href="@{/admin/editLecturer/{Id}(Id=${lecturer.lecturerId})}"> 
-        					<button type="button">Edit</button> 
-   						</a>
-		
-					    <a th:href="@{/admin/deletelecturer/{Id}(Id=${lecturer.lecturerId})}"> 
-        					<button type="button">Delete</button> 
-   						</a>
-				</td>
+			<tr th:each="student :${student_course}" >
+				<td th:text=${student_course.getStudent().getFirstName()}>firstName</td>
+				<td th:text="${student_course.getStudent().getLastName}">lastName</td>
 			</tr>
 		</table>
     </main>
