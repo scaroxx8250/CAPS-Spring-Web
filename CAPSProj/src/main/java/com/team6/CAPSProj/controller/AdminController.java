@@ -125,4 +125,42 @@ public class AdminController {
 //		return "forward:/facility/list";
 //	}
 	
+	
+	@RequestMapping(value = "/courselist")
+	public String listCourse(Model model) {
+		model.addAttribute("courses", cservice.findAllCourseforCurrentYear());
+		return "courses_manage";
+	}
+	
+	
+	@RequestMapping(value = "/addcourse")
+	public String addCourse(Model model) {
+		model.addAttribute("course", new Course());
+		List<Lecturer> lecturerList = lservice.GetAllLecturers();
+		model.addAttribute("lecturerList", lecturerList);
+		return "course_add";
+	}
+	
+	
+	@RequestMapping(value = "/savecourse")
+	public String saveCourse(@ModelAttribute("course") @Valid Course course, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "course_add";
+		}
+		cservice.addCourse(course);
+		return "redirect:/admin/courselist";
+	}
+	
+	
+	@RequestMapping(value = "/editcourse/{coursename}")
+	public String showCourseEditForm(Model model, @PathVariable("coursename") String coursename) {
+		
+		model.addAttribute("course", cservice.findCourseByCourseName(coursename));
+		return "course_edit";
+		
+	}
+	
+	
+	
 }
