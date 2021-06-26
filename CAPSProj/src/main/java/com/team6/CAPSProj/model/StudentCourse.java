@@ -26,7 +26,7 @@ private Course course;
 
 //additional fields
 @Column(nullable = true)
-private Grade grade;
+private Double grade;
 
 public Student getStudent() {
 	return student;
@@ -40,14 +40,14 @@ public Course getCourse() {
 public void setCourse(Course course) {
 	this.course = course;
 }
-public Grade getGrade() {
+public Double getGrade() {
 	return grade;
 }
-public void setGrade(Grade grade) {
+public void setGrade(Double grade) {
 	this.grade = grade;
 }
 
-public StudentCourse(Student student, Course course, Grade grade) {
+public StudentCourse(Student student, Course course, Double grade) {
 	super();
 	this.student = student;
 	this.course = course;

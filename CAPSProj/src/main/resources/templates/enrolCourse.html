@@ -25,9 +25,12 @@
  </tr>
 </table>
 <fieldset>
+<div th:if="${not #lists.isEmpty(notEnrolCourses)}">
 <input type="submit"value ="Save"/>
 &nbsp; &nbsp; 
 <input type="reset" value="Reset"/>
+</div>
+
 </fieldset>
 
 </form>
