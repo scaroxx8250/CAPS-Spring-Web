@@ -17,13 +17,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.team6.CAPSProj.model.Course;
+import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Grade;
+import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.repo.CourseRepository;
 import com.team6.CAPSProj.repo.LecturerRepository;
 import com.team6.CAPSProj.repo.StudentCourseRepository;
 import com.team6.CAPSProj.repo.StudentRepository;
+import com.team6.CAPSProj.service.CourseInterface;
+import com.team6.CAPSProj.service.CourseServiceImpl;
+import com.team6.CAPSProj.service.LecturerInterface;
+import com.team6.CAPSProj.service.LecturerServiceImpl;
+import com.team6.CAPSProj.service.StudentCourseInterface;
+import com.team6.CAPSProj.service.StudentCourseServiceImpl;
 
 @SpringBootApplication
 public class CapsProjApplication {
@@ -34,26 +42,77 @@ public class CapsProjApplication {
 	CourseRepository crepo;
 	
 	@Autowired
+	private CourseInterface cservice;
+	@Autowired
+	public void setCourseService(CourseServiceImpl cserviceImpl) {
+		this.cservice = cserviceImpl;
+	}
+	
+	@Autowired
 	LecturerRepository lrepo;
 	
 	@Autowired
 	StudentCourseRepository screpo;
 	
+	@Autowired
+	private LecturerInterface lservice;
+	@Autowired
+	public void setLecturerService(LecturerServiceImpl lserviceImpl)
+	{
+		this.lservice = lserviceImpl;
+	}
+	
+	@Autowired
+	private StudentCourseInterface scservice;
+	
+	@Autowired
+	public void setStudentCourseService(StudentCourseServiceImpl scserviceImpl) {
+		this.scservice = scserviceImpl;
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CapsProjApplication.class, args);
 		
 	}
-	
+	public DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 //	@Bean
 //	@Transactional
 //	CommandLineRunner runner() {
 //		return args ->{
-//			
+//			LocalDate ld = LocalDate.parse("22/05/2021",df);
 //			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
 //			srepo.save(s1);
+//			 
+//			Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 10);
+//			Course c2 = new Course("SCI101", "Anontomy", Faculty.MEDICINE, 5, ld, 80);
+//			Course c3 = new Course("SA4101", "design", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 10), 80);
+//			crepo.save(c1);crepo.save(c2);crepo.save(c3);
 //			
-//			Course c1 = new Course("SA4102", "C#", "COM", 5,LocalDate.of(2021, 6, 22), 100);
-//			crepo.save(c1);
+//			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
+//			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com", null, null);
+//			
+//			lservice.addLecturer(l1);
+//			lservice.addLecturer(l2);
+//			
+//			l1  = lrepo.findById(1).get();	
+//			l2 = lrepo.findById(2).get();
+//			
+//			
+//			c1 = cservice.findCourseByCourseName("ADProject");		
+//			c1.setLecturer(l1);
+//			cservice.updateCourse(c1);
+//			
+//			scservice.addStudentToCourse(c1, s1);
+//			
+//			c2 = cservice.findCourseByCourseName("SCI101");		
+//			c2.setLecturer(l2);
+//			cservice.updateCourse(c2);
+//			
+//			c3 = cservice.findCourseByCourseName("SA4101");		
+//			c3.setLecturer(l2);
+//			cservice.updateCourse(c3);
+			
+			
 //			
 //			Grade B = Grade.B;
 //			

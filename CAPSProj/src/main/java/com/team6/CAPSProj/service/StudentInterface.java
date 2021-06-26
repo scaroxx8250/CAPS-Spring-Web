@@ -13,5 +13,6 @@ public interface StudentInterface {
 	public void addStudent(Student student);
 	public void updateStudent(Student student);
 	public void deleteStudent(Student student);
+	public Student findByEmailAndPassword(String email, String password);
 
 }

@@ -1,18 +1,17 @@
 {
 	"folders": {},
 	"connections": {
-		"mysql8-17a368d82bf-4b51f9d9f575ab72": {
+		"mysql8-17a37cc6de0-77045af7320144a4": {
 			"provider": "mysql",
 			"driver": "mysql8",
-			"name": "CAPS",
+			"name": "localhost",
 			"save-password": true,
 			"read-only": false,
 			"configuration": {
 				"host": "localhost",
 				"port": "3306",
-				"database": "CAPS",
-				"url": "jdbc:mysql://localhost:3306/CAPS",
-				"home": "D:\\MySQL\\MySQL Server 8.0",
+				"url": "jdbc:mysql://localhost:3306/",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
 				"type": "dev",
 				"properties": {
 					"connectTimeout": "20000",
