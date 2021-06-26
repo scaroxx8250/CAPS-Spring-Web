@@ -14,5 +14,5 @@ public interface StudentInterface {
 	public void updateStudent(Student student);
 	public void deleteStudent(Student student);
 	public Student findByEmailAndPassword(String email, String password);
-
+	
 }

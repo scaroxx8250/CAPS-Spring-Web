@@ -92,8 +92,16 @@ public class CapsProjApplication {
 			Course c3 = new Course("SA4101", "design", Faculty.COMPUTING, 5,LocalDate.of(2019, 03, 10),l2, 2);
 			Course c4 = new Course("SA4105", "SQL", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11), 2);
 			Course c5 = new Course("SA4108", "Python", Faculty.COMPUTING, 5,LocalDate.of(2020, 07, 11),l2, 2);
+			Course c6 = new Course("SA4106", "Java", Faculty.COMPUTING, 5,LocalDate.of(2019, 03, 10),l2, 2);
+			Course c7 = new Course("SA4107", "C#", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11), l2, 2);
+			Course c8 = new Course("SA4102", "OOP", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
+			Course c9 = new Course("SA4103", "ORM", Faculty.COMPUTING, 5,LocalDate.of(2021, 03, 10),l2, 2);
+			Course c10 = new Course("SA4104", "Machine Learning", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11), l2, 2);
+			Course c11 = new Course("SA4109", "Fundamentals", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
+			Course c12 = new Course("SA4110", "JPQL", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
 			crepo.save(c1);crepo.save(c2);crepo.save(c3);crepo.save(c4);crepo.save(c5);
-			
+			crepo.save(c6);crepo.save(c7);crepo.save(c8);crepo.save(c9);crepo.save(c10);
+			crepo.save(c11);crepo.save(c12);
 			
 			
 			l1  = lrepo.findById(1).get();	
@@ -121,6 +129,14 @@ public class CapsProjApplication {
 			StudentCourse sc4 = new StudentCourse(s1, c5, 3.6);
 			StudentCourse sc5 = new StudentCourse(s2, c4,null);
 			StudentCourse sc6 = new StudentCourse(s3, c4,null);
+			StudentCourse sc7 = new StudentCourse(s1, c6,null);
+			StudentCourse sc8 = new StudentCourse(s1, c7,null);
+			StudentCourse sc9 = new StudentCourse(s1, c8,null);
+			StudentCourse sc10 = new StudentCourse(s1, c9,null);
+			StudentCourse sc11 = new StudentCourse(s1, c10,null);
+			StudentCourse sc12 = new StudentCourse(s1, c11,null);
+			StudentCourse sc13 = new StudentCourse(s1, c12,null);
+			
 			screpo.save(sc1);
 			screpo.save(sc2);
 			screpo.save(sc3);
@@ -128,7 +144,13 @@ public class CapsProjApplication {
 			screpo.save(sc5);
 			screpo.save(sc6);
 			
-			
+			screpo.save(sc7);
+			screpo.save(sc8);
+			screpo.save(sc9);
+			screpo.save(sc10);
+			screpo.save(sc11);
+			screpo.save(sc12);
+			screpo.save(sc13);
 //			
 //			Grade B = Grade.B;
 //			
