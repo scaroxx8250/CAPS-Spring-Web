@@ -2,12 +2,11 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>template</title>
+	<title>Manage Students</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
-
 <body>
   <div class = "container">
     <div id="top_grid1">Top Grid Cell 1</div>
@@ -37,10 +36,11 @@
 				<td th:text=${student.lastName}>lastName</td>
 				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
 				<td>
-					<input type="button" value="Edit"
-						onclick="window.location.href='/test/test'; return false"
-						class="button" />
-					    <a th:href="@{/admin/deletestudent/{id}(id=${student.matricNo})}"> 
+						<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}"> 
+        					<button type="button">Edit</button> 
+   						</a>
+		
+					    <a th:href="@{/admin/deletestudent/{Id}(Id=${student.matricNo})}"> 
         					<button type="button">Delete</button> 
    						</a>
 				</td>

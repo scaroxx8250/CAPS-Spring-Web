@@ -23,6 +23,11 @@ public class LecturerServiceImpl implements LecturerInterface {
 	public void addLecturer(Lecturer lecturer) {
 		lrepo.save(lecturer);
 	}
+	
+	public Lecturer findLecturerById(int lecturerId)
+	{
+		return lrepo.findByLecturerId(lecturerId);
+	}
 
 	
 	public void updateLecturer(Lecturer lecturer) {
