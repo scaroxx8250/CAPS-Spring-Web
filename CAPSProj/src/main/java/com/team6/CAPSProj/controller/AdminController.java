@@ -91,38 +91,38 @@ public class AdminController {
 	
 	
 	
-//	@RequestMapping(value = "/lecturerlist")
-//	public String listLecturer(Model model) {
-//		model.addAttribute("lecturer", lservice.GetAllLecturers());
-//		return "lecturer";
-//	}
-//	
-//	@RequestMapping(value = "/addlecturer")
-//	public String addLecturer(Model model) {
-//		model.addAttribute("lecturer", new Lecturer());
-//		return "lecturer-form";
-//	}
-//
-//	@RequestMapping(value = "/save")
-//	public String saveLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
-//			BindingResult bindingResult,  Model model) {
-//		if (bindingResult.hasErrors()) {
-//			return "lecturer-form";
-//		}
-//		lservice.addLecturer(lecturer);
-//		return "forward:/admin/lecturerlist";
-//	}
-//	
-//	@RequestMapping(value = "/editstudent/{lecturerId}")
-//	public String editLecturer(Model model, @PathVariable("lecturerId") int lecturerId) {
-//		model.addAttribute("student", lservice.findLecturerById(lecturerId));
-//		return "editstudentform";
-//	}
-//	
-//	@RequestMapping(value = "/deletelecturer/{lecturerId}")
-//	public String deleteLecturer(@PathVariable("lecturerId") Integer lecturerId) {
-//		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
-//		return "forward:/facility/list";
-//	}
+	@RequestMapping(value = "/lecturerlist")
+	public String listLecturer(Model model) {
+		model.addAttribute("lecturers", lservice.GetAllLecturers());
+		return "lecturer";
+	}
+	
+	@RequestMapping(value = "/addlecturer")
+	public String addLecturer(Model model) {
+		model.addAttribute("lecturer", new Lecturer());
+		return "lecturer-form";
+	}
+
+	@RequestMapping(value = "/saveLecturer")
+	public String saveLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "lecturer-form";
+		}
+		lservice.addLecturer(lecturer);
+		return "forward:/admin/lecturerlist";
+	}
+	
+	@RequestMapping(value = "/editLecturer/{lecturerId}")
+	public String editLecturer(Model model, @PathVariable("lecturerId") int lecturerId) {
+		model.addAttribute("student", lservice.findLecturerById(lecturerId));
+		return "editlecturerform";
+	}
+	
+	@RequestMapping(value = "/deletelecturer/{lecturerId}")
+	public String deleteLecturer(@PathVariable("lecturerId") Integer lecturerId) {
+		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
+		return "forward:/facility/list";
+	}
 	
 }

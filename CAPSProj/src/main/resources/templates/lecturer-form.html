@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Student Form</title>
+<title>Lecturer Form</title>
 </head>
 <body>
 
-	<h1>Student Form</h1>
-	<form action="#" th:object="${student}" th:action="@{/admin/save}"
+	<h1>Lecturer Form</h1>
+	<form action="#" th:object="${lecturer}" th:action="@{/admin/saveLecturer}"
 		method="post">
 		<fieldset>
 			First Name <input type="text" th:field="*{firstName}">
@@ -18,12 +18,12 @@
 			<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 		</fieldset>
 		<fieldset>
-			Personal Email <input type="text" th:field="*{personEmail}">
-			<p th:if="${#fields.hasErrors('personEmail')}" th:errors="*{personEmail}"></p>
+			Personal Email <input type="text" th:field="*{personalEmail}">
+			<p th:if="${#fields.hasErrors('personalEmail')}" th:errors="*{personalEmail}"></p>
 		</fieldset>
 		<fieldset>
-			Matriculation Date: <input type="text" th:field="*{matrDate}" placeholder="dd-MM-yyyy">
-			<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
+			Faculty <input type="text" th:field="*{faculty}">
+			<p th:if="${#fields.hasErrors('faculty')}" th:errors="*{faculty}"></p>
 		</fieldset>
 		<fieldset>
 			<input type="submit" value="Save"/>
