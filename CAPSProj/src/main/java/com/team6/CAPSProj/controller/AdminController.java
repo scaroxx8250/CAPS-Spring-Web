@@ -133,7 +133,7 @@ public class AdminController {
 	}
 	
 	
-	@RequestMapping(value = "/enrollmentlist", method = RequestMethod.GET)
+	@RequestMapping(value = "/enrollmentlist")
 	public String listEnrollment(Model model, @Valid Course course)
 	{
 		List<Course> courselist = cservice.getAllCourses();
@@ -143,6 +143,21 @@ public class AdminController {
 		model.addAttribute("student_course", sclist);
 		return "managementEnrolment";
 	}
+	
+	@RequestMapping(value = "/addenrollment/{coursename}")
+	public String addEnrollment(Model model, @PathVariable("coursename") String coursename) {
+		
+		Course course = cservice.findCourseByCourseName(coursename);
+		
+		//List<StudentCourse> stlist = st_cs_service.findAllStudentsByCourse(coursename);
+		
+		
+		model.addAttribute("course", course);
+		return "admin_enrollment_add";
+	}
+
+	
+	
 
 	
 	@RequestMapping(value = "/courselist")
