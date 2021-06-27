@@ -1,19 +1,33 @@
 package com.team6.CAPSProj.model;
 
 import java.util.ArrayList;
-import java.util.Map;
+
 
 public class CourseGrades {
 
-	private ArrayList<StudentCourse> GradeList;
+	private ArrayList<StudentCourse> studentCourse;
+	
 
-	public ArrayList<StudentCourse> getGradeList() {
-		return GradeList;
+	public CourseGrades(ArrayList<StudentCourse> studentCourse) {
+		super();
+		this.studentCourse = studentCourse;
 	}
 
-	public void setGradeList(ArrayList<StudentCourse> gradeList) {
-		GradeList = gradeList;
+
+	public ArrayList<StudentCourse> getStudentCourse() {
+		return studentCourse;
 	}
+
+
+	public void setStudentCourse(ArrayList<StudentCourse> studentCourse) {
+		this.studentCourse = studentCourse;
+	}
+
+
+	
+	
+
+	
 
 
 	

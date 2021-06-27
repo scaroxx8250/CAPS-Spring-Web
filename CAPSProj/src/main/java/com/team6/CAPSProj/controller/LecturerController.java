@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team6.CAPSProj.model.Course;
@@ -123,10 +124,10 @@ public class LecturerController {
 			String courseName = courselist.iterator().next().getCourseName();
 			ArrayList<StudentCourse> studentGrade = (ArrayList<StudentCourse>) scinterface.findAllStudentsByCourse(courseName);
 			
-			CourseGrades cg = new CourseGrades();
-			cg.setGradeList(studentGrade);
+			CourseGrades cg = new CourseGrades(new ArrayList<StudentCourse>());
 			
-			model.addAttribute("wrapper", cg);
+			model.addAttribute("selectedGrade", cg);
+			model.addAttribute("studentGrade",studentGrade);
 			
 			
 		}
@@ -161,15 +162,17 @@ public class LecturerController {
 	}
 	
 	@RequestMapping(value="/GradeCourse/save")
-	public String saveGrade(@ModelAttribute("studentGrade") @Valid StudentCourse scourse, BindingResult bindingResult, Model model) {
+	public String saveGrade(@ModelAttribute("studentGrade") @Valid CourseGrades courseGrade, BindingResult bindingResult, Model model) {
 		
 		if(bindingResult.hasErrors()) {
 			return "gradeCourse"; 
 		}
 		
-		System.out.println(scourse);
+		if(courseGrade.getStudentCourse() !=null) {
+			scinterface.updateStudentGrade(courseGrade.getStudentCourse());
+		}
 		
-		return "forward:/lecturer/gradeCourse";
+		return "success";
 		
 	}
 	

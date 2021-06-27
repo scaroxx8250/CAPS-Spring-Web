@@ -59,8 +59,8 @@ th, td {
 	<br>
 	
 	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
-	<p th:text="'Total Records: ' + ${wrapper.GradeList.size()}">Total Records</p>
-	<form action="#" th:object="${wrapper}" th:action="@{/lecturer/GradeCourse/save}" method="post">
+	<p th:text="'Total Records: ' + ${studentGrade.size()}">Total Records</p>
+	<form action="#" th:object="${studentGrade}" th:action="@{/lecturer/GradeCourse/save}" method="post">
 	<table id="students">
 	<tr>
 			<!-- <th>Student ID</th> -->
@@ -69,11 +69,14 @@ th, td {
 			<th>Last Name</th>
 			<th>Grade</th>
 	</tr>
-	<tr th:each="sc : ${GradeList}" class="table-row">		
-			<td><input type="text" th:field = "${sc.student}" th:value="${sc.grade}"/>Student ID</td>
-<!-- 		<td><input type="text" th:field="${sc.getStudent().getFirstName()}"/>First Name</td> -->
-<!-- 		<td><input type="text" th:field="${sc.getStudent().getLastName()}"/>Last Name</td> -->
-<!-- 		<td><input type="text" th:field="${sc.getGrade()}"/>Grade</td> -->
+	<tr th:each="sc, stat: ${studentGrade}" class="table-row">	
+			<td><fieldset><input type="hidden" th:id="${'studentCourse'+__${stat.index}__+'.student.studentId'}" th:name="${'studentCourse['+__${stat.index}__+'].student.studentId'}" th:value="${sc.student.studentId}"/>
+			<input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.matricNo'}" th:name="${'studentCourse['+__${stat.index}__+'].student.matricNo'}" th:value="${sc.student.matricNo}" readonly/></fieldset></td>
+			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.firstName'}" th:name="${'studentCourse['+__${stat.index}__+'].student.firstName'}" th:value="${sc.student.firstName}" readonly/></fieldset></td>
+			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.lastName'}" th:name="${'studentCourse['+__${stat.index}__+'].student.lastName'}"th:value="${sc.student.lastName}" readonly/></fieldset></td>
+			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.grade'}" th:name="${'studentCourse['+__${stat.index}__+'].grade'}" th:value="${sc.grade}"/> 
+			<input type="hidden" th:id="${'studentCourse'+__${stat.index}__+'.course.courseId'}" th:name="${'studentCourse['+__${stat.index}__+'].course.courseId'}" th:value="${sc.course.courseId}"/></fieldset></td>
+
 <!-- 			<td th:text=${student.key.studentId}>Student ID</td> -->
 <!-- 			<td th:text=${student.key.firstName}>First Name</td> -->
 <!-- 			<td th:text=${student.key.lastName}>Last Name</td> -->
@@ -81,7 +84,7 @@ th, td {
 	
 	</tr>
 	</table>
-	
+	<input type="submit"value ="Save"/>
 	</form>
 	
 

@@ -136,7 +136,7 @@ public class CapsProjApplication {
 			cservice.updateCourse(c4);
 			
 			StudentCourse sc1 = new StudentCourse(s1, c1, 4.7);
-			StudentCourse sc2 = new StudentCourse(s1, c2, null);
+			StudentCourse sc2 = new StudentCourse(s1, c2, 3.8);
 			StudentCourse sc3 = new StudentCourse(s1, c3, 3.1);
 			StudentCourse sc4 = new StudentCourse(s1, c5, 3.6);
 			StudentCourse sc5 = new StudentCourse(s2, c4,null);
@@ -148,6 +148,9 @@ public class CapsProjApplication {
 			StudentCourse sc11 = new StudentCourse(s1, c10,null);
 			StudentCourse sc12 = new StudentCourse(s1, c11,null);
 			StudentCourse sc13 = new StudentCourse(s1, c12,null);
+			
+			
+			StudentCourse sc14 = new StudentCourse(s2, c2,null);
 			
 			// Whenever you add a studentCourse, do not add directly using screpo.save()
 			// Add through addStudentToCourse()
@@ -168,7 +171,7 @@ public class CapsProjApplication {
 			scservice.addStudentToCourse(c12, s1);
 			
 //			screpo.save(sc1);
-			screpo.save(sc2);
+			screpo.save(sc2);screpo.save(sc14);
 //			screpo.save(sc3);
 //			screpo.save(sc4);
 //			screpo.save(sc5);
