@@ -3,7 +3,6 @@ package com.team6.CAPSProj.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,24 +10,21 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.attoparser.dom.StructureTextsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.team6.CAPSProj.model.Course;
-import com.team6.CAPSProj.model.Lecturer;
-import com.team6.CAPSProj.model.LetterGrade;
+import com.team6.CAPSProj.model.CourseGrades;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.service.CourseInterface;
 import com.team6.CAPSProj.service.LecturerInterface;
-import com.team6.CAPSProj.service.LecturerServiceImpl;
 import com.team6.CAPSProj.service.StudentCourseInterface;
 import com.team6.CAPSProj.service.StudentInterface;
 
@@ -118,46 +114,65 @@ public class LecturerController {
 		return "performance"; 
 	}
 	
+	
 	@RequestMapping(value="/GradeCourse")
 	public String listGrades (Model model) {
 		List<Course> courselist = cinterface.findCoursesByLecturerId(2); 
 		model.addAttribute("courses", courselist);
-		String coursename = null;
-		for (Course c: courselist)
-		{
-			if (c.getCourseName().equals("SCI101")) {
-				coursename = "SCI101";
-				List<StudentCourse> studentcourse = scinterface.findAllStudentsByCourse(coursename);
-				List<Student> students = new ArrayList<Student>(); 
-				Map<Student, Double> studentGrade = new HashMap<>();
-				for (StudentCourse sc : studentcourse) {
-					students.add(sc.getStudent());
-				}
-				model.addAttribute("students", students);
-				
-				for (Student s: students) {
-					double grade = scinterface.findGradeByStudentAndCourse(s, c);
-					studentGrade.put(s, grade);
-				}			
-				
-				model.addAttribute("studentgrade", studentGrade);
-			}
+		
+		if(courselist.iterator().hasNext()) {
+			String courseName = courselist.iterator().next().getCourseName();
+			ArrayList<StudentCourse> studentGrade = (ArrayList<StudentCourse>) scinterface.findAllStudentsByCourse(courseName);
+			
+			CourseGrades cg = new CourseGrades(new ArrayList<StudentCourse>());
+			
+			model.addAttribute("selectedGrade", cg);
+			model.addAttribute("studentGrade",studentGrade);
+			
 			
 		}
+		
+		
+		
+		
+		
+//		for (Course c: courselist)
+//		{
+//			if (c.getCourseName().equals("SCI101")) {
+//				coursename = "SCI101";
+//				List<StudentCourse> studentcourse = scinterface.findAllStudentsByCourse(coursename);
+//				List<Student> students = new ArrayList<Student>(); 
+//				Map<Student, Double> studentGrade = new HashMap<>();
+//				for (StudentCourse sc : studentcourse) {
+//					students.add(sc.getStudent());
+//				}
+//				model.addAttribute("students", students);
+//				
+//				for (Student s: students) {
+//					double grade = scinterface.findGradeByStudentAndCourse(s, c);
+//					studentGrade.put(s, grade);
+//				}			
+//				
+//				model.addAttribute("studentgrade", studentGrade);
+//			}
+//			
+//		}
 
 		return "gradeCourse"; 
 	}
 	
 	@RequestMapping(value="/GradeCourse/save")
-	public String saveGrade(@ModelAttribute("scourse") @Valid StudentCourse scourse, BindingResult bindingResult, Model model) {
+	public String saveGrade(@ModelAttribute("studentGrade") @Valid CourseGrades courseGrade, BindingResult bindingResult, Model model) {
 		
 		if(bindingResult.hasErrors()) {
 			return "gradeCourse"; 
 		}
 		
-		System.out.println(scourse);
+		if(courseGrade.getStudentCourse() !=null) {
+			scinterface.updateStudentGrade(courseGrade.getStudentCourse());
+		}
 		
-		return "forward:/lecturer/gradeCourse";
+		return "success";
 		
 	}
 	
