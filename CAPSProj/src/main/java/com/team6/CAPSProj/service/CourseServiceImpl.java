@@ -112,10 +112,10 @@ public class CourseServiceImpl implements CourseInterface {
 		return crepo.findAllNotEnrolledCoursesByStudentByPage(studentId, pageable);
 	}
 	
-//	public List<Course>getAllCourses()
-//	{
-//		return crepo.findAll();
-//	}
+	public List<Course>getAllCourses()
+	{
+		return crepo.findAll();
+	}
 	
 }
 
