@@ -1,9 +1,18 @@
 package com.team6.CAPSProj.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class User {
 
+	@NotEmpty
 	private String emailAdd;
+	
+	@NotEmpty
 	private String password;
+	
 	private Role role;
 	
 	public User(String emailAdd, String password, Role role) {

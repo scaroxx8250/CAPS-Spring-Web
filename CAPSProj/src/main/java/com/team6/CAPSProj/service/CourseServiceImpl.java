@@ -5,15 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.team6.CAPSProj.model.Course;
+import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.repo.CourseRepository;
+import com.team6.CAPSProj.repo.StudentRepository;
 @Service
 public class CourseServiceImpl implements CourseInterface {
 
 	@Autowired
 	CourseRepository crepo;
+	
+	@Autowired
+	StudentRepository srepo;
 	
 	
 	public List<Course>findAllCourses(List<Integer> CourseId)
@@ -67,6 +75,7 @@ public class CourseServiceImpl implements CourseInterface {
 			courseFromDB.setLecturer(course.getLecturer());
 			courseFromDB.setSize(course.getSize());
 			courseFromDB.setStudentCourses(course.getStudentCourses());
+			courseFromDB.setCourseOccupancy(course.getCourseOccupancy());
 			crepo.save(courseFromDB);
 		}
 
@@ -95,8 +104,18 @@ public class CourseServiceImpl implements CourseInterface {
 		
 		return crepo.findCourseByYearAndLecturer(year, lecturerId);
 	}
+
+
+	@Override
+	public Page<Course> findAllPaginatedNotEnrolledCoursesByStudent(int pageNo, int pageSize, Integer studentId) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return crepo.findAllNotEnrolledCoursesByStudentByPage(studentId, pageable);
+	}
 	
-	
+	public List<Course>getAllCourses()
+	{
+		return crepo.findAll();
+	}
 	
 }
 

@@ -1,8 +1,12 @@
+
 package com.team6.CAPSProj.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.team6.CAPSProj.model.Course;
+import com.team6.CAPSProj.model.StudentCourse;
 
 public interface CourseInterface {
 	
@@ -15,4 +19,7 @@ public interface CourseInterface {
 	public List<Course>findCoursesByLecturerId(int lecturerId);
 	public List<Course>findAllCourseByYear(int year);
 	public List<Course>findAllCourseByYearAndLecturerId(int year, int lecturerId);
+	public List<Course>getAllCourses();
+	Page<Course> findAllPaginatedNotEnrolledCoursesByStudent(int pageNo, int pageSize, Integer studentId);
 }
+

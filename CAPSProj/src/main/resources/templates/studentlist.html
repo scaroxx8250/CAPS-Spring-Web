@@ -3,6 +3,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>View Courses</title>
+<!-- <link rel="stylesheet" 
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+	integrity="sha384-MCw98/SFnGE8fJT3GXwE0ngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+	crossorigin="anonymous"> -->
+
+
 </head>
 <body>
  
@@ -14,14 +20,27 @@
    <th>Credits</th>
    <th>Course Description</th>
  </tr>
- <tr th:each="course: ${Courses}">
-   <td th:text="${course.courseName}">Course NAME</td>
-   <td th:text="${course.lecturer.firstName} +' '+ ${course.lecturer.lastName}  ">Lecture Name</td>
-   <td th:text="${course.credits}">Credits</td>
-   <td th:text="${course.description}">Course Description</td>
-  
-   
+ <tr th:each="sc: ${listStudentCourses}">
+   <td th:text="${sc.getCourse().getCourseName()}">Course NAME</td>
+   <td th:text="${sc.getCourse().getLecturer().getFirstName()} +' '+ ${sc.getCourse().getLecturer().getLastName()}  ">Lecture Name</td>
+   <td th:text="${sc.getCourse().getCredits()}">Credits</td>
+   <td th:text="${sc.getCourse().getDescription()}">Course Description</td> 
  </tr>
 </table>
+
+<div th:if = "${totalPages > 1}">
+	<div>
+		<div>
+			Total Rows: [[${totalItems}]]
+		</div>	
+		<div>
+			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+				<a th:if="${currentPage != i}" th:href="@{'/student/list/' + ${i}}">[[${i}]]</a>
+				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+			</span>
+		</div>	
+	</div>
+</div>
+
 </body>
 </html>

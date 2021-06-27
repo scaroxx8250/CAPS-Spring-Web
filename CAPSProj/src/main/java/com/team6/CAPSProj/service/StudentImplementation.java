@@ -45,7 +45,10 @@ public class StudentImplementation implements StudentInterface {
 		return srepo.findByEmail(email);
 	}
 	
-
+	public Student findStudentByStudentId(Integer id) {
+		return srepo.findByStudentId(id);
+	}
+	
 	public List<Student> findStudentByMatric_FirstName(String input) {
 		//Substring the number part of the entered String
 		String s = input.substring(1,4);
@@ -64,6 +67,18 @@ public class StudentImplementation implements StudentInterface {
 		return studentlist;
 	}
 	
+	public String findFirstNameByStudentId(Integer id)
+	{
+		Student student = srepo.findByStudentId(id);
+		String firstName = student.getFirstName();
+		return firstName; 
+	}
+	public String findLastNameByStudentId(Integer id)
+	{
+		Student student = srepo.findByStudentId(id);
+		String lastName = student.getLastName(); 
+		return lastName; 
+	}
 	
 	public void addStudent(Student student) {
 			srepo.save(student);

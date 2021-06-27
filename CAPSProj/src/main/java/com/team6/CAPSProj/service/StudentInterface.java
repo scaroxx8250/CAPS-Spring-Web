@@ -15,4 +15,8 @@ public interface StudentInterface {
 	public void deleteStudent(Student student);
 	public Student findByEmailAndPassword(String email, String password);
 
+	public String findFirstNameByStudentId(Integer id);
+	public String findLastNameByStudentId(Integer id);
+	public Student findStudentByStudentId(Integer id);
+
 }
