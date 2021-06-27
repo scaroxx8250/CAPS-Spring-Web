@@ -27,10 +27,10 @@ th, td {
 }
 </style>
 <meta charset="ISO-8859-1">
-<title>View Course Enrolment</title>
+<title>Grade Course</title>
 </head>
-<body onload="myFunction()">
-	<h1>View Course Enrolment</h1>
+<body>
+	<h1>Grade Course</h1>
 	<div class="year-dropdown">
 	<form>
 		<label for="year">Year: </label>
@@ -61,36 +61,23 @@ th, td {
 	<br>
 	
 	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
-	<br>
-	<a href="" th:href="@{/lecturer/GradeCourse}"><button>Grade this course</button></a>
-	<br>
-	
+	<p th:text="'Total Records: ' + ${studentgrade.size()}">Total Records</p>
 	<table id="students">
 	<tr>
-   		<th>Student ID</th>
-   		<th>First Name</th>
-   		<th>Last Name</th>
-   		<th>Student Email</th>
-   		<th>Student Performance</th>
- 	</tr>
- 	<tr th:each="student: ${students}">
-   		<td th:text="${student.studentId}">Student Id</td>
-   		<td th:text="${student.firstName}">First Name</td>
-   		<td th:text="${student.lastName}">Last Name</td>
-   		<td th:text="${student.email}">Student Email</td>
-			<td>
-   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.studentId}"><button>Select</button></a>
-   			</td>
- 	</tr>
-</table>
-<script>
-var rows = document.getElementById("students").rows
-var count = 0;
-for (var i=0; i< rows.length; i++) {
-    if (rows[i].cells[0].tagName != 'th') 
-    	count++
-}
-console.log(count)
-</script>
+			<!-- <th>Student ID</th> -->
+			<th>Student ID</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Grade</th>
+	</tr>
+	<tr th:each="student : ${studentgrade}" class="table-row">
+			<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
+			<td th:text=${student.key.studentId}>Student ID</td>
+			<td th:text=${student.key.firstName}>First Name</td>
+			<td th:text=${student.key.lastName}>Last Name</td>
+			<td><input type="text"></td>
+	</tr>
+	</table>
+
 </body>
 </html>

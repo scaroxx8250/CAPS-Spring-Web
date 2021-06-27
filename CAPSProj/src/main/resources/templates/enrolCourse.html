@@ -7,16 +7,17 @@
 <body>
  
   <h1>Enroll for a Course</h1>
+  <h3 th:text="'Total Records: ' + ${notEnrolCourses.size()}">Total Records</h3>
 <form action="" th:object="${selectCourse}" th:action="@{/student/submitEnrol}" method="post">
 <table>
  <tr>
-   <th>Course NAME</th>
+   <th>Course Name</th>
    <th>Lecture Name</th>
    <th>Credits</th>
    <th>Course Description</th>
    <th>Enroll</th>
  </tr>
- <tr th:each="course: ${notEnrolCourses}">
+ <tr th:each="course: ${notEnrolledCourses}">
    <td th:text="${course.courseName}">Course NAME</td>
    <td th:text="${course.lecturer.firstName} +' '+ ${course.lecturer.lastName}  ">Lecture Name</td>
    <td th:text="${course.credits}">Credits</td>
@@ -25,7 +26,7 @@
  </tr>
 </table>
 <fieldset>
-<div th:if="${not #lists.isEmpty(notEnrolCourses)}">
+<div th:if="${not #lists.isEmpty(notEnrolledCourses)}">
 <input type="submit"value ="Save"/>
 &nbsp; &nbsp; 
 <input type="reset" value="Reset"/>
@@ -34,6 +35,20 @@
 </fieldset>
 
 </form>
+
+<div th:if = "${totalPages > 1}">
+	<div>
+		<div>
+			Total Rows: [[${totalItems}]]
+		</div>	
+		<div>
+			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+				<a th:if="${currentPage != i}" th:href="@{'/student/enrolCourse/' + ${i}}">[[${i}]]</a>
+				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+			</span>
+		</div>	
+	</div>
+</div>
 
 </body>
 </html>

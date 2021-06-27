@@ -2,6 +2,8 @@ package com.team6.CAPSProj.repo;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,5 +31,8 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, In
 	
 	@Query("SELECT sc FROM StudentCourse sc WHERE sc.course = :course AND sc.student = :student")
 		StudentCourse findStudentCourseByCourseAndStudent(@Param("course") Course course, @Param("student") Student student);
-	
+
+	@Query("SELECT sc FROM StudentCourse sc join sc.course c WHERE sc.student = :student and sc.grade is null and YEAR(c.courseStartDate) =:year")
+	Page<StudentCourse> findAllCoursesByStudentByPage(@Param("student") Student student, @Param("year") int year, Pageable pageable);
+
 }
