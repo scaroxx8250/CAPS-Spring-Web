@@ -10,11 +10,13 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -39,32 +41,56 @@ public class StudentController {
 	@Autowired
 	private CourseInterface cservice;
 
+	@GetMapping("/list")
+	public String ViewCourses(Model model, HttpSession session) {
+		
+		return ViewCourses(1, session, model);
+	}
 	
-	@GetMapping(value="/list")
-	public String ViewCourses(HttpSession session, Model model) {
+	
+	@GetMapping(value="/list/{pageNo}")
+	public String ViewCourses(@PathVariable(value = "pageNo") int pageNo, HttpSession session, Model model) {
+		
 		Student s = (Student) session.getAttribute("usession");
 		
 		// session not found
 		if(s == null) {
 			return "redirect:/home"; 
 		}
-		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
+//		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
+//		List<StudentCourse> scList2 = new ArrayList<StudentCourse>();
+//		// get the current course that student has enrolled
+//		List<Course> clist = new ArrayList<Course>();
+//		for(StudentCourse sc : scList) {
+//			if(sc.getGrade() == null && sc.getCourse().getCourseStartDate().getYear() == LocalDate.now().getYear()) {
+//				scList2.add(sc);
+//			}
+//		}
+//		// passing the data to view
+//		model.addAttribute("Courses",clist);
+//		model.addAttribute("scList2", scList2);
 		
-		// get the current course that student has enrolled
-		List<Course> clist = new ArrayList<Course>();
-		for(StudentCourse sc : scList) {
-			if(sc.getGrade() == null && sc.getCourse().getCourseStartDate().getYear() == LocalDate.now().getYear()) {
-				clist.add(sc.getCourse());
-			}
-			
-		}
-		// passing the data to view
-		model.addAttribute("Courses",clist);
-		
+		int pageSize = 5;
+		Page<StudentCourse> page = scservice.findAllPaginatedCoursesByStudent(pageNo, pageSize, s.getStudentId());
+		List<StudentCourse> listStudentCourses = page.getContent();
+		int totalPages = page.getTotalPages();
+		long totalItems = page.getTotalElements();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalItems", totalItems);
+		model.addAttribute("listStudentCourses", listStudentCourses);
 		return "studentlist";
+		
 	}
-	@RequestMapping(value="/enrolCourse")
-	public String EnrolCourses( Model model,HttpSession session) {
+	
+	@GetMapping("/enrolCourse")
+	public String EnrolCourses(Model model, HttpSession session) {
+		
+		return EnrolCourses(1, session, model);
+	}
+	
+	@RequestMapping(value="/enrolCourse/{pageNo}")
+	public String EnrolCourses(@PathVariable(value = "pageNo") int pageNo, HttpSession session, Model model) {
 		Student s = (Student) session.getAttribute("usession");
 		
 		// session not found
@@ -101,6 +127,17 @@ public class StudentController {
 		StudentSelectedCourses ssc = new StudentSelectedCourses(new ArrayList<Course>());
 		model.addAttribute("notEnrolCourses",availableCourses);
 		model.addAttribute("selectCourse", ssc);
+		
+		
+		int pageSize = 5;
+		Page<Course> page = cservice.findAllPaginatedNotEnrolledCoursesByStudent(pageNo, pageSize, s.getStudentId());
+		List<Course> notEnrolledCourses = page.getContent();
+		int totalPages = page.getTotalPages();
+		long totalItems = page.getTotalElements();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalItems", totalItems);
+		model.addAttribute("notEnrolledCourses", notEnrolledCourses);	
 		
 		return "enrolCourse";
 	}

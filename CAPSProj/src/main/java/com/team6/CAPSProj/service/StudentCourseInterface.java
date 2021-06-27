@@ -2,6 +2,8 @@ package com.team6.CAPSProj.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
@@ -17,5 +19,5 @@ public interface StudentCourseInterface {
 	public void removeStudentFromCourse(Course course, Student student);
 	public void updateStudentGrade(List<StudentCourse> studentCourse);
 	public int CountTotalStudentEnrol(Integer courseId );
-
+	Page<StudentCourse> findAllPaginatedCoursesByStudent(int pageNo, int pageSize, Integer studentId);
 }
