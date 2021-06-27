@@ -71,7 +71,7 @@ public class StudentController {
 		if(s == null) {
 			return "redirect:/home";
 		}
-		
+
 		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
 		List<Course> allCourses = cservice.findAllCourseforCurrentYear();
 		

@@ -61,6 +61,9 @@ th, td {
 	<br>
 	
 	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
+	<br>
+	<a href="" th:href="@{/lecturer/GradeCourse}"><button>Grade this course</button></a>
+	<br>
 	
 	<table id="students">
 	<tr>
@@ -75,9 +78,9 @@ th, td {
    		<td th:text="${student.firstName}">First Name</td>
    		<td th:text="${student.lastName}">Last Name</td>
    		<td th:text="${student.email}">Student Email</td>
-   		<td>
-   			<a href="">Click Here</a>
-   		</td>
+			<td>
+   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.studentId}"><button>Select</button></a>
+   			</td>
  	</tr>
 </table>
 <script>

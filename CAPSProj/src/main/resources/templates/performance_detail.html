@@ -55,6 +55,8 @@ th, td {
 	<br>
 	
 	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
+	<p th:text="'Student ID: ' + ${id}"></p>
+	<p th:text="'Student Name: ' + ${firstName} + ' ' + ${lastName}"></p>
 	<p th:text="'Total Records: ' + ${size}">Total Records</p>
 	<table id="courses">
 	<tr>
@@ -71,12 +73,27 @@ th, td {
 			<td th:text=${course.key.courseName}>Course Name</td>
 			<td th:text=${course.key.credits}>Credits</td>
 			<td th:text=${course.value}>Grade</td>
-			<!-- <td th:text=${course.key.courseStartDate>Course Start Date</td> -->
-			<td th:text="${#temporals.formatISO(course.key.courseStartDate)}"></td> 
-	
+			<td th:text="${#temporals.format(course.key.courseStartDate, 'dd-MM-yyyy')}">Course Start Date</td> 
 	</tr>
 	</table>
-	
+	<br>
+	<table id="grades" style="width:25%">
+	<tr>
+		<td th:text="'AY Credits:'"></td>
+		<td th:text=${ayCredits}>AY Credits</td>
+	</tr>
+	<tr>
+		<td th:text="'AY GPA:'"></td>
+		<td th:text=${ayGPA}>AY GPA</td>
+	</tr>
+	<tr>
+		<td th:text="'Cumulative Credits:'"></td>
+		<td th:text=${cuCredits}>Cumulative Credits</td>
+	</tr>
+		<td th:text="'Cumulative GPA:'"></td>
+		<td th:text=${cuGPA}>Cumulative GPA</td>
+	</tr>
+	</table>
 
 </body>
 </html>
