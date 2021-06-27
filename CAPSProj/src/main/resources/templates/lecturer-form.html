@@ -22,16 +22,20 @@
 			<p th:if="${#fields.hasErrors('personalEmail')}" th:errors="*{personalEmail}"></p>
 		</fieldset>
 		<fieldset>
-			Faculty <input type="text" th:field="*{faculty}">
-			<p th:if="${#fields.hasErrors('faculty')}" th:errors="*{faculty}"></p>
+			Faculty:
+			<select id="facultyDropdown" name="faculty" th:field = "*{faculty}">
+			<option th:value="BUSINESS" th:utext="BUSINESS"/>
+			<option th:value="COMPUTING" th:utext="COMPUTING"/>
+			<option th:value="ENGINEERING" th:utext="ENGINEERING"/>
+			<option th:value="LAW" th:utext="LAW"/>
+			<option th:value="MEDICINE" th:utext="MEDICINE"/>
+			</select>	
 		</fieldset>
 		<fieldset>
 			<input type="submit" value="Save"/>
 			<input type="reset" value="Cancel"/>
 		</fieldset>
 	</form>
-
 	<br />
-
 </body>
 </html>

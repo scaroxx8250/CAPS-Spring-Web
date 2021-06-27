@@ -27,8 +27,14 @@
 			<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 		</fieldset>
 		<fieldset>
-			Last Name: <input type="text" th:field="*{faculty}">
-			<p th:if="${#fields.hasErrors('faculty')}" th:errors="*{faculty}"></p>
+			Faculty:
+			<select id="facultyDropdown" name="faculty" th:field = "*{faculty}">
+			<option th:value="BUSINESS" th:utext="BUSINESS"/>
+			<option th:value="COMPUTING" th:utext="COMPUTING"/>
+			<option th:value="ENGINEERING" th:utext="ENGINEERING"/>
+			<option th:value="LAW" th:utext="LAW"/>
+			<option th:value="MEDICINE" th:utext="MEDICINE"/>
+			</select>	
 		</fieldset>
 		<fieldset>
 			Personal Email <input type="text" th:field="*{personalEmail}">

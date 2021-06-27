@@ -126,24 +126,22 @@ public class AdminController {
 		for(Course course: course_delete) {
 			course.setLecturer(null);
 			cservice.updateCourse(course);
-//			st_cs_service.DeleteCourse(course);
-//			cservice.deleteCourse(course);
 		}
 		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
 		return "forward:/admin/lecturerlist";
 	}
 	
 	
-//	@RequestMapping(value = "/enrollmentlist", method = RequestMethod.GET)
-//	public String listEnrollment(Model model, @Valid Course course)
-//	{
-//		List<Course> courselist = cservice.getAllCourses();
-//		model.addAttribute("courses", courselist);
-//		
-//		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course.getCourseName());
-//		model.addAttribute("student_course", sclist);
-//		return "managementEnrolment";
-//	}
+	@RequestMapping(value = "/enrollmentlist", method = RequestMethod.POST)
+	public String listEnrollment(Model model, @Valid Course course)
+	{
+		List<Course> courselist = cservice.getAllCourses();
+		model.addAttribute("courses", courselist);
+		
+		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course.getCourseName());
+		model.addAttribute("student_course", sclist);
+		return "managementEnrolment";
+	}
 
 
 

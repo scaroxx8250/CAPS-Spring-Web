@@ -20,10 +20,12 @@
 		  aria-label="Search" />
 		</div>
 		
-
+<from>
 	<select class="course-dropdown" id="courseNameDropdown" name="courseName">
 		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
-	</select>	
+	</select>
+	<input type>
+</from>	
 
 	
 	    <table th:if="${not #lists.isEmpty(lecturers)}" class="table">
