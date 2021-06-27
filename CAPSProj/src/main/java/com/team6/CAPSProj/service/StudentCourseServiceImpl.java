@@ -130,7 +130,7 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
   
   public void removeStudentCourse(StudentCourse studentcourse) {
 	screpo.delete(studentcourse);
-  }
+  	}
 
 	public Page<StudentCourse> findAllPaginatedCoursesByStudent(int pageNo, int pageSize, Integer studentId) {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);

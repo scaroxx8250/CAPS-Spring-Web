@@ -30,7 +30,7 @@ public class LecturerServiceImpl implements LecturerInterface {
 		///generate email
 		if(lecturer.getEmail() == null) {
 			String uuid = UUID.randomUUID().toString().substring(0, 5);
-			String email = uuid + "@gmail.com";
+			String email = uuid + "@nus.edu.sg";
 			lecturer.setEmail(email);
 			lrepo.save(lecturer);
 		}

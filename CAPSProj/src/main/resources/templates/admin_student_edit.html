@@ -13,7 +13,9 @@
 	    <div id="top_grid2">Top Grid Cell 2</div>
 	    <div id="top_grid3">Top Grid Cell 3</div>
 	    <div id="top_grid4">Top Grid Cell 4</div>
-	    <nav>Navbar 1</nav>
+	    <nav>
+	        <div th:replace="fragments/general.html :: menu"></div>
+	    </nav>
 	    <main>
 			<h3>Edit Student</h3>
 			<form action="" th:object="${student}" th:action="@{/admin/save}" method="get">
@@ -38,7 +40,7 @@
 					<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 				</fieldset>
 				<fieldset>
-					Matriculation Date: <input type="text" th:field="*{matrDate}" placeholder="dd-MM-yyyy">
+					Matriculation Date: <input type="text" th:field="*{matrDate}" placeholder="DD/MM/YYYY">
 					<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
 				</fieldset>
 				<fieldset>
