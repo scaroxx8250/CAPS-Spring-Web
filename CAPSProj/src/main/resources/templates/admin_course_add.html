@@ -12,7 +12,9 @@
     <div id="top_grid2">Top Grid Cell 2</div>
     <div id="top_grid3">Top Grid Cell 3</div>
     <div id="top_grid4">Top Grid Cell 4</div>
-    <nav>Navbar 1</nav>
+    <nav>
+        <div th:replace="fragments/general.html :: menu"></div>
+    </nav>
     <main>
 		<h3>Add Course</h3>
 		<form action="#" th:object="${course}" th:action="@{/admin/savecourse}"
