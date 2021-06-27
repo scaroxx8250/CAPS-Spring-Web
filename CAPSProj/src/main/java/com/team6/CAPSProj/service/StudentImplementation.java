@@ -98,7 +98,7 @@ public class StudentImplementation implements StudentInterface {
 			///generate email
 			if(student.getEmail() == null) {
 				String uuid = UUID.randomUUID().toString().substring(0, 5);
-				String email = uuid + "@gmail.com";
+				String email = uuid + "@u.nus.edu";
 				student.setEmail(email);
 				srepo.save(student);
 			}

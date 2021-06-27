@@ -43,20 +43,20 @@ public class AdminController {
 	@RequestMapping(value = "/studentlist")
 	public String listStudent(Model model) {
 		model.addAttribute("students", stservice.findAllStudents());
-		return "student_manage";
+		return "admin_student_manage";
 	}
 	
 	@RequestMapping(value = "/addstudent")
 	public String addStudent(Model model) {
 		model.addAttribute("student", new Student());
-		return "student_add";
+		return "admin_student_add";
 	}
 	
 	@RequestMapping(value = "/save")
 	public String saveStudent(@ModelAttribute("student") @Valid Student student, 
 			BindingResult bindingResult,  Model model) {
 		if (bindingResult.hasErrors()) {
-			return "student_add";
+			return "admin_student_add";
 		}
 		stservice.addStudent(student);
 		return "forward:/admin/studentlist";
@@ -65,7 +65,7 @@ public class AdminController {
 	@RequestMapping(value = "/editstudent/{matricNo}")
 	public String showEditForm(Model model, @PathVariable("matricNo") String matricNo) {
 		model.addAttribute("student", stservice.findStudentByMatricNo(matricNo));
-		return "student_edit";
+		return "admin_student_edit";
 	}
 	
 	@RequestMapping(value = "/deletestudent/{matricNo}")
@@ -95,20 +95,20 @@ public class AdminController {
 	@RequestMapping(value = "/lecturerlist")
 	public String listLecturer(Model model) {
 		model.addAttribute("lecturers", lservice.GetAllLecturers());
-		return "lecturer";
+		return "admin_lecturer_manage";
 	}
 	
 	@RequestMapping(value = "/addlecturer")
 	public String addLecturer(Model model) {
 		model.addAttribute("lecturer", new Lecturer());
-		return "lecturer-form";
+		return "admin_lecturer_add";
 	}
 
 	@RequestMapping(value = "/saveLecturer")
 	public String saveLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
 			BindingResult bindingResult,  Model model) {
 		if (bindingResult.hasErrors()) {
-			return "lecturer-form";
+			return "admin_lecturer_add";
 		}
 		lservice.addLecturer(lecturer);
 		return "forward:/admin/lecturerlist";
@@ -118,7 +118,7 @@ public class AdminController {
 	@RequestMapping(value = "/editLecturer/{lecturerId}")
 	public String editLecturer(Model model, @PathVariable("lecturerId") int lecturerId) {
 		model.addAttribute("lecturer", lservice.findLecturerById(lecturerId));
-		return "editlecturerform";
+		return "admin_lecturer_edit";
 	}
 	
 	@RequestMapping(value = "/deletelecturer/{lecturerId}")
@@ -133,7 +133,7 @@ public class AdminController {
 	}
 	
 	
-	@RequestMapping(value = "/enrollmentlist", method = RequestMethod.POST)
+	@RequestMapping(value = "/enrollmentlist", method = RequestMethod.GET)
 	public String listEnrollment(Model model, @Valid Course course)
 	{
 		List<Course> courselist = cservice.getAllCourses();
@@ -148,7 +148,7 @@ public class AdminController {
 	@RequestMapping(value = "/courselist")
 	public String listCourse(Model model) {
 		model.addAttribute("courses", cservice.findAllCourseforCurrentYear());
-		return "courses_manage";
+		return "admin_course_manage";
 	}
 	
 	
@@ -157,7 +157,7 @@ public class AdminController {
 		model.addAttribute("course", new Course());
 		List<Lecturer> lecturerList = lservice.GetAllLecturers();
 		model.addAttribute("lecturerList", lecturerList);
-		return "course_add";
+		return "admin_course_add";
 	}
 	
 	
@@ -178,7 +178,7 @@ public class AdminController {
 		model.addAttribute("course", cservice.findCourseByCourseName(coursename));
 		List<Lecturer> lecturerList = lservice.GetAllLecturers();
 		model.addAttribute("lecturerList", lecturerList);
-		return "course_edit";
+		return "admin_course_edit";
 	}
 	
 	@RequestMapping(value = "/deletecourse/{courseName}")
