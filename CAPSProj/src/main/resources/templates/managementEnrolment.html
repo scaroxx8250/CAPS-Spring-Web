@@ -27,6 +27,13 @@
 	<input type>
 </from>	
 
+<from>
+	<select class="course-dropdown" id="courseNameDropdown" name="courseName">
+		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
+	</select>
+	<input type>
+</from>	
+
 	
 	    <table th:if="${not #lists.isEmpty(lecturers)}" class="table">
 			<tr >
