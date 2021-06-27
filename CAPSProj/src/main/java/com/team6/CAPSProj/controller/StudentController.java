@@ -82,8 +82,15 @@ public class StudentController {
 		return "studentlist";
 		
 	}
-	@RequestMapping(value="/enrolCourse")
-	public String EnrolCourses( Model model,HttpSession session) {
+	
+	@GetMapping("/enrolCourse")
+	public String EnrolCourses(Model model, HttpSession session) {
+		
+		return EnrolCourses(1, session, model);
+	}
+	
+	@RequestMapping(value="/enrolCourse/{pageNo}")
+	public String EnrolCourses(@PathVariable(value = "pageNo") int pageNo, HttpSession session, Model model) {
 		Student s = (Student) session.getAttribute("usession");
 		
 		// session not found
@@ -120,6 +127,17 @@ public class StudentController {
 		StudentSelectedCourses ssc = new StudentSelectedCourses(new ArrayList<Course>());
 		model.addAttribute("notEnrolCourses",availableCourses);
 		model.addAttribute("selectCourse", ssc);
+		
+		
+		int pageSize = 5;
+		Page<Course> page = cservice.findAllPaginatedNotEnrolledCoursesByStudent(pageNo, pageSize, s.getStudentId());
+		List<Course> notEnrolledCourses = page.getContent();
+		int totalPages = page.getTotalPages();
+		long totalItems = page.getTotalElements();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalItems", totalItems);
+		model.addAttribute("notEnrolledCourses", notEnrolledCourses);	
 		
 		return "enrolCourse";
 	}

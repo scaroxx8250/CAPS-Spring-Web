@@ -2,12 +2,15 @@ package com.team6.CAPSProj.repo;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
 import com.team6.CAPSProj.model.Course;
+import com.team6.CAPSProj.model.Student;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
@@ -27,5 +30,11 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
 	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId and YEAR(c.courseStartDate) =:year ")
 	List<Course> findCourseByYearAndLecturer(@Param("year") int year,@Param("lecId") Integer lecId);
+	
+	@Query(value = "SELECT * FROM course "
+			+ "WHERE course.course_start_date > CURRENT_DATE "
+			+ "AND course.course_id NOT IN (SELECT course_id FROM student_course WHERE student_course.student_id = :studentId) "
+			+ "AND course.course_occupancy = 0", nativeQuery = true)
+	Page<Course> findAllNotEnrolledCoursesByStudentByPage(@Param("studentId") int studentId, Pageable pageable);
 	
 }

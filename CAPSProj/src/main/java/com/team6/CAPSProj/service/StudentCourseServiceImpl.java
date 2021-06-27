@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.team6.CAPSProj.model.Course;
+import com.team6.CAPSProj.model.CourseOccupancy;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.repo.CourseRepository;
@@ -29,6 +30,9 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 	
 	@Autowired
 	StudentRepository srepo; 
+	
+	@Autowired
+	CourseInterface cservice;
 	
 	public List<StudentCourse> findAllCoursesByStudent(Integer studentId) {
 		Student student = srepo.findByStudentId(studentId);
@@ -76,9 +80,25 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 
 	
 	public void addStudentToCourse(Course course, Student student) {
-		StudentCourse sc = new StudentCourse(course, student); 
-		screpo.save(sc); 
-
+		// Can only add student to a course if the course has not yet started
+		// i.e. courseStartDate is later than the current date
+		if (course.getCourseStartDate().isAfter(LocalDate.now()))
+		{
+			List<StudentCourse> studentsInCourse = screpo.findAllStudentsByCourse(course);
+			int noOfStudentsInCourse = studentsInCourse.size();
+			// If the students in the course is less than the course size limit, then can add the student to the course
+			if(noOfStudentsInCourse < course.getSize())
+			{
+				StudentCourse sc = new StudentCourse(course, student); 
+				screpo.save(sc); 
+				// After adding the student, if course has reached max capacity
+				if(noOfStudentsInCourse == course.getSize() - 1)
+				{
+					course.setCourseOccupancy(CourseOccupancy.FULL);
+					cservice.updateCourse(course);
+				}
+			}	
+		}
 	}
 
 	
@@ -116,5 +136,5 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		Student student = srepo.findByStudentId(studentId);
 		return screpo.findAllCoursesByStudentByPage(student, LocalDate.now().getYear(), pageable);
 	}
-
+	
 }
