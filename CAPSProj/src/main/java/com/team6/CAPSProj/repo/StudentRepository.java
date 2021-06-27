@@ -21,5 +21,6 @@ public interface StudentRepository extends JpaRepository<Student, Integer>, Pagi
 	List<Student> findByFirstName(String input);
 	
 	Student findByEmailAndPassword(String email, String password);
+	
 
 }

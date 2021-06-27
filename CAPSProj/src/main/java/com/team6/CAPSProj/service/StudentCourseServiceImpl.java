@@ -122,19 +122,16 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		}
 
 	}
-
 	
 	public int CountTotalStudentEnrol(Integer courseId) {
 		Course course = crepo.findByCourseId(courseId);
 		return screpo.countStudents(course);
 	}
 
-
-	@Override
 	public Page<StudentCourse> findAllPaginatedCoursesByStudent(int pageNo, int pageSize, Integer studentId) {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		Student student = srepo.findByStudentId(studentId);
 		return screpo.findAllCoursesByStudentByPage(student, LocalDate.now().getYear(), pageable);
 	}
-	
+
 }

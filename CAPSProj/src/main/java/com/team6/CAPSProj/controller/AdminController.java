@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.team6.CAPSProj.model.Course;
@@ -91,40 +92,60 @@ public class AdminController {
 	
 	
 	
-//	@RequestMapping(value = "/lecturerlist")
-//	public String listLecturer(Model model) {
-//		model.addAttribute("lecturer", lservice.GetAllLecturers());
-//		return "lecturer";
-//	}
-//	
-//	@RequestMapping(value = "/addlecturer")
-//	public String addLecturer(Model model) {
-//		model.addAttribute("lecturer", new Lecturer());
-//		return "lecturer-form";
-//	}
-//
-//	@RequestMapping(value = "/save")
-//	public String saveLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
-//			BindingResult bindingResult,  Model model) {
-//		if (bindingResult.hasErrors()) {
-//			return "lecturer-form";
-//		}
-//		lservice.addLecturer(lecturer);
-//		return "forward:/admin/lecturerlist";
-//	}
-//	
-//	@RequestMapping(value = "/editstudent/{lecturerId}")
-//	public String editLecturer(Model model, @PathVariable("lecturerId") int lecturerId) {
-//		model.addAttribute("student", lservice.findLecturerById(lecturerId));
-//		return "editstudentform";
-//	}
-//	
-//	@RequestMapping(value = "/deletelecturer/{lecturerId}")
-//	public String deleteLecturer(@PathVariable("lecturerId") Integer lecturerId) {
-//		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
-//		return "forward:/facility/list";
-//	}
+	@RequestMapping(value = "/lecturerlist")
+	public String listLecturer(Model model) {
+		model.addAttribute("lecturers", lservice.GetAllLecturers());
+		return "lecturer";
+	}
 	
+	@RequestMapping(value = "/addlecturer")
+	public String addLecturer(Model model) {
+		model.addAttribute("lecturer", new Lecturer());
+		return "lecturer-form";
+	}
+
+	@RequestMapping(value = "/saveLecturer")
+	public String saveLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "lecturer-form";
+		}
+		lservice.addLecturer(lecturer);
+		return "forward:/admin/lecturerlist";
+	}
+	
+
+	@RequestMapping(value = "/editLecturer/{lecturerId}")
+	public String editLecturer(Model model, @PathVariable("lecturerId") int lecturerId) {
+		model.addAttribute("lecturer", lservice.findLecturerById(lecturerId));
+		return "editlecturerform";
+	}
+	
+	@RequestMapping(value = "/deletelecturer/{lecturerId}")
+	public String deleteLecturer(@PathVariable("lecturerId") Integer lecturerId) {
+		List <Course> course_delete = cservice.findCoursesByLecturerId(lecturerId);
+		for(Course course: course_delete) {
+			course.setLecturer(null);
+			cservice.updateCourse(course);
+//			st_cs_service.DeleteCourse(course);
+//			cservice.deleteCourse(course);
+		}
+		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
+		return "forward:/admin/lecturerlist";
+	}
+	
+	
+//	@RequestMapping(value = "/enrollmentlist", method = RequestMethod.GET)
+//	public String listEnrollment(Model model, @Valid Course course)
+//	{
+//		List<Course> courselist = cservice.getAllCourses();
+//		model.addAttribute("courses", courselist);
+//		
+//		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course.getCourseName());
+//		model.addAttribute("student_course", sclist);
+//		return "managementEnrolment";
+//	}
+
 	
 	@RequestMapping(value = "/courselist")
 	public String listCourse(Model model) {
@@ -160,7 +181,5 @@ public class AdminController {
 		return "course_edit";
 		
 	}
-	
-	
-	
+
 }

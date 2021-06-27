@@ -34,4 +34,5 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, In
 
 	@Query("SELECT sc FROM StudentCourse sc join sc.course c WHERE sc.student = :student and sc.grade is null and YEAR(c.courseStartDate) =:year")
 	Page<StudentCourse> findAllCoursesByStudentByPage(@Param("student") Student student, @Param("year") int year, Pageable pageable);
+
 }
