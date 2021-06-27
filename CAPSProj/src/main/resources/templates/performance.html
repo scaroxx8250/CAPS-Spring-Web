@@ -78,7 +78,7 @@ th, td {
 			<td th:text=${student.key.lastName}>Last Name</td>
 			<td th:text=${student.value}>Grade</td>
 			<td>
-   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.key.studentId}">Select</a>
+   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.key.studentId}"><button>Select</button></a>
    			</td>
 	</tr>
 	</table>

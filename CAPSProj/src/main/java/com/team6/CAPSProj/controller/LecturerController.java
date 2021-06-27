@@ -1,14 +1,17 @@
 package com.team6.CAPSProj.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.attoparser.dom.StructureTextsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -161,21 +164,75 @@ public class LecturerController {
 	@RequestMapping(value="/StudentPerformance/detail/{id}")
 	public String listPerformanceDetails (@PathVariable("id")int id, Model model) {
 
-				List<StudentCourse> scourses = scinterface.findAllCoursesByStudent(id);
-				List<Course> courses = new ArrayList<Course>(); 
-				Map<Course, Double> studentGrade = new HashMap<>();
-				for (StudentCourse sc : scourses) {
-					courses.add(sc.getCourse());
-				}
-				model.addAttribute("courses", courses);
+		List<StudentCourse> scourses = scinterface.findAllCoursesByStudent(id);
 				
-				for (StudentCourse sc: scourses) {
-					studentGrade.put(sc.getCourse(), sc.getGrade());
-				}
+		String firstName = sinterface.findFirstNameByStudentId(id);
+		model.addAttribute("firstName", firstName); 
+		
+		String lastName = sinterface.findLastNameByStudentId(id); 
+		model.addAttribute("lastName", lastName); 
 				
-				model.addAttribute("studentGrade", studentGrade);
-				int size = studentGrade.size();
-				model.addAttribute("size", size); 
+		Student student = sinterface.findStudentByStudentId(id);
+		model.addAttribute("student", student);
+				
+		List<Course> courses = new ArrayList<Course>(); 
+		Map<Course, Double> studentGrade = new HashMap<>();
+		
+		for (StudentCourse sc : scourses) {
+			courses.add(sc.getCourse());
+		}
+		model.addAttribute("courses", courses);
+				
+		for (StudentCourse sc: scourses) {
+			studentGrade.put(sc.getCourse(), sc.getGrade());
+		}
+				
+		model.addAttribute("studentGrade", studentGrade);
+		int size = studentGrade.size();
+		model.addAttribute("size", size); 
+				
+		int ayCredits=0, cuCredits=0; 
+		double ayGPA=0, cuGPA=0;
+		List<StudentCourse>AyGradedCourses = scinterface.findAllGradeByYearAndStudent(courses, student, LocalDate.now().getYear());
+		List<StudentCourse>AllTimeGradedCourses = scinterface.findAllGradeByStudent(courses, student);
+		
+		// calculate the current year graded courses' credits and GPA score
+		for (StudentCourse sc: AyGradedCourses) {
+			ayCredits += sc.getCourse().getCredits();
+			ayGPA += sc.getGrade() * sc.getCourse().getCredits();
+		}
+		ayGPA = ayGPA/ayCredits;
+		
+		 // calculate all year graded course' credits and all year GPA score
+		List<String> acadYears = new ArrayList<String>();
+		for (StudentCourse sc: AllTimeGradedCourses) {
+		cuCredits += sc.getCourse().getCredits();
+		cuGPA += sc.getGrade() * sc.getCourse().getCredits();
+		
+		// retrieve year that student completed the course and store in acadYears list
+		String courseYear = String.valueOf(sc.getCourse().getCourseStartDate().getYear());
+		if(!acadYears.contains(courseYear)){
+			acadYears.add(String.valueOf(sc.getCourse().getCourseStartDate().getYear()));
+			}
+		}
+		cuGPA = cuGPA/cuCredits;
+		
+		// sort the acadYears in descending order
+		acadYears = acadYears.stream().sorted((p1,p2) -> {
+			if(Integer.valueOf(p1) > Integer.valueOf(p2))
+				return -1;
+			else if (Integer.valueOf(p1)< Integer.valueOf(p2))
+				return 1;
+			else
+				return 0;
+		}).collect(Collectors.toList());
+		
+		model.addAttribute("gradedCourse", AyGradedCourses);
+		model.addAttribute("ayCredits", ayCredits);
+		model.addAttribute("ayGPA", ayGPA);
+		model.addAttribute("cuCredits", cuCredits);
+		model.addAttribute("cuGPA", cuGPA);
+		model.addAttribute("ay",acadYears);
 		
 		return "performance_detail";
 	}
