@@ -19,5 +19,7 @@ public interface StudentCourseInterface {
 	public void removeStudentFromCourse(Course course, Student student);
 	public void updateStudentGrade(List<StudentCourse> studentCourse);
 	public int CountTotalStudentEnrol(Integer courseId );
+
+	public void removeStudentCourse(StudentCourse studentcourse);
 	Page<StudentCourse> findAllPaginatedCoursesByStudent(int pageNo, int pageSize, Integer studentId);
 }

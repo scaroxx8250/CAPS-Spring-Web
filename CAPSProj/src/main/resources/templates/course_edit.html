@@ -24,34 +24,36 @@
 					Course Name: <input type="text" th:field="*{courseName}">
 					<p th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}"></p>
 				</fieldset>
-				<fieldset>
-					Faculty: <input type="text" th:field="*{faculty}">
-					<p th:if="${#fields.hasErrors('faculty')}" th:errors="*{faculty}"></p>
-				</fieldset>
+				<fieldset>Faculty: 
+					<select id="facultyDropdown" name="faculty" th:field = "*{faculty}">
+					<option th:value="BUSINESS" th:utext="BUSINESS"/>
+					<option th:value="COMPUTING" th:utext="COMPUTING"/>
+					<option th:value="ENGINEERING" th:utext="ENGINEERING"/>
+					<option th:value="LAW" th:utext="LAW"/>
+					<option th:value="MEDICINE" th:utext="MEDICINE"/>
+					</select>
+				</fieldset>	
 				<fieldset>
 					Credits: <input type="text" th:field="*{credits}" placeholder="dd-MM-yyyy">
 					<p th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></p>
 				</fieldset>
 				<fieldset>
-					Description: <input type="text" th:field="*{description}">
-					<p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-				</fieldset>
-				<fieldset>
-					Size<input type="text" th:field="*{size}">
+					Size: <input type="text" th:field="*{size}">
 					<p th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></p>
 				</fieldset>
+				<fieldset>Lecturer: 
+					<select id="lecturerNameDropdown" name="lecturerName" th:field = "*{lecturer}">
+					<option th:each="lecturer:${lecturerList}" th:value="${lecturer.lecturerId}" th:utext="${lecturer.getFirstName + ' ' + lecturer.getLastName()}"/>
+					</select>
+				</fieldset>					
 				<fieldset>
-					Course Start Date: <input type="text" th:field="*{courseStartDate}" placeholder="dd-MM-yyyy">
+					Course Start Date: <input type="text" th:field="*{courseStartDate}" placeholder="DD/MM/YYYY">
 					<p th:if="${#fields.hasErrors('courseStartDate')}" th:errors="*{courseStartDate}"></p>
 				</fieldset>
-<!-- 				<fieldset> -->
-<!-- 					Lecturer First Name: <input type="text" th:field="*{Lecturer.firstName}"> -->
-<!-- 					<p th:if="${#fields.hasErrors('Lecturer.firstName')}" th:errors="*{Lecturer.firstName}"></p> -->
-<!-- 				</fieldset> -->
-<!-- 				<fieldset> -->
-<!-- 					Lecturer Last Name: <input type="text" th:field="*{Lecturer.lastName}"> -->
-<!-- 					<p th:if="${#fields.hasErrors('Lecturer.lastName')}" th:errors="*{Lecturer.lastName}"></p> -->
-<!-- 				</fieldset> -->
+				<fieldset>
+					Description: <input type="text" th:field="*{description}" size="150">
+					<p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+				</fieldset>
 				<fieldset>
 					<input type="submit" value="Save"/>	
 					<input type="reset" value="Reset"/>

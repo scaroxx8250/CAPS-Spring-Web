@@ -176,8 +176,22 @@ public class AdminController {
 	public String showCourseEditForm(Model model, @PathVariable("coursename") String coursename) {
 		
 		model.addAttribute("course", cservice.findCourseByCourseName(coursename));
+		List<Lecturer> lecturerList = lservice.GetAllLecturers();
+		model.addAttribute("lecturerList", lecturerList);
 		return "course_edit";
-		
 	}
-
+	
+	@RequestMapping(value = "/deletecourse/{courseName}")
+	public String deleteCourse(@PathVariable("courseName") String courseName) {
+	
+		List<StudentCourse> studentcourses = st_cs_service.findAllStudentsByCourse(cservice.findCourseByCourseName(courseName).getCourseName());
+		
+		for(StudentCourse stucourse : studentcourses) {
+			st_cs_service.removeStudentCourse(stucourse);
+		}
+		
+		cservice.deleteCourse(cservice.findCourseByCourseName(courseName));
+		return "forward:/admin/courselist";
+	}
+	
 }

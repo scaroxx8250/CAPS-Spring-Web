@@ -13,7 +13,21 @@
     <div id="top_grid2">Top Grid Cell 2</div>
     <div id="top_grid3">Top Grid Cell 3</div>
     <div id="top_grid4">Top Grid Cell 4</div>
-    <nav>Navbar 1</nav>
+    <nav>Navbar 1
+    	<div>
+			<table>
+				<tr>
+					<td><input type="button" value="Manage Students"
+						onclick="window.location.href='/admin/studentlist'; return false"
+						class="button" /> <input type="button" value="Manage Lecturers"
+						onclick="window.location.href='/admin/lecturerlist'; return false"
+						class="button" /> <input type="button" value="Manage Courses"
+						onclick="window.location.href='/admin/courselist'; return false"
+						class="button" /></td>
+				</tr>
+			</table>
+		</div>
+    </nav>
     <main>
 		<div class="form-outline">
 		  <input type="search" id="form1" class="form-control" placeholder="Type query"
@@ -46,7 +60,7 @@
         					<button type="button">Edit</button> 
    						</a>
 		
-					    <a th:href="@{/admin/test/{Id}(Id=${course.courseId})}"> 
+					    <a th:href="@{/admin/deletecourse/{Id}(Id=${course.courseName})}"> 
         					<button type="button">Delete</button> 
    						</a>
 				</td>
