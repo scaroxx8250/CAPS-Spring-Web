@@ -11,16 +11,17 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.CourseGrades;
+import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.service.CourseInterface;
@@ -113,16 +114,39 @@ public class LecturerController {
 
 		return "performance"; 
 	}
-	
-	
 	@RequestMapping(value="/GradeCourse")
-	public String listGrades (Model model) {
-		List<Course> courselist = cinterface.findCoursesByLecturerId(2); 
+	public String listGrades (Model model, HttpSession session) {
+		return listGrades(1, session, model);
+		
+	}
+	
+	@RequestMapping(value="/GradeCourse/{pageNo}")
+	public String listGrades (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model) {
+		
+		Lecturer l = (Lecturer) session.getAttribute("usession");
+		
+		// session not found
+//				if(l == null) {
+//					return "redirect:/home"; 
+//				}
+		int pageSize = 5;
+	
+		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(),2); 
 		model.addAttribute("courses", courselist);
 		
 		if(courselist.iterator().hasNext()) {
-			String courseName = courselist.iterator().next().getCourseName();
-			ArrayList<StudentCourse> studentGrade = (ArrayList<StudentCourse>) scinterface.findAllStudentsByCourse(courseName);
+			Course course = courselist.iterator().next();
+
+			//String courseName = course.getCourseName();
+			
+			Page<StudentCourse>page = scinterface.findAllPaginatedStudentsByLecturer(pageNo, pageSize, 2, course);
+			List<StudentCourse> studentGrade =  page.getContent();
+			int totalPages = page.getTotalPages();
+			long totalItems = page.getTotalElements();
+			model.addAttribute("currentPage", pageNo);
+			model.addAttribute("totalPages",totalPages);
+			model.addAttribute("totalItems",totalItems);
+			//ArrayList<StudentCourse> studentGrade = (ArrayList<StudentCourse>) scinterface.findAllStudentsByCourse(courseName);
 			
 			CourseGrades cg = new CourseGrades(new ArrayList<StudentCourse>());
 			
@@ -131,32 +155,6 @@ public class LecturerController {
 			
 			
 		}
-		
-		
-		
-		
-		
-//		for (Course c: courselist)
-//		{
-//			if (c.getCourseName().equals("SCI101")) {
-//				coursename = "SCI101";
-//				List<StudentCourse> studentcourse = scinterface.findAllStudentsByCourse(coursename);
-//				List<Student> students = new ArrayList<Student>(); 
-//				Map<Student, Double> studentGrade = new HashMap<>();
-//				for (StudentCourse sc : studentcourse) {
-//					students.add(sc.getStudent());
-//				}
-//				model.addAttribute("students", students);
-//				
-//				for (Student s: students) {
-//					double grade = scinterface.findGradeByStudentAndCourse(s, c);
-//					studentGrade.put(s, grade);
-//				}			
-//				
-//				model.addAttribute("studentgrade", studentGrade);
-//			}
-//			
-//		}
 
 		return "gradeCourse"; 
 	}

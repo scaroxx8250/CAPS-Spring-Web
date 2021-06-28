@@ -78,7 +78,10 @@ public class CapsProjApplication {
 			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
 			Student s2 = new Student("e100001","Tan","Sharon", "sharonTan@gmail.com","e100024@u.nus.edu", "1234", LocalDate.of(2021, 6, 22));
 			Student s3 = new Student("e100002","Lim","Sharon", "sharonLim@gmail.com","e112024@u.nus.edu", "1234", LocalDate.of(2021, 6, 22));
-			srepo.save(s1);srepo.save(s2);srepo.save(s3);
+			Student s4 = new Student("e134567","Huang","Grace", "gracehuang@gmail.com","e134567@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
+			Student s5 = new Student("e123458","koch","Stephan", "stephanKoch@gmail.com","e123458@u.nus.edu", "678", LocalDate.of(2021, 6, 22));
+			Student s6 = new Student("e156789","Luo","ChengHao", "sharonLim@gmail.com","e1567894@u.nus.edu", "678", LocalDate.of(2021, 6, 22));
+			srepo.save(s1);srepo.save(s2);srepo.save(s3);srepo.save(s4);srepo.save(s5);srepo.save(s6);
 			 
 			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
 			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com",null, null);
@@ -151,6 +154,10 @@ public class CapsProjApplication {
 			
 			
 			StudentCourse sc14 = new StudentCourse(s2, c2,null);
+			StudentCourse sc15 = new StudentCourse(s3, c2,null);
+			StudentCourse sc16 = new StudentCourse(s4, c2,null);
+			StudentCourse sc17 = new StudentCourse(s5, c2,null);
+			StudentCourse sc18 = new StudentCourse(s6, c2,null);
 			
 			// Whenever you add a studentCourse, do not add directly using screpo.save()
 			// Add through addStudentToCourse()
@@ -171,7 +178,7 @@ public class CapsProjApplication {
 			scservice.addStudentToCourse(c12, s1);
 			
 //			screpo.save(sc1);
-			screpo.save(sc2);screpo.save(sc14);
+			screpo.save(sc2);screpo.save(sc14);screpo.save(sc15);screpo.save(sc16);screpo.save(sc17);screpo.save(sc18);
 //			screpo.save(sc3);
 //			screpo.save(sc4);
 //			screpo.save(sc5);

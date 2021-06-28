@@ -1,5 +1,6 @@
 package com.team6.CAPSProj.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -20,4 +21,5 @@ public interface StudentCourseInterface {
 	public void updateStudentGrade(List<StudentCourse> studentCourse);
 	public int CountTotalStudentEnrol(Integer courseId );
 	Page<StudentCourse> findAllPaginatedCoursesByStudent(int pageNo, int pageSize, Integer studentId);
+	Page<StudentCourse>findAllPaginatedStudentsByLecturer(int pageNo, int pageSize,Integer lecturerId, Course course);
 }

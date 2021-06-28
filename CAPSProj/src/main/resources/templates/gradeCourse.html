@@ -31,29 +31,10 @@ th, td {
 </head>
 <body>
 	<h1>Grade Course</h1>
-	<div class="year-dropdown">
-		<label for="year">Year: </label>
-		<select id='date-dropdown'>
-  		</select>
-  		<script>
-    		let dateDropdown = document.getElementById('date-dropdown');
-
-    		let currentYear = new Date().getFullYear();
-    		let earliestYear = 2018;
-
-    		while (currentYear >= earliestYear) {
-      			let dateOption = document.createElement('option');
-      			dateOption.text = currentYear;
-      			dateOption.value = currentYear;
-      			dateDropdown.add(dateOption);
-      			currentYear -= 1;
-      		}
-  		</script>
-	</div>
 	<br>
 	<div class="course-dropdown">
-	<select id="courseNameDropdown" name="courseName">
-		<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:utext="${course.getCourseName()}" th:selected="${course.getCourseName()}"/>
+	<select th:field="${courses}">
+		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
 	</select>	
 	</div>
 	<br>
@@ -76,17 +57,24 @@ th, td {
 			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.lastName'}" th:name="${'studentCourse['+__${stat.index}__+'].student.lastName'}"th:value="${sc.student.lastName}" readonly/></fieldset></td>
 			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.grade'}" th:name="${'studentCourse['+__${stat.index}__+'].grade'}" th:value="${sc.grade}"/> 
 			<input type="hidden" th:id="${'studentCourse'+__${stat.index}__+'.course.courseId'}" th:name="${'studentCourse['+__${stat.index}__+'].course.courseId'}" th:value="${sc.course.courseId}"/></fieldset></td>
-
-<!-- 			<td th:text=${student.key.studentId}>Student ID</td> -->
-<!-- 			<td th:text=${student.key.firstName}>First Name</td> -->
-<!-- 			<td th:text=${student.key.lastName}>Last Name</td> -->
-<!-- 			<td th:field=${student.value}></td> -->
-	
 	</tr>
 	</table>
+	<br>
 	<input type="submit"value ="Save"/>
 	</form>
 	
-
+	<div th:if = "${totalPages > 1}">
+	<div>
+		<div>
+			Total Rows: [[${totalItems}]]
+		</div>	
+		<div>
+			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+				<a th:if="${currentPage != i}" th:href="@{'/lecturer/GradeCourse/' + ${i}}">[[${i}]]</a>
+				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+			</span>
+		</div>	
+	</div>
+</div>
 </body>
 </html>
