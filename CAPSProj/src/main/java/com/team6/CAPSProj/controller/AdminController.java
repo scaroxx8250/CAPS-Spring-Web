@@ -2,21 +2,26 @@ package com.team6.CAPSProj.controller;
 
 import javax.validation.Valid;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.team6.CAPSProj.model.Course;
+import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
@@ -142,36 +147,82 @@ public class AdminController {
 		
 		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course.getCourseName());
 		model.addAttribute("student_course", sclist);
+		
 		return "managementEnrolment";
+		
 	}
 	
-	@RequestMapping(value = "/addenrollment/{coursename}")
-	public String addEnrollment(Model model, @PathVariable("coursename") String coursename) {
+	@GetMapping("/addenrollment/{coursename}")
+	public String listEnrollment(Model model, @PathVariable("coursename") String coursename) {
+		
+		return addEnrollment(1, model, coursename);
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "/addenrollment/{coursename}/{pageNo}")
+	public String addEnrollment(@PathVariable(value = "pageNo") int pageNo, Model model, @PathVariable("coursename") String coursename) {
 		
 		Course course = cservice.findCourseByCourseName(coursename);
 		
 		//List<StudentCourse> stlist = st_cs_service.findAllStudentsByCourse(coursename);
 		
-		List<Student> studentlist = stservice.findAllStudents();
-		model.addAttribute("allstudents", studentlist);
+		Student onestudent= stservice.findAllStudents().get(0);
+		model.addAttribute("student", onestudent);
 		model.addAttribute("course", course);
+		Student s8 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
+		
+		
+		Course c8 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, LocalDate.of(2021, 07, 11), 2);
+		
+		StudentCourse sc = new StudentCourse(c8, s8);
+		
+		model.addAttribute("studentcourse", sc);
+		
+		int pageSize = 4;
+		Page<Student> page = stservice.findAllPaginatedNotEnrolledStudentsByCourse(pageNo, pageSize, course.getCourseId());
+		List<Student> notEnrolledStudents = page.getContent();
+		int totalPages = page.getTotalPages();
+		long totalItems = page.getTotalElements();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalItems", totalItems);
+		model.addAttribute("notEnrolledStudents", notEnrolledStudents);
+		
 		return "admin_enrollment_add";
 	}
 	
 	
-	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}")
-	public String enrollStudent(Model model, @PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename) {
-	
-		//get Student
-		Student student = stservice.findStudentByMatricNo(matricNo);
-		//get course
-		Course course = cservice.findCourseByCourseName(coursename);
-		//do assignment
-		st_cs_service.addStudentToCourse(course, student);	
+//	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}")
+//	public String enrollStudent(Model model, @PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename) {
+//	
+//		//get Student
+//		Student student = stservice.findStudentByMatricNo(matricNo);
+//		//get course
+//		Course course = cservice.findCourseByCourseName(coursename);
+//		//do assignment
+//		st_cs_service.addStudentToCourse(course, student);	
+//		return "redirect:/admin/enrollmentlist";
+//	}
+
+	@RequestMapping(value = "/enrolstudent")
+	public String enrolStudent(@ModelAttribute("studentcourse") @Valid StudentCourse studentcourse, 
+			BindingResult bindingResult,  Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			return "admin_enrollment_add";
+		}
+		System.out.print(studentcourse);
+		st_cs_service.addStudentToCourse(studentcourse.getCourse(), studentcourse.getStudent());
 		return "redirect:/admin/enrollmentlist";
 	}
-
-
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/courselist")
 	public String listCourse(Model model) {
