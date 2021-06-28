@@ -167,6 +167,25 @@ public class StudentCourseTest {
 //		assertTrue( scservice.CountTotalStudentEnrol(c.getCourseId())== 2);
 //	}
 	
+	@Test
+	@Order(7)
+	public void testRemoveStudentCourse() {
+		Student student3 = new Student("A2345B","Kevin", "Lin", "kevin@mail.com","1233@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 22));
+		stservice.addStudent(student3);
+		Lecturer l2 = new Lecturer("Francis2", "Tan2", Faculty.BUSINESS, "francis@gmail.com", null, null);
+		lservice.addLecturer(l2);
+		Course c3 = new Course("ADProject2", "ADProject", Faculty.BUSINESS, 5, LocalDate.of(2021, 07, 24), l2, 10);
+		cservice.addCourse(c3);
+		
+		scservice.addStudentToCourse(c3, student3);
+		
+		StudentCourse studentcourse = scservice.findAllStudentsByCourse("ADProject2").get(0);
+		
+		scservice.removeStudentCourse(studentcourse);
+		
+		assertTrue(scservice.findAllStudentsByCourse("ADProject2").isEmpty());
+	}
+	
 //	@Test
 //	@Order(7)
 //	public void testFindStudentCourseByCourse() {

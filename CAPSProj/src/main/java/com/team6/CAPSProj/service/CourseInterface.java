@@ -1,3 +1,4 @@
+
 package com.team6.CAPSProj.service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface CourseInterface {
 	public List<Course>findCoursesByLecturerId(int lecturerId);
 	public List<Course>findAllCourseByYear(int year);
 	public List<Course>findAllCourseByYearAndLecturerId(int year, int lecturerId);
-
+	public List<Course>getAllCourses();
 	Page<Course> findAllPaginatedNotEnrolledCoursesByStudent(int pageNo, int pageSize, Integer studentId);
 }
+

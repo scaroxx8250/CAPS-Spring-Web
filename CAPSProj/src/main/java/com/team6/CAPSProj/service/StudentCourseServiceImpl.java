@@ -127,6 +127,10 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		Course course = crepo.findByCourseId(courseId);
 		return screpo.countStudents(course);
 	}
+  
+  public void removeStudentCourse(StudentCourse studentcourse) {
+	screpo.delete(studentcourse);
+  	}
 
 	public Page<StudentCourse> findAllPaginatedCoursesByStudent(int pageNo, int pageSize, Integer studentId) {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);

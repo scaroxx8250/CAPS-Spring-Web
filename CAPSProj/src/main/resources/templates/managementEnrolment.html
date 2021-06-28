@@ -8,22 +8,33 @@
 </head>
 
 <body>
+	    
   <div class = "container">
     <div id="top_grid1">Top Grid Cell 1</div>
     <div id="top_grid2">Top Grid Cell 2</div>
     <div id="top_grid3">Top Grid Cell 3</div>
     <div id="top_grid4">Top Grid Cell 4</div>
-    <nav>Navbar 1</nav>
+    <nav>
+          <div th:replace="fragments/general.html :: menu"></div>
+    </nav>
     <main>
 		<div class="form-outline">
 		  <input type="search" id="form1" class="form-control" placeholder="Type query"
 		  aria-label="Search" />
 		</div>
 		
-
+<table>
+	<tr>
+	<td>
 	<select class="course-dropdown" id="courseNameDropdown" name="courseName">
-		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
-	</select>	
+		<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:text="${course.getCourseName()}"/>
+	</select>
+	</td>
+	<td>
+	<a id="addstudent" href="addenrollment"> Add Student </a>
+	</td>
+	</tr>
+</table>
 
 	
 	    <table th:if="${not #lists.isEmpty(lecturers)}" class="table">
@@ -39,5 +50,16 @@
     </main>
     <footer>Footer</footer>
   </div>
+  
+  
+  
+  <script>var sel = document.getElementById('courseNameDropdown');
+	sel.onchange = function () {
+	    document.getElementById("addstudent").href = "addenrollment" + "/" + this.value;   
+	}
+	document.getElementById("courseNameDropdown").selectedIndex = -1;
+	</script>
+	
+	
 </body>
 </html>
