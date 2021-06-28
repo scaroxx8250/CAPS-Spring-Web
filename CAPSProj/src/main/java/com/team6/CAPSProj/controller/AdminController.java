@@ -145,11 +145,24 @@ public class AdminController {
 		List<Course> courselist = cservice.findAllCourseforCurrentYear();
 		model.addAttribute("courses", courselist);
 		
-		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course.getCourseName());
-		model.addAttribute("student_course", sclist);
+		Course course1 = cservice.findCourseByCourseName("SCI101");
+		
+		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course1.getCourseName());
+//		model.addAttribute("student_course", sclist);
+		
+		List<Student> students = new ArrayList<Student>();
+		
+		for (StudentCourse sc: sclist)
+		{
+			students.add(sc.getStudent());
+		}
+		
+		Student teststudent = stservice.findStudentByStudentId(1);
+		students.add(teststudent);
+		
+		model.addAttribute("studentlist", students);
 		
 		return "managementEnrolment";
-		
 	}
 	
 	@GetMapping("/addenrollment/{coursename}")
@@ -166,20 +179,18 @@ public class AdminController {
 		
 		Course course = cservice.findCourseByCourseName(coursename);
 		
-		//List<StudentCourse> stlist = st_cs_service.findAllStudentsByCourse(coursename);
+//		List<StudentCourse> stlist = st_cs_service.findAllStudentsByCourse(coursename);
+//		
+//		Student onestudent= stservice.findAllStudents().get(0);
+//		model.addAttribute("student", onestudent);
+//
+//		Student s8 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
+//	
+//		Course c8 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, LocalDate.of(2021, 07, 11), 2);
+//		StudentCourse sc = new StudentCourse(c8, s8);
+//		model.addAttribute("studentcourse", sc);
 		
-		Student onestudent= stservice.findAllStudents().get(0);
-		model.addAttribute("student", onestudent);
 		model.addAttribute("course", course);
-		Student s8 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
-		
-		
-		Course c8 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, LocalDate.of(2021, 07, 11), 2);
-		
-		StudentCourse sc = new StudentCourse(c8, s8);
-		
-		model.addAttribute("studentcourse", sc);
-		
 		int pageSize = 4;
 		Page<Student> page = stservice.findAllPaginatedNotEnrolledStudentsByCourse(pageNo, pageSize, course.getCourseId());
 		List<Student> notEnrolledStudents = page.getContent();
@@ -189,35 +200,34 @@ public class AdminController {
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("notEnrolledStudents", notEnrolledStudents);
-		
 		return "admin_enrollment_add";
 	}
 	
 	
-//	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}")
-//	public String enrollStudent(Model model, @PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename) {
-//	
-//		//get Student
-//		Student student = stservice.findStudentByMatricNo(matricNo);
-//		//get course
-//		Course course = cservice.findCourseByCourseName(coursename);
-//		//do assignment
-//		st_cs_service.addStudentToCourse(course, student);	
-//		return "redirect:/admin/enrollmentlist";
-//	}
-
-	@RequestMapping(value = "/enrolstudent")
-	public String enrolStudent(@ModelAttribute("studentcourse") @Valid StudentCourse studentcourse, 
-			BindingResult bindingResult,  Model model) {
-		
-		if (bindingResult.hasErrors()) {
-			return "admin_enrollment_add";
-		}
-		System.out.print(studentcourse);
-		st_cs_service.addStudentToCourse(studentcourse.getCourse(), studentcourse.getStudent());
+	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}")
+	public String enrollStudent(Model model, @PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename) {
+	
+		//get Student
+		Student student = stservice.findStudentByMatricNo(matricNo);
+		//get course
+		Course course = cservice.findCourseByCourseName(coursename);
+		//do assignment
+		st_cs_service.addStudentToCourse(course, student);	
 		return "redirect:/admin/enrollmentlist";
 	}
-	
+
+//	@RequestMapping(value = "/enrolstudent")
+//	public String enrolStudent(@ModelAttribute("studentcourse") @Valid StudentCourse studentcourse, 
+//			BindingResult bindingResult,  Model model) {
+//		
+//		if (bindingResult.hasErrors()) {
+//			return "admin_enrollment_add";
+//		}
+//		System.out.print(studentcourse);
+//		st_cs_service.addStudentToCourse(studentcourse.getCourse(), studentcourse.getStudent());
+//		return "redirect:/admin/enrollmentlist";
+//	}
+//	
 	
 	
 	

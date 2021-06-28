@@ -19,58 +19,55 @@
 		<h1 th:text="${course.courseName}"></h1>
 		
 		<h3>Which student do you want to enrol?</h3>
-		<h2 th:text="${student}"></h2>
-		<h2 th:text="${course}"></h2>
-
-
-		<form action="#" th:object="${studentcourse}" th:action="@{/admin/enrolstudent}" method="post">
-					        <fieldset>
-							     <input type="text" th:id="*{course}" th:name="*{course}" th:value="${course.getCourseId()}">  
-							</fieldset>
-							<fieldset>
-							     <input type="hidden" th:id="*{student}" th:name="*{student}" th:value="${student.getStudentId()}">  
-							</fieldset>
-							<fieldset>
-								<input type="submit" value="Submit"/>	
-								<input type="reset" value="Reset"/>
-							</fieldset>
-					</form>
-		
-<!-- 	    <table th:if="${not #lists.isEmpty(notEnrolledStudents)}" class="table"> -->
-<!-- 			<tr > -->
-<!-- 				<th>Matriculation Number</th> -->
-<!-- 				<th>First Name</th> -->
-<!-- 				<th>Last Name</th> -->
-<!-- 				<th>Matriculation Date</th> -->
-<!-- 				<th></th> -->
-<!-- 			</tr> -->
-<!-- 			<tr th:each="student:${notEnrolledStudents}" > -->
+<!-- 		<h2 th:text="${student}"></h2> -->
+<!-- 		<h2 th:text="${course}"></h2> -->
+<!-- 		<form action="#" th:object="${studentcourse}" th:action="@{/admin/enrolstudent}" method="post"> -->
+<!-- 			        <fieldset> -->
+<!-- 					     <input type="text" th:id="*{course}" th:name="*{course}" th:value="${course.getCourseId()}">   -->
+<!-- 					</fieldset> -->
+<!-- 					<fieldset> -->
+<!-- 					     <input type="hidden" th:id="*{student}" th:name="*{student}" th:value="${student.getStudentId()}">   -->
+<!-- 					</fieldset> -->
+<!-- 					<fieldset> -->
+<!-- 						<input type="submit" value="Submit"/>	 -->
+<!-- 						<input type="reset" value="Reset"/> -->
+<!-- 					</fieldset> -->
+<!-- 		</form> -->
+	    <table th:if="${not #lists.isEmpty(notEnrolledStudents)}" class="table">
+			<tr >
+				<th>Matriculation Number</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Matriculation Date</th>
+				<th></th>
+			</tr>
+			<tr th:each="student:${notEnrolledStudents}" >
 			
-<!-- 				<td th:text=${student.matricNo}>matricNo</td> -->
-<!-- 				<td th:text="${student.firstName}">firstName</td> -->
-<!-- 				<td th:text=${student.lastName}>lastName</td> -->
-<!-- 				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td> -->
-<!-- 				<td> -->
-<!-- 						<a th:href="@{/admin/enrolstudent/{Id}/{Id2}(Id=${student.matricNo}, Id2=${course.courseName})}">  -->
-<!--         					<button type="button">Enrol</button>  -->
-<!--    						</a> -->
-<!-- 				</td> -->
+				<td th:text=${student.matricNo}>matricNo</td>
+				<td th:text="${student.firstName}">firstName</td>
+				<td th:text=${student.lastName}>lastName</td>
+				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
+				<td>
+						<a th:href="@{/admin/enrolstudent/{Id}/{Id2}(Id=${student.matricNo}, Id2=${course.courseName})}"> 
+        					<button type="button">Enrol</button> 
+   						</a>
+				</td>
 			
-<!-- 			</tr> -->
-<!-- 		</table> -->
-<!-- 			<div th:if = "${totalPages > 1}"> -->
-<!-- 				<div> -->
-<!-- 					<div> -->
-<!-- 						Total Rows: [[${totalItems}]] -->
-<!-- 					</div> -->
-<!-- 					<div> -->
-<!-- 						<span th:each="i: ${#numbers.sequence(1, totalPages)}"> -->
-<!-- 							<a th:if="${currentPage != i}" th:href="@{'/admin/addenrollment/' + ${course.courseName} + '/' + ${i}}">[[${i}]]</a> -->
-<!-- 							<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp; -->
-<!-- 						</span> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div>				 -->
+			</tr>
+		</table>
+			<div th:if = "${totalPages > 1}">
+				<div>
+					<div>
+						Total Rows: [[${totalItems}]]
+					</div>
+					<div>
+						<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+							<a th:if="${currentPage != i}" th:href="@{'/admin/addenrollment/' + ${course.courseName} + '/' + ${i}}">[[${i}]]</a>
+							<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+						</span>
+					</div>
+				</div>
+			</div>				
 	</main>
 	<footer>Footer</footer>
   </div>
