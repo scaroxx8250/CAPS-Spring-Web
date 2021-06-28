@@ -1,11 +1,97 @@
-<!DOCTYPE html>
 <html>
+  <style>
+body{
+  overflow: hidden;
+}
+
+html, body {
+  position: relative;
+  background: #FFF ;
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-family: 'Raleway', sans-serif;
+
+}
+
+.Container {
+  text-align: center;
+  position: relative;
+}
+
+.MainTitle {
+  display: block;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.MainDescription {
+  max-width: 50%;
+  font-weight: lighter;
+}
+
+.MainGraphic {
+  position: relative;
+}
+
+.Icon {
+  width: 10rem;
+  height: 10rem;
+  fill: #089EF2;
+}
+.buttons-con .action-link-wrap {
+  margin-top: 40px;
+}
+.buttons-con .action-link-wrap a:hover {
+  background: #5A5C6C;
+  color: #fff;
+}
+.buttons-con .action-link-wrap a {
+  background: #089EF2;
+  padding: 8px 25px;
+  border-radius: 4px;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  margin-right: 10px
+}
+</style>
+
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Error Page</title>
+  <meta charset="UTF-8" />
+  <title>An Error Has Occured</title>
+
 </head>
+
 <body>
-<h1>Error Page</h1>
-<p>There is something wrong, please try again later. Thank you.</p>
+
+  <div class="Container">
+    
+    <div class="MainGraphic">
+ 
+    <svg class="Icon"  viewBox="0 0 32 32"><path d="M29.18 19.07c-1.678-2.908-.668-6.634 2.256-8.328L28.29 5.295c-.897.527-1.942.83-3.057.83-3.36 0-6.085-2.743-6.085-6.126h-6.29c.01 1.043-.25 2.102-.81 3.07-1.68 2.907-5.41 3.896-8.34 2.21L.566 10.727c.905.515 1.69 1.268 2.246 2.234 1.677 2.904.673 6.624-2.24 8.32l3.145 5.447c.895-.522 1.935-.82 3.044-.82 3.35 0 6.066 2.725 6.083 6.092h6.29c-.004-1.035.258-2.08.81-3.04 1.676-2.902 5.4-3.893 8.325-2.218l3.145-5.447c-.9-.515-1.678-1.266-2.232-2.226zM16 22.48c-3.578 0-6.48-2.902-6.48-6.48S12.423 9.52 16 9.52c3.578 0 6.48 2.902 6.48 6.48s-2.902 6.48-6.48 6.48z"/></svg>
+    
+    </div>
+
+    </svg>
+   <h1 class="MainTitle">
+        An error has occurred
+      </h1>
+    <p class="Main Description">
+      Please try again later.
+    </p>
+    <div class="buttons-con">
+    <div class="action-link-wrap">
+      <a onclick="history.back(-1)" class="link-button link-back-button">Go Back</a>
+    </div>
+    
+  </div>
+
 </body>
+
 </html>
