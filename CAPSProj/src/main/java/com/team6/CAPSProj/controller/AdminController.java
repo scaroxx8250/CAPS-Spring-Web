@@ -136,7 +136,8 @@ public class AdminController {
 	@RequestMapping(value = "/enrollmentlist")
 	public String listEnrollment(Model model, @Valid Course course)
 	{
-		List<Course> courselist = cservice.getAllCourses();
+		//List<Course> courselist = cservice.getAllCourses();
+		List<Course> courselist = cservice.findAllCourseforCurrentYear();
 		model.addAttribute("courses", courselist);
 		
 		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course.getCourseName());
@@ -151,13 +152,25 @@ public class AdminController {
 		
 		//List<StudentCourse> stlist = st_cs_service.findAllStudentsByCourse(coursename);
 		
-		
+		List<Student> studentlist = stservice.findAllStudents();
+		model.addAttribute("allstudents", studentlist);
 		model.addAttribute("course", course);
 		return "admin_enrollment_add";
 	}
+	
+	
+	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}")
+	public String enrollStudent(Model model, @PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename) {
+	
+		//get Student
+		Student student = stservice.findStudentByMatricNo(matricNo);
+		//get course
+		Course course = cservice.findCourseByCourseName(coursename);
+		//do assignment
+		st_cs_service.addStudentToCourse(course, student);	
+		return "redirect:/admin/enrollmentlist";
+	}
 
-	
-	
 
 	
 	@RequestMapping(value = "/courselist")
