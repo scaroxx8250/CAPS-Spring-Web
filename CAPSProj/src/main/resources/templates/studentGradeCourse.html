@@ -4,12 +4,16 @@
 <meta charset="ISO-8859-1">
 <title>Grades and GPA</title>
 </head>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
 <body>
  
   <h1>Grades and GPA</h1>
   <div>
   <label>Year</label>
-  <select th:field="*{ay}">
+  <select th:field="*{ay}" onchange="UpdateGPA(this.value)">
   <option th:each="selectOption : ${ay}" th:value="${selectOption}"
   th:text="${selectOption}">
   selectedOption

@@ -137,5 +137,13 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		Student student = srepo.findByStudentId(studentId);
 		return screpo.findAllCoursesByStudentByPage(student, LocalDate.now().getYear(), pageable);
 	}
+	
+
+
+
+	public Page<StudentCourse> findAllPaginatedStudentsByLecturer(int pageNo, int pageSize, Integer lecturerId, Course course) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return screpo.findAllStudentsByLecturerByPage(course,lecturerId, LocalDate.now().getYear(), pageable);
+	}
 
 }

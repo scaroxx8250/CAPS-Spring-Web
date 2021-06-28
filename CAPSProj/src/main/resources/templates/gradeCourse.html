@@ -31,37 +31,17 @@ th, td {
 </head>
 <body>
 	<h1>Grade Course</h1>
-	<div class="year-dropdown">
-	<form>
-		<label for="year">Year: </label>
-		<select id='date-dropdown'>
-  		</select>
-  		<script>
-    		let dateDropdown = document.getElementById('date-dropdown');
-
-    		let currentYear = new Date().getFullYear();
-    		let earliestYear = 2018;
-
-    		while (currentYear >= earliestYear) {
-      			let dateOption = document.createElement('option');
-      			dateOption.text = currentYear;
-      			dateOption.value = currentYear;
-      			dateDropdown.add(dateOption);
-      			currentYear -= 1;
-      		}
-  		</script>
-	</form>
-	</div>
 	<br>
 	<div class="course-dropdown">
-	<select id="courseNameDropdown" name="courseName">
-		<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:utext="${course.getCourseName()}" th:selected="${course.getCourseName()}"/>
+	<select th:field="${courses}">
+		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
 	</select>	
 	</div>
 	<br>
 	
 	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
-	<p th:text="'Total Records: ' + ${studentgrade.size()}">Total Records</p>
+	<p th:text="'Total Records: ' + ${studentGrade.size()}">Total Records</p>
+	<form action="#" th:object="${studentGrade}" th:action="@{/lecturer/GradeCourse/save}" method="post">
 	<table id="students">
 	<tr>
 			<!-- <th>Student ID</th> -->
@@ -70,14 +50,31 @@ th, td {
 			<th>Last Name</th>
 			<th>Grade</th>
 	</tr>
-	<tr th:each="student : ${studentgrade}" class="table-row">
-			<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
-			<td th:text=${student.key.studentId}>Student ID</td>
-			<td th:text=${student.key.firstName}>First Name</td>
-			<td th:text=${student.key.lastName}>Last Name</td>
-			<td><input type="text"></td>
+	<tr th:each="sc, stat: ${studentGrade}" class="table-row">	
+			<td><fieldset><input type="hidden" th:id="${'studentCourse'+__${stat.index}__+'.student.studentId'}" th:name="${'studentCourse['+__${stat.index}__+'].student.studentId'}" th:value="${sc.student.studentId}"/>
+			<input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.matricNo'}" th:name="${'studentCourse['+__${stat.index}__+'].student.matricNo'}" th:value="${sc.student.matricNo}" readonly/></fieldset></td>
+			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.firstName'}" th:name="${'studentCourse['+__${stat.index}__+'].student.firstName'}" th:value="${sc.student.firstName}" readonly/></fieldset></td>
+			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.lastName'}" th:name="${'studentCourse['+__${stat.index}__+'].student.lastName'}"th:value="${sc.student.lastName}" readonly/></fieldset></td>
+			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.grade'}" th:name="${'studentCourse['+__${stat.index}__+'].grade'}" th:value="${sc.grade}"/> 
+			<input type="hidden" th:id="${'studentCourse'+__${stat.index}__+'.course.courseId'}" th:name="${'studentCourse['+__${stat.index}__+'].course.courseId'}" th:value="${sc.course.courseId}"/></fieldset></td>
 	</tr>
 	</table>
-
+	<br>
+	<input type="submit"value ="Save"/>
+	</form>
+	
+	<div th:if = "${totalPages > 1}">
+	<div>
+		<div>
+			Total Rows: [[${totalItems}]]
+		</div>	
+		<div>
+			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+				<a th:if="${currentPage != i}" th:href="@{'/lecturer/GradeCourse/' + ${i}}">[[${i}]]</a>
+				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+			</span>
+		</div>	
+	</div>
+</div>
 </body>
 </html>
