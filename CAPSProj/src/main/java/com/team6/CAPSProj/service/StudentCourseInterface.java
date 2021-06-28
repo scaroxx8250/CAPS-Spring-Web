@@ -1,3 +1,4 @@
+
 package com.team6.CAPSProj.service;
 
 import java.util.List;
@@ -19,7 +20,8 @@ public interface StudentCourseInterface {
 	public void removeStudentFromCourse(Course course, Student student);
 	public void updateStudentGrade(List<StudentCourse> studentCourse);
 	public int CountTotalStudentEnrol(Integer courseId );
-
-	public void removeStudentCourse(StudentCourse studentcourse);
+  public void removeStudentCourse(StudentCourse studentcourse);
 	Page<StudentCourse> findAllPaginatedCoursesByStudent(int pageNo, int pageSize, Integer studentId);
+	Page<StudentCourse>findAllPaginatedStudentsByLecturer(int pageNo, int pageSize,Integer lecturerId, Course course);
 }
+
