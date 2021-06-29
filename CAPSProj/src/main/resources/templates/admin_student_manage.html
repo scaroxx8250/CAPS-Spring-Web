@@ -36,7 +36,7 @@
 				<td th:text=${student.matricNo}>matricNo</td>
 				<td th:text="${student.firstName}">firstName</td>
 				<td th:text=${student.lastName}>lastName</td>
-<!-- 				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td> -->
+				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
 				<td>
 						<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}"> 
         					<button type="button">Edit</button> 
