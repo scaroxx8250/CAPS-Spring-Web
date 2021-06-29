@@ -138,8 +138,8 @@ public class AdminController {
 	}
 	
 	
-	@RequestMapping(value = "/enrollmentlist")
-	public String listEnrollment(Model model, String courseName)
+	@RequestMapping(value = "/enrolmentlist")
+	public String listEnrolment(Model model, Integer id)
 	{
 		//List<Course> courselist = cservice.getAllCourses();
 		List<Course> courselist = cservice.findAllCourseforCurrentYear();
@@ -147,13 +147,13 @@ public class AdminController {
 		
 		Course course1;
 		
-		if(courseName == null)
+		if(id == null)
 		{
 			course1 = cservice.findAllCourseByYear(LocalDate.now().getYear()).get(0);
 		}
 		else
 		{
-			course1 = cservice.findCourseByCourseName(courseName);
+			course1 = cservice.findAllCourseByYear(LocalDate.now().getYear()).get(id);
 		}
 		
 		List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course1.getCourseName());
@@ -171,14 +171,26 @@ public class AdminController {
 		
 		model.addAttribute("studentlist", students);
 		model.addAttribute("course", new Course());
+		if(id != null)
+		{
+			model.addAttribute("id", id);
+			Course selectedCourse = courselist.get(id);
+			model.addAttribute("selectedCourse", selectedCourse);
+		}
+		else
+		{
+			model.addAttribute("id", 0);
+			Course selectedCourse = courselist.get(0);
+			model.addAttribute("selectedCourse", selectedCourse);
+		}
 		
 		return "admin_enrolment_manage";
 	}
 	
-	@RequestMapping(value = "/enrollmentlist/{course_name}")
-	public String addEnrollment(@PathVariable("course_name") String courseName, Model model)
+	@RequestMapping(value = "/enrolmentlist/{id}")
+	public String listEnrolment(@PathVariable("id") Integer id, Model model)
 	{	
-		return listEnrollment(model, courseName);
+		return listEnrolment(model, id);
 	}
 	
 //	@GetMapping("/addenrollment/{coursename}")
@@ -190,10 +202,11 @@ public class AdminController {
 	
 	
 	
-	@RequestMapping(value = "/addenrollment/{coursename}/{pageNo}")
-	public String addEnrollment(@PathVariable(value = "pageNo") int pageNo, Model model, @PathVariable("coursename") String coursename) {
+	@RequestMapping(value = "/addenrolment/{id}/{pageNo}")
+	public String addEnrolment(@PathVariable(value = "pageNo") int pageNo, Model model, @PathVariable("id") int id) {
 		
-		Course course = cservice.findCourseByCourseName(coursename);
+		//get course
+		Course course = cservice.findAllCourseByYear(LocalDate.now().getYear()).get(id);
 		
 //		List<StudentCourse> stlist = st_cs_service.findAllStudentsByCourse(coursename);
 //		
@@ -216,12 +229,13 @@ public class AdminController {
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("notEnrolledStudents", notEnrolledStudents);
-		return "admin_enrollment_add";
+		model.addAttribute("id", id);
+		return "admin_enrolment_add";
 	}
 	
 	
-	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}")
-	public String enrollStudent(Model model, @PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename) {
+	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}/{id}")
+	public String enrollStudent(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id) {
 	
 		//get Student
 		Student student = stservice.findStudentByMatricNo(matricNo);
@@ -229,7 +243,8 @@ public class AdminController {
 		Course course = cservice.findCourseByCourseName(coursename);
 		//do assignment
 		st_cs_service.addStudentToCourse(course, student);	
-		return "redirect:/admin/enrollmentlist";
+		System.out.println(id);
+		return "redirect:/admin/enrolmentlist/{id}";
 	}
 
 //	@RequestMapping(value = "/enrolstudent")
@@ -241,7 +256,7 @@ public class AdminController {
 //		}
 //		System.out.print(studentcourse);
 //		st_cs_service.addStudentToCourse(studentcourse.getCourse(), studentcourse.getStudent());
-//		return "redirect:/admin/enrollmentlist";
+//		return "redirect:/admin/enrolmentlist";
 //	}
 //	
 	
