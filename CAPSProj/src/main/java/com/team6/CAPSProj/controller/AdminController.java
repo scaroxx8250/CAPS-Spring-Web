@@ -180,7 +180,7 @@ public class AdminController {
 	public String saveCourse(@ModelAttribute("course") @Valid Course course, 
 			BindingResult bindingResult,  Model model) {
 		if (bindingResult.hasErrors()) {
-			return "course_add";
+			return "admin_course_add";
 		}
 		cservice.addCourse(course);
 		return "redirect:/admin/courselist";
