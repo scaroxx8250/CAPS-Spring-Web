@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<style>
-table, td, th {  
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  padding: 15px;
-}
-
-#input {
-  background-position: 10px 12px;
-  background-repeat: no-repeat;
-  width: 25%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-}
-</style>
-<meta charset="ISO-8859-1">
-<title>Grade Course</title>
+	<title>Grade a Course</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<h1>Grade Course</h1>
+  <div class = "container">
+    <heading><div th:replace="fragments/general::heading"></div></heading>
+    <div id="top_grid1"><b>Welcome, </b></div>
+    <div id="top_grid2"></div>
+    <div id="top_grid3"></div>
+    <div id="top_grid4"><input type="button" value="Logout"
+					onclick="window.location.href='/admin/studentlist'; return false"
+					class="button-logout" />
+	</div>
+    <nav>
+    	<div th:replace="fragments/general.html :: lecturer-menu"></div>
+    </nav>
+    <page-title>
+    	<h1> Grade a Course</h1>
+    </page-title>
+    <main>
 	<br>
 	<div class="course-dropdown">
 	<select th:field="${courses}">
@@ -42,7 +34,7 @@ th, td {
 	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
 	<p th:text="'Total Records: ' + ${studentGrade.size()}">Total Records</p>
 	<form action="#" th:object="${studentGrade}" th:action="@{/lecturer/GradeCourse/save}" method="post">
-	<table id="students">
+	<table id="students" class="table">
 	<tr>
 			<!-- <th>Student ID</th> -->
 			<th>Student ID</th>
@@ -76,5 +68,8 @@ th, td {
 		</div>	
 	</div>
 </div>
+    </main>
+
+    <footer><div th:replace="fragments/general::footer"></div></footer>
 </body>
 </html>

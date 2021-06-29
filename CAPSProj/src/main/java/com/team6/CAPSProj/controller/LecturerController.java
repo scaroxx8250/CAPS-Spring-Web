@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -106,8 +107,8 @@ public class LecturerController {
 		
 		int pageSize = 5; 
 		
-		// find list of courses that lecturer teaches 
-		List<Course> courselist = cinterface.findCoursesByLecturerId(l.getLecturerId());
+		// find list of courses that lecturer teaches for current year 
+		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(), l.getLecturerId());
 		model.addAttribute("courses", courselist);
 		
 		if(courselist.iterator().hasNext()) {
@@ -312,6 +313,15 @@ public class LecturerController {
 		model.addAttribute("ay",acadYears);
 		
 		return "performance_detail";
+	}
+	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false); 
+		if(session != null) {
+			session.invalidate();
+		}
+		return "redirect:/home";
 	}
 	
 }

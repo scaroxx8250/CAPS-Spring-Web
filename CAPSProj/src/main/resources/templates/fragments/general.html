@@ -5,22 +5,82 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<div th:fragment="menu" id="menu">
+	<div th:fragment="admin-menu" id="admin-menu">
 		<table>
 			<tr>
 				<td><input type="button" value="Manage Students"
 					onclick="window.location.href='/admin/studentlist'; return false"
-					class="button" /> <input type="button" value="Manage Lecturers"
+					class="button-menu"/> 
+					<input type="button" value="Manage Lecturers"
 					onclick="window.location.href='/admin/lecturerlist'; return false"
-					class="button" /> <input type="button" value="Manage Courses"
+					class="button-menu"/> 
+					<input type="button" value="Manage Courses"
 					onclick="window.location.href='/admin/courselist'; return false"
-					class="button" /> <input type="button" value="Manage Enrolment"
+					class="button-menu"/> 
+					<input type="button" value="Manage Enrolment"
 					onclick="window.location.href='/admin/enrollmentlist'; return false"
-					class="button" />
+					class="button-menu"/>
 					</td>
 			</tr>
 		</table>
 	</div>
+	
+	<div th:fragment="lecturer-menu" id="lecturer-menu">
+		<table>
+			<tr>
+				<td><input type="button" value="View Courses Taught"
+					onclick="window.location.href='/lecturer/Courses'; return false"
+					class="button-menu"/> 
+					<input type="button" value="View Course Enrolment"
+					onclick="window.location.href='/lecturer/CourseEnrolment'; return false"
+					class="button-menu"/> 
+					<input type="button" value="Grade a Course"
+					onclick="window.location.href='/lecturer/GradeCourse'; return false"
+					class="button-menu"/> 
+					<input type="button" value="View Student Performance"
+					onclick="window.location.href='/lecturer/StudentPerformance'; return false"
+					class="button-menu"/>
+					</td>
+			</tr>
+		</table>
+	</div>
+	
+		<div th:fragment="student-menu" id="student-menu">
+		<table>
+			<tr>
+				<td><input type="button" value="Grades and GPA"
+					onclick="window.location.href='/student/GradesGPA'; return false"
+					class="button-menu"/> 
+					<input type="button" value="View Courses"
+					onclick="window.location.href='/student/list'; return false"
+					class="button-menu"/> 
+					<input type="button" value="Enrol for a Course"
+					onclick="window.location.href='/student/enrolCourse'; return false"
+					class="button-menu"/>
+					</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div th:fragment="footer">
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="row copyright">
+				<div class="col-md-12 text-center">
+					<p>
+						<small class="block">Copyright © NUS-ISS SA52 Team 6. All rights reserved.</small>
+					</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+	
+	<div th:fragment="heading">
+		<p>
+			<small class="block">Course Application Processing System</small>
+		</p>
+	</div>
+
+
+</div>
 </body>
 </html>
