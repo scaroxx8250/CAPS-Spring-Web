@@ -37,7 +37,7 @@ public class Course {
 	private int credits;
 	
 
-	@DateTimeFormat (pattern="dd-MM-yyyy")
+	@DateTimeFormat (pattern="dd/MM/yyyy")
 	private LocalDate courseStartDate;
 	
 	@ManyToOne
