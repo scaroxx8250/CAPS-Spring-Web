@@ -7,7 +7,6 @@
 <body>
  
   <h1>Enroll for a Course</h1>
-  <h3 th:text="'Total Records: ' + ${notEnrolCourses.size()}">Total Records</h3>
 <form action="" th:object="${selectCourse}" th:action="@{/student/submitEnrol}" method="post">
 <table>
  <tr>
@@ -39,7 +38,7 @@
 <div th:if = "${totalPages > 1}">
 	<div>
 		<div>
-			Total Rows: [[${totalItems}]]
+			Total Records: [[${totalItems}]]
 		</div>	
 		<div>
 			<span th:each="i: ${#numbers.sequence(1, totalPages)}">

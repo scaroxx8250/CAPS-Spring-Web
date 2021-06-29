@@ -21,7 +21,7 @@
    <th>Course Description</th>
  </tr>
  <tr th:each="sc: ${listStudentCourses}">
-   <td th:text="${sc.getCourse().getCourseName()}">Course NAME</td>
+   <td th:text="${sc.getCourse().getCourseName()}">Course Name</td>
    <td th:text="${sc.getCourse().getLecturer().getFirstName()} +' '+ ${sc.getCourse().getLecturer().getLastName()}  ">Lecture Name</td>
    <td th:text="${sc.getCourse().getCredits()}">Credits</td>
    <td th:text="${sc.getCourse().getDescription()}">Course Description</td> 
@@ -31,7 +31,7 @@
 <div th:if = "${totalPages > 1}">
 	<div>
 		<div>
-			Total Rows: [[${totalItems}]]
+			Total Records: [[${totalItems}]]
 		</div>	
 		<div>
 			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
