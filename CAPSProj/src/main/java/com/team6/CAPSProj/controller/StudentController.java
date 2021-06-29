@@ -98,34 +98,34 @@ public class StudentController {
 			return "redirect:/home";
 		}
 
-		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
-		List<Course> allCourses = cservice.findAllCourseforCurrentYear();
-		
-		// retrieve the list of courses that student has enrolled
-		List<Course> enrolCourses = new ArrayList<Course>();
-		for(StudentCourse sc : scList) {
-			enrolCourses.add(sc.getCourse());
-		}
-		
-		// filter the courses that student has not enrolled
-		List<Course> availableCourses = new ArrayList<Course>();
-		availableCourses.addAll(allCourses);
-		for(Course ac: allCourses) {
-			for(Course ec: enrolCourses) {
-				if(ac.getCourseId() == ec.getCourseId()) {
-					availableCourses.remove(ac);
-				}
-			}
-		}
-
-		// filter the courses that student has not enrolled and is available to start tomorrow onwards
-		availableCourses = availableCourses.stream().
-				filter(c->c.getCourseStartDate().isAfter(LocalDate.now()) && scservice.CountTotalStudentEnrol(c.getCourseId())<c.getSize())
-				.collect(Collectors.toList());
+//		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
+//		List<Course> allCourses = cservice.findAllCourseforCurrentYear();
+//		
+//		// retrieve the list of courses that student has enrolled
+//		List<Course> enrolCourses = new ArrayList<Course>();
+//		for(StudentCourse sc : scList) {
+//			enrolCourses.add(sc.getCourse());
+//		}
+//		
+//		// filter the courses that student has not enrolled
+//		List<Course> availableCourses = new ArrayList<Course>();
+//		availableCourses.addAll(allCourses);
+//		for(Course ac: allCourses) {
+//			for(Course ec: enrolCourses) {
+//				if(ac.getCourseId() == ec.getCourseId()) {
+//					availableCourses.remove(ac);
+//				}
+//			}
+//		}
+//
+//		// filter the courses that student has not enrolled and is available to start tomorrow onwards
+//		availableCourses = availableCourses.stream().
+//				filter(c->c.getCourseStartDate().isAfter(LocalDate.now()) && scservice.CountTotalStudentEnrol(c.getCourseId())<c.getSize())
+//				.collect(Collectors.toList());
 		
 		// passing the data to view
 		StudentSelectedCourses ssc = new StudentSelectedCourses(new ArrayList<Course>());
-		model.addAttribute("notEnrolCourses",availableCourses);
+		//model.addAttribute("notEnrolCourses",availableCourses);
 		model.addAttribute("selectCourse", ssc);
 		
 		
@@ -162,7 +162,7 @@ public class StudentController {
 		}
 		return "enrolCourse";	
 	}
-	@GetMapping(value="/GradesGPA")
+	@GetMapping(value="/gradesGPA")
 	public String gradesAndGPA(Model model,HttpSession session ) {
 		Student s = (Student) session.getAttribute("usession");
 		
