@@ -14,7 +14,7 @@
   <h1>Grades and GPA</h1>
   <div>
   <label>Year</label>
-  <select th:field="*{ay}">
+  <select th:field="${ay}">
   <option th:each="selectOption : ${ay}" th:value="${selectOption}"
   th:text="${selectOption}">
   selectedOption
@@ -28,7 +28,7 @@
    <th>Credits</th>
    <th>Grade</th>
  </tr>
- <tr th:each="gc: ${gradedCourse}">
+ <tr id ="editable" th:each="gc: ${gradedCourse}">
    <td th:text="${gc.course.courseName}">Course Name</td>
    <td th:text="${gc.course.credits}  ">Credits</td>
    <td th:text="${gc.grade}">Grade</td>
@@ -38,19 +38,19 @@
 <table>
  <tr>
    <td>AY Credits</td>
-   <td th:text="${ayCredits}"></td>
+   <td id="ayCredits" th:text="${ayCredits}"></td>
  </tr>
  <tr>
    <td>AY GPA:</td>
-   <td th:text="${ayGPA}"></td>
+   <td id="ayGPA" th:text="${ayGPA}"></td>
  </tr>
  <tr>
    <td>Cumulative Credits:</td>
-   <td th:text="${cuCredits}"></td>
+   <td id="cuCredits" th:text="${cuCredits}"></td>
  </tr>
  <tr>
    <td>Cumulative GPA:</td>
-   <td th:text="${cuGPA}"></td>
+   <td id="cuGPA" th:text="${cuGPA}"></td>
  </tr>
 </table>
 <script>
@@ -86,6 +86,7 @@ $(document).ready(function(){
 				console.log(data.cuCredits);
 				console.log(data.ayCredits);
 				console.log(data.gradedCourse.length);
+				console.log(data.gradedCourse);
 			}
 		
 		});
