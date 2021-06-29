@@ -172,7 +172,7 @@ public class AdminController {
 		model.addAttribute("studentlist", students);
 		model.addAttribute("course", new Course());
 		
-		return "managementEnrolment";
+		return "admin_enrolment_manage";
 	}
 	
 	@RequestMapping(value = "/enrollmentlist/{course_name}")
