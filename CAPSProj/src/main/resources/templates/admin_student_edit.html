@@ -40,7 +40,7 @@
 					<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 				</fieldset>
 				<fieldset>
-					Matriculation Date: <input type="text" th:field="*{matrDate}" placeholder="DD/MM/YYYY">
+					Matriculation Date: <input type="date" th:value = "*{matrDate}" th:field="*{matrDate}" placeholder="yyyy-MM-dd">
 					<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
 				</fieldset>
 				<fieldset>
