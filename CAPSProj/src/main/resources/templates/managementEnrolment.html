@@ -25,39 +25,44 @@
 		
 		
 		<fieldset>
-			<select id="courseNameDropdown">
+			<select id="courseNameDropdown" class = "example">
 			<option th:each="course : ${courses}" th:value="${course.courseName}" th:text="${course.courseName}"></option>
 			</select>
 			&nbsp; &nbsp;
-			<a th:href="@{/admin/enrollmentlist/{course_name}(course_name=${course.courseName})}"> 
-        					<button type="button">Add Student</button> 
-   						</a>
+			<a id="addstudent" href="ADProject" > Add Student </a>
+			<br>
+			<a id="showenrolledstudents" href="ADProject" > Show enrolled Students</a>
+<!-- 			<a th:href="@{/admin/enrollmentlist/{course_name}(course_name=${course.courseName})}">  -->
+<!--         					<button type="button">Add Student</button>  -->
+<!--    						</a> -->
 		</fieldset>
 		
 		<script>var sel = document.getElementById('courseNameDropdown');
 		sel.onchange = function () {
-	    	document.getElementById("addstudent").href = "/admin/enrollmentlist/" + this.value;   
+	    	document.getElementById("addstudent").href = "/admin/addenrollment/" + this.value + "/1";
+	    	document.getElementById("showenrolledstudents").href = "/admin/enrollmentlist/" + this.value;
 		}
 		document.getElementById("courseNameDropdown").selectedIndex = -1;
 		</script>
 		
 		
-		<table>
-			<tr>
-			<td>
-			Select course: 
-			</td>
-			<td>
-			<select class="course-dropdown" id="courseNameDropdown" name="courseName" value = "ADProject">
-				<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:text="${course.getCourseName()}"/>
-			</select>
-			</td>
-			<td>
-			<a id="addstudent" href="ADProject" > Add Student </a>
-			</td>
-			</tr>
-		</table>
-
+<!-- 		<table> -->
+<!-- 			<tr> -->
+<!-- 			<td> -->
+<!-- 			Select course:  -->
+<!-- 			</td> -->
+<!-- 			<td> -->
+<!-- 			<select class="course-dropdown" id="courseNameDropdown" name="courseName" value = "ADProject"> -->
+<!-- 				<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:text="${course.getCourseName()}"/> -->
+<!-- 			</select> -->
+<!-- 			</td> -->
+<!-- 			<td> -->
+<!-- 			<a id="addstudent" href="ADProject" > Add Student </a> -->
+<!-- 			</td> -->
+<!-- 			</tr> -->
+<!-- 		</table> -->
+		<br>
+		<h4>Enrolled students for course: <span th:text="${courses[0].getCourseName()}"></span> </h4>
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
