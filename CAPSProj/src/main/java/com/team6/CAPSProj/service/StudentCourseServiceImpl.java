@@ -82,6 +82,8 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 	public void addStudentToCourse(Course course, Student student) {
 		// Can only add student to a course if the course has not yet started
 		// i.e. courseStartDate is later than the current date
+		
+		// Student can only enrol in courses that have not started at time of enrolment
 		if (course.getCourseStartDate().isAfter(LocalDate.now()))
 		{
 			List<StudentCourse> studentsInCourse = screpo.findAllStudentsByCourse(course);
@@ -99,6 +101,33 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 				}
 			}	
 		}
+	}
+	
+	public boolean adminAddStudentToCourse(Course course, Student student) {
+		// Can only add student to a course if the course has not yet started
+		// i.e. courseStartDate is later than the current date
+		
+		// Admin can add student to course within a 14-day window after course has started
+		LocalDate date = LocalDate.now();
+		if (course.getCourseStartDate().isAfter(date.minusDays(14)))
+		{
+			List<StudentCourse> studentsInCourse = screpo.findAllStudentsByCourse(course);
+			int noOfStudentsInCourse = studentsInCourse.size();
+			// If the students in the course is less than the course size limit, then can add the student to the course
+			if(noOfStudentsInCourse < course.getSize())
+			{
+				StudentCourse sc = new StudentCourse(course, student); 
+				screpo.save(sc); 
+				// After adding the student, if course has reached max capacity
+				if(noOfStudentsInCourse == course.getSize() - 1)
+				{
+					course.setCourseOccupancy(CourseOccupancy.FULL);
+					cservice.updateCourse(course);
+				}
+				return true;
+			}	
+		}
+		return false;
 	}
 
 	

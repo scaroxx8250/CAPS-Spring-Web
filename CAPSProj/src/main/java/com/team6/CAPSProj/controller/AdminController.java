@@ -59,7 +59,6 @@ public class AdminController {
 		else {
 
 	public String listStudent(Model model) {
-
 		model.addAttribute("studentlist", stservice.findAllStudents());
 		return "admin_student_manage";
 		}
@@ -240,7 +239,7 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/enrolmentlist")
-	public String listEnrolment(Model model, Integer id)
+	public String listEnrolment(Model model, Integer id, Integer statusId)
 	{
 		//List<Course> courselist = cservice.getAllCourses();
 		List<Course> courselist = cservice.findAllCourseforCurrentYear();
@@ -267,8 +266,8 @@ public class AdminController {
 			students.add(sc.getStudent());
 		}
 		
-		Student teststudent = stservice.findStudentByStudentId(1);
-		students.add(teststudent);
+//		Student teststudent = stservice.findStudentByStudentId(1);
+//		students.add(teststudent);
 		
 		model.addAttribute("studentlist", students);
 		model.addAttribute("course", new Course());
@@ -285,13 +284,33 @@ public class AdminController {
 			model.addAttribute("selectedCourse", selectedCourse);
 		}
 		
+//		if(!status)
+//		{
+//			model.addAttribute("status", status);
+//		}
+//		Boolean status = (Boolean) model.getAttribute("status");
+		
+		if(statusId != null)
+		{
+			if(statusId == 1)
+				model.addAttribute("status", false);
+			else
+				model.addAttribute("status", true);
+		}
+		
 		return "admin_enrolment_manage";
 	}
 	
 	@RequestMapping(value = "/enrolmentlist/{id}")
 	public String listEnrolment(@PathVariable("id") Integer id, Model model)
 	{	
-		return listEnrolment(model, id);
+		return listEnrolment(model, id, null);
+	}
+	
+	@RequestMapping(value = "/enrolmentlist/{id}/{statusId}")
+	public String listEnrolment(@PathVariable("id") Integer id, Model model, @PathVariable("statusId") Integer statusId)
+	{	
+		return listEnrolment(model, id, statusId);
 	}
 	
 //	@GetMapping("/addenrollment/{coursename}")
@@ -336,16 +355,24 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}/{id}")
-	public String enrollStudent(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id) {
+	public String enrollStudent(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model) {
 	
 		//get Student
 		Student student = stservice.findStudentByMatricNo(matricNo);
 		//get course
 		Course course = cservice.findCourseByCourseName(coursename);
 		//do assignment
-		st_cs_service.addStudentToCourse(course, student);	
-		System.out.println(id);
-		return "redirect:/admin/enrolmentlist/{id}";
+		boolean status = st_cs_service.adminAddStudentToCourse(course, student);
+		int statusId;
+		if(status)
+		{
+			return "redirect:/admin/enrolmentlist/{id}/1";
+		}
+		else
+		{
+			return "redirect:/admin/enrolmentlist/{id}/0";
+		}
+		
 	}
 
 //	@RequestMapping(value = "/enrolstudent")

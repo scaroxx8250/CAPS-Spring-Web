@@ -25,7 +25,7 @@
 		
 		
 		<fieldset>
-			<select id="courseNameDropdown" class = "example">
+			<select id="courseNameDropdown" class = "example" th:if="${not #lists.isEmpty(courses)}">
 			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 			</select>
 			&nbsp; &nbsp;
@@ -64,6 +64,10 @@
 <!-- 		</table> -->
 		<br>
 		<h4>Enrolled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
+	    <span th:if="${status != null}">
+	    <span th:if="${status}">You are not allowed to enroll this student for now</span>
+	    <span th:unless="${status}">Student has been successfully added to course</span>
+	    </span>
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
