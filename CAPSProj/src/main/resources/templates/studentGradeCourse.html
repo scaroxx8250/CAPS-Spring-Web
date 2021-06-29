@@ -9,11 +9,12 @@
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
   crossorigin="anonymous"></script>
 <body>
- 
+ <div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
+ <div th:text= "'Welcome to '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></div>
   <h1>Grades and GPA</h1>
   <div>
   <label>Year</label>
-  <select th:field="*{ay}" onchange="UpdateGPA(this.value)">
+  <select th:field="*{ay}">
   <option th:each="selectOption : ${ay}" th:value="${selectOption}"
   th:text="${selectOption}">
   selectedOption
@@ -51,7 +52,48 @@
    <td>Cumulative GPA:</td>
    <td th:text="${cuGPA}"></td>
  </tr>
- 
 </table>
+<script>
+$(document).ready(function(){
+	$("select").change(function(){
+	    var selectedYear = $(this).val();
+	    var stId = $("#stId").text();
+	    $.ajax({
+			type: "Get",
+			url: "/api/student/"+stId+"/"+selectedYear,
+			success: function(data) {
+				$('#recTable tr').not(':first').remove();
+				var html = '';
+				for(var i=0; i<data.gradedCourse.length; i++)
+					{
+					 html += '<tr><td>' + data.gradedCourse[i].courseName + '</td><td>' +data.gradedCourse[i].credits+'</td><td>'
+					         + data.gradedCourse[i].grade + "</td></tr>";
+					          
+					}
+				$('#recTable tr').first().after(html);
+				
+				var ayCredit = data.ayCredits;
+				var cuCredit = data.cuCredits;
+				var ayGPA = data.ayGPA;
+				var cuGPA = data.cuGPA;
+				
+				$('#ayCredits').html(ayCredit);
+				$('#cuCredits').html(cuCredit);
+				$('#ayGPA').html(ayGPA);
+				$('#cuGPA').html(cuGPA);
+				console.log(data.cuGPA);
+				console.log(data.ayGPA);
+				console.log(data.cuCredits);
+				console.log(data.ayCredits);
+				console.log(data.gradedCourse.length);
+			}
+		
+		});
+	    
+	    
+	});
+});
+
+</script>
 </body>
 </html>
