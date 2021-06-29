@@ -31,27 +31,6 @@ th, td {
 </head>
 <body>
 	<h1>View Student Performance</h1>
-	<div class="year-dropdown">
-	<form>
-		<label for="year">Year: </label>
-		<select id='date-dropdown'>
-  		</select>
-  		<script>
-    		let dateDropdown = document.getElementById('date-dropdown');
-
-    		let currentYear = new Date().getFullYear();
-    		let earliestYear = 2018;
-
-    		while (currentYear >= earliestYear) {
-      			let dateOption = document.createElement('option');
-      			dateOption.text = currentYear;
-      			dateOption.value = currentYear;
-      			dateDropdown.add(dateOption);
-      			currentYear -= 1;
-      		}
-  		</script>
-	</form>
-	</div>
 	<br>
 	<div class="course-dropdown">
 	<select th:field="${courses}">
@@ -59,9 +38,9 @@ th, td {
 	</select>	
 	</div>
 	<br>
-	
-	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
-	<p th:text="'Total Records: ' + ${studentgrade.size()}">Total Records</p>
+		<p th:text="'Total Records: ' + ${studentgrade.size()}">Total Records</p>
+			<a href ="logout"><button>Logout</button></a>
+	<br>
 	<table id="students">
 	<tr>
 			<!-- <th>Student ID</th> -->

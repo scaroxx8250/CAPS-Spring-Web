@@ -21,7 +21,8 @@ th, td {
 </head>
 <body>
 	<h1>View Courses Taught</h1>
-	<h3 th:text="'Total Records: ' + ${courses.size()}">Total Records</h3>
+	<a href ="logout"><button>Logout</button></a>
+	<br>
 <!-- 	<table id="listCourses" th:if="${not #lists.isEmpty(courses)}">
  -->	<table id="courses">
 	<tr>
@@ -40,7 +41,7 @@ th, td {
 <div th:if = "${totalPages > 1}">
 	<div>
 		<div>
-			Total Rows: [[${totalItems}]]
+			Total Records: [[${totalItems}]]
 		</div>	
 		<div>
 			<span th:each="i: ${#numbers.sequence(1, totalPages)}">

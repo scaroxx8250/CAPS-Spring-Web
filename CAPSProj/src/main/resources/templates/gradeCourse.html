@@ -38,9 +38,8 @@ th, td {
 	</select>	
 	</div>
 	<br>
-	
-	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
-	<p th:text="'Total Records: ' + ${studentGrade.size()}">Total Records</p>
+		<a href ="logout"><button>Logout</button></a>
+	<br>
 	<form action="#" th:object="${studentGrade}" th:action="@{/lecturer/GradeCourse/save}" method="post">
 	<table id="students">
 	<tr>
@@ -66,7 +65,7 @@ th, td {
 	<div th:if = "${totalPages > 1}">
 	<div>
 		<div>
-			Total Rows: [[${totalItems}]]
+			Total Records: [[${totalItems}]]
 		</div>	
 		<div>
 			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
