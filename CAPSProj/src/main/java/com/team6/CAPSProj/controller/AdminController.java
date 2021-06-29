@@ -47,7 +47,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/studentlist")
 	public String listStudent(Model model) {
-		model.addAttribute("students", stservice.findAllStudents());
+		model.addAttribute("studentlist", stservice.findAllStudents());
 		return "admin_student_manage";
 	}
 	

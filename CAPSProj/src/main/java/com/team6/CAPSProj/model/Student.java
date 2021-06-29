@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,7 +41,7 @@ public class Student {
 	private String password;
 
 	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@NotEmpty
+	@NotNull
 	private LocalDate matrDate;
 	
 	
