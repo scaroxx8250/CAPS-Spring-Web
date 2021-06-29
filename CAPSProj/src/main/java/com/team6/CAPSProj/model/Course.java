@@ -10,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,20 +24,27 @@ public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int courseId;
-
+	@NotEmpty
 	private String courseName;
 
+	@NotEmpty
 	private String description;
 
 	private Faculty faculty;
 
+	@Max(15)
+	@NotNull
 	private int credits;
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	
+	@NotNull
+	@DateTimeFormat (pattern="dd/MM/yyyy")
 	private LocalDate courseStartDate;
 	
 	@ManyToOne
 	private Lecturer lecturer;
 
+	@Max(80)
+	@NotNull
 	private int size;
 	
 	private CourseOccupancy courseOccupancy = CourseOccupancy.NOTFULL;

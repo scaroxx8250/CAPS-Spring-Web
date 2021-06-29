@@ -2,6 +2,9 @@ package com.team6.CAPSProj.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.team6.CAPSProj.model.Student;
 
 public interface StudentInterface {
@@ -18,5 +21,7 @@ public interface StudentInterface {
 	public String findFirstNameByStudentId(Integer id);
 	public String findLastNameByStudentId(Integer id);
 	public Student findStudentByStudentId(Integer id);
+	Page<Student> findAllPaginatedNotEnrolledStudentsByCourse(int pageNo, int pageSize, Integer courseId);
+
 
 }

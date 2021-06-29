@@ -1,0 +1,108 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>template</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	    
+  <div class = "container">
+    <div id="top_grid1">Top Grid Cell 1</div>
+    <div id="top_grid2">Top Grid Cell 2</div>
+    <div id="top_grid3">Top Grid Cell 3</div>
+    <div id="top_grid4">Top Grid Cell 4</div>
+    <nav>
+          <div th:replace="fragments/general.html :: menu"></div>
+    </nav>
+    <main>
+		<div class="form-outline">
+		  <input type="search" id="form1" class="form-control" placeholder="Type query"
+		  aria-label="Search" />
+		</div>
+		
+		
+		<fieldset>
+			<select id="courseNameDropdown" class = "example">
+			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
+			</select>
+			&nbsp; &nbsp;
+			<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"> Add Student </a>
+			
+<!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
+			
+			<br>
+			<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/{Id} (Id=${id})}" > Show enrolled Students</a>
+		</fieldset>
+		
+		<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
+		sel.onchange = function () {
+	    	document.getElementById("addstudent").href = "/admin/addenrolment/" + this.value + "/1";
+	    	document.getElementById("showenrolledstudents").href = "/admin/enrolmentlist/" + this.value;
+		}
+		var id = /*[[${id}]]*/
+			document.getElementById("courseNameDropdown").selectedIndex = id;
+		</script>
+		
+		
+<!-- 		<table> -->
+<!-- 			<tr> -->
+<!-- 			<td> -->
+<!-- 			Select course:  -->
+<!-- 			</td> -->
+<!-- 			<td> -->
+<!-- 			<select class="course-dropdown" id="courseNameDropdown" name="courseName" value = "ADProject"> -->
+<!-- 				<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:text="${course.getCourseName()}"/> -->
+<!-- 			</select> -->
+<!-- 			</td> -->
+<!-- 			<td> -->
+<!-- 			<a id="addstudent" href="ADProject" > Add Student </a> -->
+<!-- 			</td> -->
+<!-- 			</tr> -->
+<!-- 		</table> -->
+		<br>
+		<h4>Enrolled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
+	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
+			<tr >
+				<th>Matriculation Number</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Matriculation Date</th>
+				<th></th>
+			</tr>
+			<tr th:each="student:${studentlist}" >
+				<td th:text=${student.matricNo}>matricNo</td>
+				<td th:text="${student.firstName}">firstName</td>
+				<td th:text=${student.lastName}>lastName</td>
+				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
+				<td>
+						<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}"> 
+        					<button type="button">Edit</button> 
+   						</a>
+		
+					    <a th:href="@{/admin/deletestudent/{Id}(Id=${student.matricNo})}"> 
+        					<button type="button">Delete</button> 
+   						</a>
+				</td>
+			</tr>
+		</table>
+    </main>
+    <footer>Footer</footer>
+  </div>
+  
+  
+  
+  
+  
+  	<!-- <script>var sel = document.getElementById('courseNameDropdown');
+	sel.onchange = function () {
+	    document.getElementById("addstudent").href = "addenrolment" + "/" + this.value;   
+	}
+	document.getElementById("courseNameDropdown").selectedIndex = -1;
+	</script> -->
+	
+	
+</body>
+</html>
