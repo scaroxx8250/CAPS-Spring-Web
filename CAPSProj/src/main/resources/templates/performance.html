@@ -54,8 +54,8 @@ th, td {
 	</div>
 	<br>
 	<div class="course-dropdown">
-	<select id="courseNameDropdown" name="courseName">
-		<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:utext="${course.getCourseName()}" th:selected="${course.getCourseName()}"/>
+	<select th:field="${courses}">
+		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
 	</select>	
 	</div>
 	<br>
@@ -82,7 +82,6 @@ th, td {
    			</td>
 	</tr>
 	</table>
-	
 
 </body>
 </html>

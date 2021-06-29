@@ -37,4 +37,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 			+ "AND course.course_occupancy = 0", nativeQuery = true)
 	Page<Course> findAllNotEnrolledCoursesByStudentByPage(@Param("studentId") int studentId, Pageable pageable);
 	
+	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId")
+	Page<Course> findCourseByLecturerByPage(@Param("lecId") Integer lecId, Pageable pageable);
+	
 }

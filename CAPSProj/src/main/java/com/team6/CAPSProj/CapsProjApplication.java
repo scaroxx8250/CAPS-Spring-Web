@@ -83,8 +83,8 @@ public class CapsProjApplication {
 			Student s6 = new Student("e156789","Luo","ChengHao", "sharonLim@gmail.com","e1567894@u.nus.edu", "678", LocalDate.of(2021, 6, 22));
 			srepo.save(s1);srepo.save(s2);srepo.save(s3);srepo.save(s4);srepo.save(s5);srepo.save(s6);
 			 
-			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
-			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com",null, null);
+			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", "francis@u.nus.edu", "francis");
+			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com","tin@u.nus.edu", "tin");
 			
 			lservice.addLecturer(l1);
 			lservice.addLecturer(l2);

@@ -51,69 +51,127 @@ public class LecturerController {
 //		this.linterface = lserviceImpl;
 //	}
 	
-	@RequestMapping(value = "/Courses")
-	public String listCourses (HttpSession session, Model model ) {
-		//Lecturer l = (Lecturer) session.getAttribute("usession");
-		//int lecturerId = l.getLecturerId();
-		int lecturerId = 2;
-		List<Course> courselist = cinterface.findCoursesByLecturerId(lecturerId);
+	@RequestMapping(value="/Courses")
+	public String listCourses(Model model, HttpSession session) {
+		return listCourses(1, session, model);
+	}
+	
+	// View list of courses 
+	@RequestMapping(value = "/Courses/{pageNo}")
+	public String listCourses (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model ) {
+		// get session
+		Lecturer l = (Lecturer) session.getAttribute("usession");
+		// session not found
+		if(l == null) {
+			return "redirect:/home";
+		}
+		
+		int pageSize = 5; 
+
+		Page<Course> page = cinterface.findAllPaginatedCoursesByLecturerId(pageNo, pageSize, l.getLecturerId());
+		List<Course> courselist = page.getContent();
 		int studentsEnrolled = 0;
+		// instantiate hash map
 		Map<Course, Integer> map = new HashMap<>();
+		// for each course in the list of courses
 		for (Course c : courselist) {
+			// get total number of enrolled students 
 			studentsEnrolled = scinterface.CountTotalStudentEnrol(c.getCourseId());
+			// put course(key) and number of enrolled students(value) into hash map 
 			map.put(c, studentsEnrolled);
 		}
 		model.addAttribute("courses", map);
 		
+		int totalPages = page.getTotalPages(); 
+		long totalItems = page.getTotalElements(); 
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("totalItems",totalItems);
+		
 		return "courses";
 	}
 	
-	@RequestMapping(value = "/CourseEnrolment")
-	public String listCourseEnrolment (Model model) {
-		//int lecturerId = lecturer.getLecturerId(); 
-			
-		int lecturerId = 2; 
-		List<Course> courselist = cinterface.findCoursesByLecturerId(lecturerId);
+	@RequestMapping(value="/CourseEnrolment")
+	public String listCourseEnrolment(Model model, HttpSession session) {
+		return listCourseEnrolment(1, session, model);
+	}
+	
+	// View Course Enrolment (No. of students enrolled in a course)
+	@RequestMapping(value = "/CourseEnrolment/{pageNo}")
+	public String listCourseEnrolment (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model) {
+		Lecturer l = (Lecturer) session.getAttribute("usession");	
+		if(l == null) {
+			return "redirect:/home";
+		}
+		
+		int pageSize = 5; 
+		
+		// find list of courses that lecturer teaches 
+		List<Course> courselist = cinterface.findCoursesByLecturerId(l.getLecturerId());
 		model.addAttribute("courses", courselist);
 		
-		List<StudentCourse> studentslist = scinterface.findAllStudentsByCourse("SCI101");
-		List<Student> students  = new ArrayList<Student>(); 
+		if(courselist.iterator().hasNext()) {
+			// iterate through the course list to get a singular course 
+			Course course = courselist.iterator().next();
+		
+		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course.getCourseName());
+		List<StudentCourse> studentslist = page.getContent(); 
+		List<Student> students  = new ArrayList<Student>();
+		// get all students in the course 
 		for (StudentCourse sc: studentslist) {
+			// add them into a student list 
 			students.add(sc.getStudent());
 		}
 		model.addAttribute("students", students);
 		
+		int totalPages = page.getTotalPages(); 
+		long totalItems = page.getTotalElements(); 
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("totalItems",totalItems);
+		
+		}
 		return "enrolment"; 
 	}
 	
+	// View Student Performance for a course 
 	@RequestMapping(value="/StudentPerformance")
-	public String listPerformance (Model model) {
-		List<Course> courselist = cinterface.findCoursesByLecturerId(2); 
+	public String listPerformance (HttpSession session, Model model) {
+		Lecturer l = (Lecturer) session.getAttribute("usession");		
+		if(l == null) {
+			return "redirect:/home";
+		}
+		
+		// Get list of courses taught by lecturer (user) 
+		List<Course> courselist = cinterface.findCoursesByLecturerId(l.getLecturerId()); 
 		model.addAttribute("courses", courselist);
-		String coursename = null;
-		for (Course c: courselist)
-		{
-			if (c.getCourseName().equals("SCI101")) {
-				coursename = "SCI101";
-				List<StudentCourse> studentcourse = scinterface.findAllStudentsByCourse(coursename);
+		if(courselist.iterator().hasNext()) {
+			Course course = courselist.iterator().next();
+				List<StudentCourse> studentcourse = scinterface.findAllStudentsByCourse(course.getCourseName());
 				List<Student> students = new ArrayList<Student>(); 
-				Map<Student, Double> studentGrade = new HashMap<>();
 				for (StudentCourse sc : studentcourse) {
+					// get all students in the course and add them to a list 
 					students.add(sc.getStudent());
 				}
 				model.addAttribute("students", students);
-				
+		
+				Map<Student, Double> studentGrade = new HashMap<>();
+				// for each student in the course, get their grades 
 				for (Student s: students) {
-					double grade = scinterface.findGradeByStudentAndCourse(s, c);
-					studentGrade.put(s, grade);
+				     StudentCourse selectedSc = scinterface.findGradeByStudentAndCourse(s, course);
+		
+					if( selectedSc.getGrade() !=null) {
+						studentGrade.put(s, selectedSc.getGrade());
+					}
+					
 				}			
 				
 				model.addAttribute("studentgrade", studentGrade);
 			}
-		}
-
+		
 		return "performance"; 
 	}
+	
 	@RequestMapping(value="/GradeCourse")
 	public String listGrades (Model model, HttpSession session) {
 		return listGrades(1, session, model);
@@ -124,29 +182,27 @@ public class LecturerController {
 	public String listGrades (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model) {
 		
 		Lecturer l = (Lecturer) session.getAttribute("usession");
+		if(l == null) {
+			return "redirect:/home";
+		}
 		
-		// session not found
-//				if(l == null) {
-//					return "redirect:/home"; 
-//				}
+		// 5 records displayed on one page 
 		int pageSize = 5;
-	
-		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(),2); 
+		// get all courses taught by lecturer of current year 
+		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(),l.getLecturerId()); 
 		model.addAttribute("courses", courselist);
 		
 		if(courselist.iterator().hasNext()) {
 			Course course = courselist.iterator().next();
-
-			//String courseName = course.getCourseName();
 			
-			Page<StudentCourse>page = scinterface.findAllPaginatedStudentsByLecturer(pageNo, pageSize, 2, course);
+			// find all students according to page number and size 
+			Page<StudentCourse>page = scinterface.findAllPaginatedStudentsByLecturer(pageNo, pageSize, l.getLecturerId(), course);
 			List<StudentCourse> studentGrade =  page.getContent();
 			int totalPages = page.getTotalPages();
 			long totalItems = page.getTotalElements();
 			model.addAttribute("currentPage", pageNo);
 			model.addAttribute("totalPages",totalPages);
 			model.addAttribute("totalItems",totalItems);
-			//ArrayList<StudentCourse> studentGrade = (ArrayList<StudentCourse>) scinterface.findAllStudentsByCourse(courseName);
 			
 			CourseGrades cg = new CourseGrades(new ArrayList<StudentCourse>());
 			
@@ -160,8 +216,11 @@ public class LecturerController {
 	}
 	
 	@RequestMapping(value="/GradeCourse/save")
-	public String saveGrade(@ModelAttribute("studentGrade") @Valid CourseGrades courseGrade, BindingResult bindingResult, Model model) {
-		
+	public String saveGrade(@ModelAttribute("studentGrade") @Valid CourseGrades courseGrade, BindingResult bindingResult, HttpSession session, Model model) {
+		Lecturer l = (Lecturer) session.getAttribute("usession");	
+		if(l == null) {
+			return "redirect:/home";
+		}
 		if(bindingResult.hasErrors()) {
 			return "gradeCourse"; 
 		}
@@ -175,9 +234,14 @@ public class LecturerController {
 	}
 	
 	@RequestMapping(value="/StudentPerformance/detail/{id}")
-	public String listPerformanceDetails (@PathVariable("id")int id, Model model) {
-
-		List<StudentCourse> scourses = scinterface.findAllCoursesByStudent(id);
+	public String listPerformanceDetails (@PathVariable("id")int id, Model model, HttpSession session) {
+		Lecturer l = (Lecturer) session.getAttribute("usession");	
+		if(l == null) {
+			return "redirect:/home";
+		}
+		
+		// find all courses that selected student is enrolled in 
+		List<StudentCourse> scourses = scinterface.findAllGradedCoursesByStudent(id);
 				
 		String firstName = sinterface.findFirstNameByStudentId(id);
 		model.addAttribute("firstName", firstName); 

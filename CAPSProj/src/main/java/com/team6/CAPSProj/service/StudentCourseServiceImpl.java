@@ -71,14 +71,14 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		return sc; 	
 	}
 	
-	public double findGradeByStudentAndCourse(Student student, Course course) {
-		StudentCourse retrieved = screpo.findByCourseIdAndStudentId(course, student).get(0);
-		double grade = retrieved.getGrade();
-		return grade; 
+	public StudentCourse findGradeByStudentAndCourse(Student student, Course course) {
+		if(screpo.findByCourseIdAndStudentId(course, student)!=null) {
+		return screpo.findByCourseIdAndStudentId(course, student). get(0);
+		}
+		return null;
+		 
 	}
 
-
-	
 	public void addStudentToCourse(Course course, Student student) {
 		// Can only add student to a course if the course has not yet started
 		// i.e. courseStartDate is later than the current date
@@ -139,11 +139,20 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 	}
 	
 
-
-
 	public Page<StudentCourse> findAllPaginatedStudentsByLecturer(int pageNo, int pageSize, Integer lecturerId, Course course) {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		return screpo.findAllStudentsByLecturerByPage(course,lecturerId, LocalDate.now().getYear(), pageable);
+	}
+	
+	public Page<StudentCourse>findAllPaginatedStudentsByCourse(int pageNo, int pageSize, String CourseName){
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		Course course = crepo.findByCourseNameWithCurrentYear(CourseName,LocalDate.now().getYear());
+		return screpo.findAllStudentsByCourseByPage(course, LocalDate.now().getYear(), pageable);
+	}
+	
+	public List<StudentCourse> findAllGradedCoursesByStudent(Integer studentId) {
+		Student student = srepo.findByStudentId(studentId);
+		return screpo.findAllGradedCoursesByStudent(student);
 	}
 
 }

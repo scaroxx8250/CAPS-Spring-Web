@@ -117,5 +117,10 @@ public class CourseServiceImpl implements CourseInterface {
 		return crepo.findAll();
 	}
 	
+	public Page<Course> findAllPaginatedCoursesByLecturerId(int pageNo, int pageSize, int lecturerId) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return crepo.findCourseByLecturerByPage(lecturerId, pageable);
+	}
+	
 }
 

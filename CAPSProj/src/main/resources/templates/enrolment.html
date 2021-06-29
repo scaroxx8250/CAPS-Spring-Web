@@ -54,8 +54,8 @@ th, td {
 	</div>
 	<br>
 	<div class="course-dropdown">
-	<select id="courseNameDropdown" name="courseName">
-		<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:utext="${course.getCourseName()}" th:selected="${course.getCourseName()}"/>
+	<select th:field="${courses}">
+		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
 	</select>	
 	</div>
 	<br>
@@ -64,6 +64,8 @@ th, td {
 	<br>
 	<a href="" th:href="@{/lecturer/GradeCourse}"><button>Grade this course</button></a>
 	<br>
+	<p th:text="'Total Records: ' + ${students.size()}">Total Records</p>
+	
 	
 	<table id="students">
 	<tr>
@@ -82,15 +84,19 @@ th, td {
    				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.studentId}"><button>Select</button></a>
    			</td>
  	</tr>
-</table>
-<script>
-var rows = document.getElementById("students").rows
-var count = 0;
-for (var i=0; i< rows.length; i++) {
-    if (rows[i].cells[0].tagName != 'th') 
-    	count++
-}
-console.log(count)
-</script>
+	</table>
+		<div th:if = "${totalPages > 1}">
+	<div>
+		<div>
+			Total Rows: [[${totalItems}]]
+		</div>	
+		<div>
+			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+				<a th:if="${currentPage != i}" th:href="@{'/lecturer/CourseEnrolment/' + ${i}}">[[${i}]]</a>
+				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+			</span>
+		</div>	
+	</div>
+</div>
 </body>
 </html>
