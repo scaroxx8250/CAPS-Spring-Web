@@ -18,7 +18,7 @@
 	    </nav>
 	    <main>
 			<h3>Edit Course</h3>
-			<form action="" th:object="${course}" th:action="@{/admin/savecourse}" method="get">
+			<form action="" th:object="${course}" th:action="@{/admin/editcourse/save}" method="get">
 			    <fieldset>
 				     <input type="hidden" th:field="*{courseId}">  
 				</fieldset>
