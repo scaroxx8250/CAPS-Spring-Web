@@ -25,11 +25,42 @@ th, td {
   border: 1px solid #ddd;
   margin-bottom: 12px;
 }
+
+.topnav {
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.topnav a {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #1764DD;
+  color: white;
+}
 </style>
 <meta charset="ISO-8859-1">
 <title>View Student Performance</title>
 </head>
 <body>
+<div class="topnav">
+  <a href="Courses">View Courses Taught</a>
+  <a href="CourseEnrolment">View Course Enrolment</a>
+  <a href="GradeCourse">Grade a Course</a>
+  <a class="active" href="StudentPerformance">View Student Performance</a>
+  <a href="logout">Logout</a>
+</div>
 	<h1>View Student Performance</h1>
 	<br>
 	<div class="course-dropdown">
@@ -39,7 +70,6 @@ th, td {
 	</div>
 	<br>
 		<p th:text="'Total Records: ' + ${studentgrade.size()}">Total Records</p>
-			<a href ="logout"><button>Logout</button></a>
 	<br>
 	<table id="students">
 	<tr>

@@ -62,10 +62,13 @@ public class LecturerController {
 	public String listCourses (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model ) {
 		// get session
 		Lecturer l = (Lecturer) session.getAttribute("usession");
+
 		// session not found
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		int pageSize = 5; 
 
@@ -104,6 +107,8 @@ public class LecturerController {
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		int pageSize = 5; 
 		
@@ -142,6 +147,8 @@ public class LecturerController {
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		// Get list of courses taught by lecturer (user) 
 		List<Course> courselist = cinterface.findCoursesByLecturerId(l.getLecturerId()); 
@@ -186,6 +193,8 @@ public class LecturerController {
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		// 5 records displayed on one page 
 		int pageSize = 5;
@@ -240,6 +249,8 @@ public class LecturerController {
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		// find all courses that selected student is enrolled in 
 		List<StudentCourse> scourses = scinterface.findAllGradedCoursesByStudent(id);
