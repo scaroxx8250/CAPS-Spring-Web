@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<style>
-table, td, th {  
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  padding: 15px;
-}
-
-#input {
-  background-position: 10px 12px;
-  background-repeat: no-repeat;
-  width: 25%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-}
-</style>
 <meta charset="ISO-8859-1">
 <title>View Student Performance</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<h1>View Student Performance</h1>
+<div class = "container">
+    <heading><div th:replace="fragments/general::heading"></div></heading>
+    <div id="top_grid1"><b>Welcome, </b></div>
+    <div id="top_grid2"></div>
+    <div id="top_grid3"></div>
+    <div id="top_grid4"><input type="button" value="Logout"
+					onclick="window.location.href='/admin/studentlist'; return false"
+					class="button-logout" />
+	</div>
+    <nav>
+    	<div th:replace="fragments/general.html :: admin-menu"></div>
+    </nav>
+    <page-title>
+    	<h1>View Student Performance</h1>
+    </page-title>
+    <main>
 	<div class="year-dropdown">
 	<form>
 		<label for="year">Year: </label>
@@ -54,48 +47,49 @@ th, td {
 	</div>
 	<br>
 	
+	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
 	<p th:text="'Student ID: ' + ${id}"></p>
 	<p th:text="'Student Name: ' + ${firstName} + ' ' + ${lastName}"></p>
 	<p th:text="'Total Records: ' + ${size}">Total Records</p>
-		<a href ="logout"><button>Logout</button></a>
-	<br>
-	<table id="courses">
-	<tr>
-			<!-- <th>Student ID</th> -->
-			<th>Course ID</th>
-			<th>Course Name</th>
-			<th>Credits</th>
-			<th>Grade</th>
-			<th>Course Start Date</th>
-	</tr>
-	 <tr th:each="course : ${studentGrade}" class="table-row">
-			<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
-			<td th:text=${course.key.courseId}>Course ID</td>
-			<td th:text=${course.key.courseName}>Course Name</td>
-			<td th:text=${course.key.credits}>Credits</td>
-			<td th:text=${course.value}>Grade</td>
-			<td th:text="${#temporals.format(course.key.courseStartDate, 'dd-MM-yyyy')}">Course Start Date</td> 
-	</tr>
-	</table>
-	<br>
-	<table id="grades" style="width:25%">
-	<tr>
-		<td th:text="'AY Credits:'"></td>
-		<td th:text=${ayCredits}>AY Credits</td>
-	</tr>
-	<tr>
-		<td th:text="'AY GPA:'"></td>
-		<td th:text=${ayGPA}>AY GPA</td>
-	</tr>
-	<tr>
-		<td th:text="'Cumulative Credits:'"></td>
-		<td th:text=${cuCredits}>Cumulative Credits</td>
-	</tr>
-		<td th:text="'Cumulative GPA:'"></td>
-		<td th:text=${cuGPA}>Cumulative GPA</td>
-	</tr>
-	</table>
+		<table id="courses" class="table">
+		<tr>
+				<!-- <th>Student ID</th> -->
+				<th>Course ID</th>
+				<th>Course Name</th>
+				<th>Credits</th>
+				<th>Grade</th>
+				<th>Course Start Date</th>
+		</tr>
+		 <tr th:each="course : ${studentGrade}" class="table-row">
+				<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
+				<td th:text=${course.key.courseId}>Course ID</td>
+				<td th:text=${course.key.courseName}>Course Name</td>
+				<td th:text=${course.key.credits}>Credits</td>
+				<td th:text=${course.value}>Grade</td>
+				<td th:text="${#temporals.format(course.key.courseStartDate, 'dd-MM-yyyy')}">Course Start Date</td> 
+		</tr>
+		</table>
+		<br>
+		<table id="grades" style="width:25%">
+		<tr>
+			<td th:text="'AY Credits:'"></td>
+			<td th:text=${ayCredits}>AY Credits</td>
+		</tr>
+		<tr>
+			<td th:text="'AY GPA:'"></td>
+			<td th:text=${ayGPA}>AY GPA</td>
+		</tr>
+		<tr>
+			<td th:text="'Cumulative Credits:'"></td>
+			<td th:text=${cuCredits}>Cumulative Credits</td>
+		</tr>
+			<td th:text="'Cumulative GPA:'"></td>
+			<td th:text=${cuGPA}>Cumulative GPA</td>
+		</tr>
+		</table>
+    </main>
 
+    <footer><div th:replace="fragments/general::footer"></div></footer>
 
 </body>
 </html>
