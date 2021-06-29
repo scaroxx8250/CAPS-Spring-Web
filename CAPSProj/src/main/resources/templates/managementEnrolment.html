@@ -29,7 +29,7 @@
 			Select course: 
 			</td>
 			<td>
-			<select class="course-dropdown" id="courseNameDropdown" name="courseName" value = "ADProject">
+			<select class="course-dropdown" id="courseNameDropdown" name="courseName">
 				<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:text="${course.getCourseName()}"/>
 			</select>
 			</td>
@@ -39,7 +39,7 @@
 			</tr>
 		</table>
 
-	    <table th:if="${not #lists.isEmpty(students)}" class="table">
+	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
 				<th>First Name</th>
@@ -47,7 +47,7 @@
 				<th>Matriculation Date</th>
 				<th></th>
 			</tr>
-			<tr th:each="student:${students}" >
+			<tr th:each="student:${studentlist}" >
 				<td th:text=${student.matricNo}>matricNo</td>
 				<td th:text="${student.firstName}">firstName</td>
 				<td th:text=${student.lastName}>lastName</td>
@@ -63,29 +63,9 @@
 				</td>
 			</tr>
 		</table>
-
-
-
-
-
-
-	    <table th:if="${not #lists.isEmpty(lecturers)}" class="table">
-			<tr >
-				<th>First Name</th>
-				<th>Last Name</th>
-			</tr>
-			<tr th:each="student :${student_course}" >
-				<td th:text=${student_course.getStudent().getFirstName()}>firstName</td>
-				<td th:text="${student_course.getStudent().getLastName}">lastName</td>
-			</tr>
-		</table>
     </main>
     <footer>Footer</footer>
   </div>
-  
-  
-  
-  
   
   	<script>var sel = document.getElementById('courseNameDropdown');
 	sel.onchange = function () {
@@ -93,7 +73,6 @@
 	}
 	document.getElementById("courseNameDropdown").selectedIndex = -1;
 	</script>
-	
 	
 </body>
 </html>

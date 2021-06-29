@@ -24,7 +24,7 @@
 	    <input type="button" value="Add Student"
 					onclick="window.location.href='/admin/addstudent'; return false"
 					class="button" />
-	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
+	    <table th:if="${not #lists.isEmpty(students)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
 				<th>First Name</th>
@@ -32,7 +32,7 @@
 				<th>Matriculation Date</th>
 				<th></th>
 			</tr>
-			<tr th:each="student:${studentlist}" >
+			<tr th:each="student:${students}" >
 				<td th:text=${student.matricNo}>matricNo</td>
 				<td th:text="${student.firstName}">firstName</td>
 				<td th:text=${student.lastName}>lastName</td>
