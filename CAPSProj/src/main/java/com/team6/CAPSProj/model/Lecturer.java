@@ -7,15 +7,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Lecturer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int lecturerId;
+	@NotEmpty
 	private String firstName;
+	@NotEmpty
 	private String lastName;
 	private Faculty faculty;
+	@Email
+	@NotEmpty
 	private String personalEmail;
 	private String email;
 	private String password;
