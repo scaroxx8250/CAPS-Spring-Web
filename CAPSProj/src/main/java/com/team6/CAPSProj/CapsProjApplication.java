@@ -11,11 +11,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.team6.CAPSProj.model.Admin;
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
+import com.team6.CAPSProj.repo.AdminRepository;
 import com.team6.CAPSProj.repo.CourseRepository;
 import com.team6.CAPSProj.repo.LecturerRepository;
 import com.team6.CAPSProj.repo.StudentCourseRepository;
@@ -34,7 +36,8 @@ public class CapsProjApplication {
 	StudentRepository srepo;
 	@Autowired
 	CourseRepository crepo;
-
+	@Autowired
+	AdminRepository adrepo;
 	
 	@Autowired
 	private CourseInterface cservice;
@@ -69,12 +72,18 @@ public class CapsProjApplication {
 		SpringApplication.run(CapsProjApplication.class, args);
 		
 	}
+
 	public DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  
 	@Bean
 	@Transactional
 	CommandLineRunner runner() {
 		return args ->{
 			LocalDate ld = LocalDate.parse("2021-05-22",df);
+
+			Admin ad1 = new Admin("admin","admin","admin@gmail.com","admin");
+			adrepo.save(ad1);
+
 			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
 			Student s2 = new Student("e100001","Tan","Sharon", "sharonTan@gmail.com","e100024@u.nus.edu", "1234", LocalDate.of(2021, 6, 22));
 			Student s3 = new Student("e100002","Lim","Sharon", "sharonLim@gmail.com","e112024@u.nus.edu", "1234", LocalDate.of(2021, 6, 22));
@@ -85,7 +94,7 @@ public class CapsProjApplication {
 			 
 			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
 			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com",null, null);
-			
+
 			lservice.addLecturer(l1);
 			lservice.addLecturer(l2);
 			
@@ -96,7 +105,7 @@ public class CapsProjApplication {
 			Course c4 = new Course("SA4105", "SQL", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11), 2);
 			Course c5 = new Course("SA4108", "Python", Faculty.COMPUTING, 5,LocalDate.of(2020, 07, 11),l2, 2);
 			Course c6 = new Course("SA4106", "Java", Faculty.COMPUTING, 5,LocalDate.of(2019, 03, 10),l2, 2);
-			
+
 			// Student 1 enrolled courses (total 6)
 			Course c7 = new Course("SA4107", "C#", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11), l2, 2);
 			Course c8 = new Course("SA4102", "OOP", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
@@ -152,16 +161,15 @@ public class CapsProjApplication {
 			StudentCourse sc12 = new StudentCourse(s1, c11,null);
 			StudentCourse sc13 = new StudentCourse(s1, c12,null);
 			
-			
 			StudentCourse sc14 = new StudentCourse(s2, c2,null);
 			StudentCourse sc15 = new StudentCourse(s3, c2,null);
 			StudentCourse sc16 = new StudentCourse(s4, c2,null);
 			StudentCourse sc17 = new StudentCourse(s5, c2,null);
 			StudentCourse sc18 = new StudentCourse(s6, c2,null);
 			
+
 			// Whenever you add a studentCourse, do not add directly using screpo.save()
 			// Add through addStudentToCourse()
-			
 			scservice.addStudentToCourse(c1, s1);
 			scservice.addStudentToCourse(c2, s1);
 			scservice.addStudentToCourse(c3, s1);
@@ -191,7 +199,7 @@ public class CapsProjApplication {
 //			screpo.save(sc11);
 //			screpo.save(sc12);
 //			screpo.save(sc13);
-			
+//			
 //			scservice.addStudentToCourse(c13, s3);
 //			scservice.addStudentToCourse(c13, s2);
 //			scservice.addStudentToCourse(c13, s1);
@@ -200,7 +208,7 @@ public class CapsProjApplication {
 //			
 //			StudentCourse sc1 = new StudentCourse(s1, c1, B );
 //			screpo.save(sc1);
-			
+//			
 //			Book b1 = new Book("Spring Boot");
 //	        Book b2 = new Book("Spring Data JPA");
 //	        bookRepository.saveAll(Arrays.asList(b1, b2));
@@ -214,7 +222,7 @@ public class CapsProjApplication {
 //	        BookPublisher bp3 = new BookPublisher(b2, p1, new Date());
 //	        BookPublisher bp4 = new BookPublisher(b2, p2, new Date());
 //	        bookPublisherRepository.saveAll(Arrays.asList(bp1, bp2, bp3, bp4));
-			
+//			
 //			DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 //			LocalDate dt = LocalDate.parse("23/05/2021",df);
 //			

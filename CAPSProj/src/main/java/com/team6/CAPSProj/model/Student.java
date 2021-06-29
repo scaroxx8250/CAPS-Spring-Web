@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -41,8 +40,8 @@ public class Student {
 
 	private String password;
 
-	//@DateTimeFormat(pattern="dd/MM/yyyy")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@NotNull
 	private LocalDate matrDate;
 	

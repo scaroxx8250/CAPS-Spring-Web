@@ -17,7 +17,7 @@
     </nav>
     <main>
 		<h3>Add Course</h3>
-		<form action="#" th:object="${course}" th:action="@{/admin/savecourse}"
+		<form action="#" th:object="${course}" th:action="@{/admin/addcourse/save}"
 			method="post">
 			<fieldset>
 				CourseName: <input type="text" th:field="*{courseName}">

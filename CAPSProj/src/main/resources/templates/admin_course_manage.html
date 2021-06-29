@@ -44,11 +44,11 @@
 				<td th:text="${course.size}">Size</td>
 				<td th:text="${course.Lecturer.firstName} + ' ' + ${course.Lecturer.lastName}">Lecturer Name</td>
 				<td>
-						<a th:href="@{/admin/editcourse/{Id}(Id=${course.courseName})}"> 
+						<a th:href="@{/admin/editcourse/{Id}(Id=${course.courseId})}"> 
         					<button type="button">Edit</button> 
    						</a>
 		
-					    <a th:href="@{/admin/deletecourse/{Id}(Id=${course.courseName})}"> 
+					    <a th:href="@{/admin/deletecourse/{Id}(Id=${course.courseId})}"> 
         					<button type="button">Delete</button> 
    						</a>
 				</td>

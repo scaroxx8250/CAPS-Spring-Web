@@ -37,14 +37,18 @@ public class Course {
 	private int credits;
 	
 
+
 	@DateTimeFormat (pattern="yyyy-MM-dd")
 	@NotNull
+
 	private LocalDate courseStartDate;
 	
 	@ManyToOne
 	private Lecturer lecturer;
 
-	@Max(15)
+
+@Max(80)
+
 	@NotNull
 	private int size;
 	
