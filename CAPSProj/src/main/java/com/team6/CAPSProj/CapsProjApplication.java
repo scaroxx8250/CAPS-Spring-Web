@@ -72,16 +72,17 @@ public class CapsProjApplication {
 		SpringApplication.run(CapsProjApplication.class, args);
 		
 	}
-	public DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+	public DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 	@Bean
 	@Transactional
 	CommandLineRunner runner() {
 		return args ->{
-
-			
+			LocalDate ld = LocalDate.parse("2021-05-22",df);
 			Admin ad1 = new Admin("admin","admin","admin@gmail.com","admin");
 			adrepo.save(ad1);
-			LocalDate ld = LocalDate.parse("22/05/2021",df);
+
 			Student s1 = new Student("e123456","Wong","Jireh", "jirehWong@gmail.com","e123456@u.nus.edu", "5678", LocalDate.of(2021, 6, 22));
 			Student s2 = new Student("e100001","Tan","Sharon", "sharonTan@gmail.com","e100024@u.nus.edu", "1234", LocalDate.of(2021, 6, 22));
 			Student s3 = new Student("e100002","Lim","Sharon", "sharonLim@gmail.com","e112024@u.nus.edu", "1234", LocalDate.of(2021, 6, 22));
