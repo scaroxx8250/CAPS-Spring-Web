@@ -48,6 +48,7 @@ public class AdminController {
 		
 
 	@RequestMapping(value = "/studentlist")
+
 	public String listStudent(Model model, HttpSession session) {
 		Admin ad = (Admin) session.getAttribute("usession");
 		if (ad == null)
@@ -55,6 +56,9 @@ public class AdminController {
 			return "redirect:/home";
 		}
 		else {
+
+	public String listStudent(Model model) {
+
 		model.addAttribute("studentlist", stservice.findAllStudents());
 		return "admin_student_manage";
 		}
