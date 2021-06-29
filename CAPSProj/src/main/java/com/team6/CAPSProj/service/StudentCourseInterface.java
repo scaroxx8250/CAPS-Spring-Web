@@ -24,5 +24,6 @@ public interface StudentCourseInterface {
 	Page<StudentCourse> findAllPaginatedCoursesByStudent(int pageNo, int pageSize, Integer studentId);
 	Page<StudentCourse>findAllPaginatedStudentsByLecturer(int pageNo, int pageSize,Integer lecturerId, Course course);
 	Page<StudentCourse>findAllPaginatedStudentsByCourse(int pageNo, int pageSize, String CourseName);
+	public List<StudentCourse> findAllGradedCoursesByStudent(Integer studentId);
 }
 

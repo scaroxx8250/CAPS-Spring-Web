@@ -51,9 +51,14 @@ public class LecturerController {
 //		this.linterface = lserviceImpl;
 //	}
 	
+	@RequestMapping(value="/Courses")
+	public String listCourses(Model model, HttpSession session) {
+		return listCourses(1, session, model);
+	}
+	
 	// View list of courses 
-	@RequestMapping(value = "/Courses")
-	public String listCourses (HttpSession session, Model model ) {
+	@RequestMapping(value = "/Courses/{pageNo}")
+	public String listCourses (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model ) {
 		// get session
 		Lecturer l = (Lecturer) session.getAttribute("usession");
 		// session not found
@@ -61,7 +66,10 @@ public class LecturerController {
 			return "redirect:/home";
 		}
 		
-		List<Course> courselist = cinterface.findCoursesByLecturerId(l.getLecturerId());
+		int pageSize = 5; 
+
+		Page<Course> page = cinterface.findAllPaginatedCoursesByLecturerId(pageNo, pageSize, l.getLecturerId());
+		List<Course> courselist = page.getContent();
 		int studentsEnrolled = 0;
 		// instantiate hash map
 		Map<Course, Integer> map = new HashMap<>();
@@ -73,6 +81,12 @@ public class LecturerController {
 			map.put(c, studentsEnrolled);
 		}
 		model.addAttribute("courses", map);
+		
+		int totalPages = page.getTotalPages(); 
+		long totalItems = page.getTotalElements(); 
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("totalItems",totalItems);
 		
 		return "courses";
 	}
@@ -227,7 +241,7 @@ public class LecturerController {
 		}
 		
 		// find all courses that selected student is enrolled in 
-		List<StudentCourse> scourses = scinterface.findAllCoursesByStudent(id);
+		List<StudentCourse> scourses = scinterface.findAllGradedCoursesByStudent(id);
 				
 		String firstName = sinterface.findFirstNameByStudentId(id);
 		model.addAttribute("firstName", firstName); 

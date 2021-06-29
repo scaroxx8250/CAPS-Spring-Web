@@ -149,5 +149,10 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		Course course = crepo.findByCourseNameWithCurrentYear(CourseName,LocalDate.now().getYear());
 		return screpo.findAllStudentsByCourseByPage(course, LocalDate.now().getYear(), pageable);
 	}
+	
+	public List<StudentCourse> findAllGradedCoursesByStudent(Integer studentId) {
+		Student student = srepo.findByStudentId(studentId);
+		return screpo.findAllGradedCoursesByStudent(student);
+	}
 
 }
