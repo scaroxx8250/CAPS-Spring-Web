@@ -97,7 +97,7 @@ public class CapsProjApplication {
 			
 			lservice.addLecturer(l1);
 			lservice.addLecturer(l2);
-			
+
 			Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 2);
 			Course c2 = new Course("SCI101", "Anontomy", Faculty.MEDICINE, 5, ld, 2);
 			

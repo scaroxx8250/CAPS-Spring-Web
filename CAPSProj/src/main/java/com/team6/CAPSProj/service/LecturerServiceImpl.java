@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.team6.CAPSProj.model.Lecturer;
@@ -65,6 +68,12 @@ public class LecturerServiceImpl implements LecturerInterface {
 	public void deleteLecturer(Lecturer lecturer) {
 		lrepo.delete(lecturer);
 
+	}
+
+	@Override
+	public Page<Lecturer> findAllPaginatedLecturers(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return lrepo.findAll(pageable);
 	}
 
 }

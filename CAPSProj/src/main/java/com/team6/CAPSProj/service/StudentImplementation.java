@@ -138,6 +138,18 @@ public class StudentImplementation implements StudentInterface {
 	Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 	return srepo.findAllNotEnrolledStudentsByCourseByPage(courseId, pageable);
 	}
+
+	@Override
+	public Page<Student> findAllPaginatedStudents(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return srepo.findAll(pageable);
+	}
+
+	@Override
+	public Page<Student> findAllPaginatedStudentsByCourse(int pageNo, int pageSize, Integer courseId) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return srepo.findAllStudentsByCourseByPage(courseId, pageable);
+	}
 	
 	
 	

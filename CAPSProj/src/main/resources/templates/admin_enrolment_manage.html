@@ -35,26 +35,26 @@
 <!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
 			
 			<br>
-			<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/{Id} (Id=${id})}" ><button class="button">Show enroled Students</button></a>
+			<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/1/{Id} (Id=${id})}" ><button class="button">Show enrolled Students</button></a>
 		</fieldset>
 		
 		<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
 		sel.onchange = function () {
 	    	document.getElementById("addstudent").href = "/admin/addenrolment/" + this.value + "/1"
-	    	document.getElementById("showenrolledstudents").href = "/admin/enrolmentlist/" + this.value;
+	    	document.getElementById("showenrolledstudents").href = "/admin/enrolmentlist/1/" + this.value;
 		}
 		var id = /*[[${id}]]*/
 			document.getElementById("courseNameDropdown").selectedIndex = id;
 		</script>
 		
 		<br>
-		<h4>Enroled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
-	    <span th:if="${status != null}">
+		<h4>Enrolled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
+	    <span th:if="${enrol_student_status != null}">
 
-	  	    <h5><span th:unless="${status}">Student cannot be enroled for the course.</span></h5>
-		    <h5><span th:if="${status}">Student has been successfully enroled for course.</span></h5>
+	  	    <h5><span th:unless="${enrol_student_status}">Student cannot be enrolled for the course.</span></h5>
+		    <h5><span th:if="${enrol_student_status}">Student has been successfully enrolled for course.</span></h5>
 	    </span>
-	    	<h5><span th:if="${enrolment_delete_success == true}">Student has been removed from course</span></h5>
+	    	<h5><span th:if="${unenrol_student_status == true}">Student has been removed from course</span></h5>
 	   	
 	   	<span th:if="${#lists.isEmpty(studentlist)}">There are no students in this course.</span>
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
@@ -77,6 +77,19 @@
 				</td>
 			</tr>
 		</table>
+		<div th:if = "${totalPages > 1}">
+				<div>
+					<div>
+						Total Rows: [[${totalItems}]]
+					</div>
+					<div>
+						<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+							<a th:if="${currentPage != i}" th:href="@{'/admin/enrolmentlist/' + ${i}}">[[${i}]]</a>
+							<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+						</span>
+					</div>
+				</div>
+			</div>
     </main>
  	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
 </body>

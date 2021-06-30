@@ -48,4 +48,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	Page<Course> findAllNotEnrolledCoursesByStudentAndFacultyByPage(@Param("studentId") int studentId, @Param("faculty")int faculty,
 			Pageable pageable);
 	
+	@Query("Select c from Course c where YEAR(c.courseStartDate) = ?1")
+	Page<Course> findCoursesByYearByPage(Integer year, Pageable pageable);
+	
 }

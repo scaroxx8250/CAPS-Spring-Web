@@ -135,6 +135,13 @@ public class CourseServiceImpl implements CourseInterface {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		return crepo.findAllNotEnrolledCoursesByStudentAndFacultyByPage(studentId,faculty, pageable);
 	}
+
+
+	@Override
+	public Page<Course> findAllPaginatedCourseForCurrentYear(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return crepo.findCoursesByYearByPage(LocalDate.now().getYear(), pageable);
+	}
 	
 }
 

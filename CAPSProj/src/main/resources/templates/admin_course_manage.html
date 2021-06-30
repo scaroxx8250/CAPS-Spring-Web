@@ -13,11 +13,9 @@
  		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
  	</div>    <div id="top_grid2"></div>
     <div id="top_grid3"></div>
-    <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/logout'; return false"
-					class="button-logout" />
+    <div id="top_grid4">
+    <input type="button" value="Logout" onclick="window.location.href='/admin/logout'; return false" class="button-logout" />
 	</div>
-	
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
@@ -29,8 +27,7 @@
 					onclick="window.location.href='/admin/addcourse'; return false"
 					class="button" /></div>
 		<br>
-
-		<span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled.</span>
+		<h5><span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled.</span></h5>
 		
 		<span th:if="${#lists.isEmpty(courses)}"><br><br>There are no courses, please add courses first.</span>
       
@@ -64,6 +61,19 @@
 				</td>
 			</tr>
 		</table>
+		<div th:if = "${totalPages > 1}">
+				<div>
+					<div>
+						Total Rows: [[${totalItems}]]
+					</div>
+					<div>
+						<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+							<a th:if="${currentPage != i}" th:href="@{'/admin/courselist/' + ${i}}">[[${i}]]</a>
+							<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+						</span>
+					</div>
+				</div>
+			</div>
     </main>
  	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
 </body>
