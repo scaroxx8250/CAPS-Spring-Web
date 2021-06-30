@@ -58,6 +58,11 @@ public class CourseServiceImpl implements CourseInterface {
 		
 		crepo.save(course);
 	}
+	
+	public Course findCourseByCourseId(int courseId) {
+		return crepo.findByCourseId(courseId);
+		
+	}
 
 	
 	public void updateCourse(Course course) {

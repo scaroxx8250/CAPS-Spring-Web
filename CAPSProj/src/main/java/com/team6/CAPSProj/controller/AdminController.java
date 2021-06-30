@@ -45,6 +45,7 @@ public class AdminController {
 	@Autowired CourseInterface cservice;
 	
 	@Autowired StudentCourseInterface st_cs_service;
+	
 		
 
 	@RequestMapping(value = "/studentlist")
@@ -56,9 +57,6 @@ public class AdminController {
 			return "redirect:/home";
 		}
 		else {
-
-	public String listStudent(Model model) {
-
 		model.addAttribute("studentlist", stservice.findAllStudents());
 		return "admin_student_manage";
 		}
@@ -77,7 +75,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(value = "/save")
+	@RequestMapping(value = "/addstudent/save")
 	public String saveStudent(@ModelAttribute("student") @Valid Student student, 
 			BindingResult bindingResult,  Model model, HttpSession session) {
 		Admin ad = (Admin) session.getAttribute("usession");
@@ -93,6 +91,19 @@ public class AdminController {
 		return "forward:/admin/studentlist";
 		}
 	}
+	
+	@RequestMapping(value = "/editstudent/save")
+	public String saveEditedStudent(@ModelAttribute("student") @Valid Student student, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "admin_student_edit";
+		}
+		stservice.addStudent(student);
+		return "forward:/admin/studentlist";
+	}
+	
+	
+	
 	
 	@RequestMapping(value = "/editstudent/{matricNo}")
 	public String showEditForm(Model model, @PathVariable("matricNo") String matricNo, HttpSession session) {
@@ -164,7 +175,7 @@ public class AdminController {
 		}
 	}
 
-	@RequestMapping(value = "/saveLecturer")
+	@RequestMapping(value = "/addlecturer/save")
 	public String saveLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
 			BindingResult bindingResult,  Model model, HttpSession session) {
 		Admin ad = (Admin) session.getAttribute("usession");
@@ -180,6 +191,17 @@ public class AdminController {
 		return "forward:/admin/lecturerlist";
 		}
 	}
+	
+	@RequestMapping(value = "/editlecturer/save")
+	public String saveEditedLecturer(@ModelAttribute("lecturer") @Valid Lecturer lecturer, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "admin_lecturer_edit";
+		}
+		lservice.addLecturer(lecturer);
+		return "forward:/admin/lecturerlist";
+	}
+	
 	
 
 	@RequestMapping(value = "/editLecturer/{lecturerId}")
@@ -215,7 +237,7 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/enrolmentlist")
-	public String listEnrolment(Model model, Integer id)
+	public String listEnrolment(Model model, Integer id, Integer statusId)
 	{
 		//List<Course> courselist = cservice.getAllCourses();
 		List<Course> courselist = cservice.findAllCourseforCurrentYear();
@@ -242,8 +264,8 @@ public class AdminController {
 			students.add(sc.getStudent());
 		}
 		
-		Student teststudent = stservice.findStudentByStudentId(1);
-		students.add(teststudent);
+//		Student teststudent = stservice.findStudentByStudentId(1);
+//		students.add(teststudent);
 		
 		model.addAttribute("studentlist", students);
 		model.addAttribute("course", new Course());
@@ -260,13 +282,33 @@ public class AdminController {
 			model.addAttribute("selectedCourse", selectedCourse);
 		}
 		
+//		if(!status)
+//		{
+//			model.addAttribute("status", status);
+//		}
+//		Boolean status = (Boolean) model.getAttribute("status");
+		
+		if(statusId != null)
+		{
+			if(statusId == 1)
+				model.addAttribute("status", true);
+			else
+				model.addAttribute("status", false);
+		}
+		
 		return "admin_enrolment_manage";
 	}
 	
 	@RequestMapping(value = "/enrolmentlist/{id}")
 	public String listEnrolment(@PathVariable("id") Integer id, Model model)
 	{	
-		return listEnrolment(model, id);
+		return listEnrolment(model, id, null);
+	}
+	
+	@RequestMapping(value = "/enrolmentlist/{id}/{statusId}")
+	public String listEnrolment(@PathVariable("id") Integer id, Model model, @PathVariable("statusId") Integer statusId)
+	{	
+		return listEnrolment(model, id, statusId);
 	}
 	
 //	@GetMapping("/addenrollment/{coursename}")
@@ -276,7 +318,7 @@ public class AdminController {
 //	}
 	
 	
-	
+
 	
 	@RequestMapping(value = "/addenrolment/{id}/{pageNo}")
 	public String addEnrolment(@PathVariable(value = "pageNo") int pageNo, Model model, @PathVariable("id") int id) {
@@ -311,16 +353,23 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}/{id}")
-	public String enrollStudent(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id) {
+	public String enrollStudent(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model) {
 	
 		//get Student
 		Student student = stservice.findStudentByMatricNo(matricNo);
 		//get course
 		Course course = cservice.findCourseByCourseName(coursename);
 		//do assignment
-		st_cs_service.addStudentToCourse(course, student);	
-		System.out.println(id);
-		return "redirect:/admin/enrolmentlist/{id}";
+		boolean status = st_cs_service.adminAddStudentToCourse(course, student);
+		if(status)
+		{
+			return "redirect:/admin/enrolmentlist/{id}/1";
+		}
+		else
+		{
+			return "redirect:/admin/enrolmentlist/{id}/0";
+		}
+		
 	}
 
 //	@RequestMapping(value = "/enrolstudent")
@@ -371,9 +420,9 @@ public class AdminController {
 	}
 	
 	
-	@RequestMapping(value = "/savecourse")
+	@RequestMapping(value = "/addcourse/save")
 	public String saveCourse(@ModelAttribute("course") @Valid Course course, 
-			BindingResult bindingResult,  Model model, HttpSession session) {
+		BindingResult bindingResult,  Model model, HttpSession session) {
 		Admin ad = (Admin) session.getAttribute("usession");
 		if (ad == null)
 		{
@@ -381,6 +430,8 @@ public class AdminController {
 		}
 		else {
 		if (bindingResult.hasErrors()) {
+			List<Lecturer> lecturerList = lservice.GetAllLecturers();
+			model.addAttribute("lecturerList", lecturerList);
 			return "admin_course_add";
 		}
 		cservice.addCourse(course);
@@ -388,24 +439,39 @@ public class AdminController {
 		}
 	}
 	
+	@RequestMapping(value = "/editcourse/save")
+	public String saveEditedCourse(@ModelAttribute("course") @Valid Course course, 
+			BindingResult bindingResult,  Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			List<Lecturer> lecturerList = lservice.GetAllLecturers();
+			model.addAttribute("lecturerList", lecturerList);
+			return "admin_course_edit";
+		}
+		cservice.addCourse(course);
+		return "redirect:/admin/courselist";
+	}
 	
-	@RequestMapping(value = "/editcourse/{coursename}")
-	public String showCourseEditForm(Model model, @PathVariable("coursename") String coursename, HttpSession session) {
+	
+
+	@RequestMapping(value = "/editcourse/{courseId}")
+	public String showCourseEditForm(Model model, @PathVariable("courseId") int courseId, HttpSession session) {
 		Admin ad = (Admin) session.getAttribute("usession");
 		if (ad == null)
 		{
 			return "redirect:/home";
 		}
 		else {
-		model.addAttribute("course", cservice.findCourseByCourseName(coursename));
+		model.addAttribute("course", cservice.findCourseByCourseId(courseId));
 		List<Lecturer> lecturerList = lservice.GetAllLecturers();
 		model.addAttribute("lecturerList", lecturerList);
 		return "admin_course_edit";
 		}
 	}
 	
-	@RequestMapping(value = "/deletecourse/{courseName}")
-	public String deleteCourse(@PathVariable("courseName") String courseName, HttpSession session) {
+
+	@RequestMapping(value = "/deletecourse/{courseId}")
+	public String deleteCourse(@PathVariable("courseId") int courseId, HttpSession session) {
 	
 		Admin ad = (Admin) session.getAttribute("usession");
 		if (ad == null)
@@ -413,13 +479,13 @@ public class AdminController {
 			return "redirect:/home";
 		}
 		else {
-		List<StudentCourse> studentcourses = st_cs_service.findAllStudentsByCourse(cservice.findCourseByCourseName(courseName).getCourseName());
-		
+		List<StudentCourse> studentcourses = st_cs_service.findAllStudentsByCourse(cservice.findCourseByCourseId(courseId).getCourseName());
+
 		for(StudentCourse stucourse : studentcourses) {
 			st_cs_service.removeStudentCourse(stucourse);
 		}
 		
-		cservice.deleteCourse(cservice.findCourseByCourseName(courseName));
+		cservice.deleteCourse(cservice.findCourseByCourseId(courseId));
 		return "forward:/admin/courselist";
 		}
 	}

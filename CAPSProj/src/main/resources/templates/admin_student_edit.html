@@ -18,7 +18,7 @@
 	    </nav>
 	    <main>
 			<h3>Edit Student</h3>
-			<form action="" th:object="${student}" th:action="@{/admin/save}" method="get">
+			<form action="" th:object="${student}" th:action="@{/admin/editstudent/save}" method="get">
 			    <fieldset>
 				     <input type="hidden" th:field="*{studentId}">  
 				</fieldset>
@@ -40,12 +40,12 @@
 					<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 				</fieldset>
 				<fieldset>
-					Matriculation Date: <input type="date" th:value = "*{matrDate}" th:field="*{matrDate}" placeholder="yyyy-MM-dd">
-					<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
+					Personal Email: <input type="text" th:field="*{personEmail}">
+					<p th:if="${#fields.hasErrors('personEmail')}" th:errors="*{personEmail}"></p>
 				</fieldset>
 				<fieldset>
-					Personal Email <input type="text" th:field="*{personEmail}">
-					<p th:if="${#fields.hasErrors('personEmail')}" th:errors="*{personEmail}"></p>
+					Matriculation Date: <input type="date" th:value="*{matrDate}" th:field="*{matrDate}">
+					<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
 				</fieldset>
 				<fieldset>
 					<input type="submit" value="Save"/>	
