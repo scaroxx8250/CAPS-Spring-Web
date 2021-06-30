@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team6.CAPSProj.model.Course;
-import com.team6.CAPSProj.model.LetterGrade;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.model.StudentSelectedCourses;

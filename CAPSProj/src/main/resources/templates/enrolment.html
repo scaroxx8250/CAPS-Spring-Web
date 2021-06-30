@@ -82,7 +82,7 @@ th, td {
 	</script>
 	<br>
 	<h4>Enrolled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
-	<a href="" th:href="@{/lecturer/GradeCourse}"><button>Grade this course</button></a>
+	<a href="" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}"><button>Grade this course</button></a>
 	<br>	
 	<table id="students">
 	<tr>
