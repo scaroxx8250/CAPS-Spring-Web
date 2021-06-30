@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table, td, th {  
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 15px;
+}
+
+#input {
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 25%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+</style>
+<meta charset="ISO-8859-1">
+<title>View Student Performance</title>
+</head>
+<body>
+	<h1>View Student Performance</h1>
+	<div class="year-dropdown">
+	<form>
+		<label for="year">Year: </label>
+		<select id='date-dropdown'>
+  		</select>
+  		<script>
+    		let dateDropdown = document.getElementById('date-dropdown');
+
+    		let currentYear = new Date().getFullYear();
+    		let earliestYear = 2018;
+
+    		while (currentYear >= earliestYear) {
+      			let dateOption = document.createElement('option');
+      			dateOption.text = currentYear;
+      			dateOption.value = currentYear;
+      			dateDropdown.add(dateOption);
+      			currentYear -= 1;
+      		}
+  		</script>
+	</form>
+	</div>
+	<br>
+	
+	<p th:text="'Student ID: ' + ${id}"></p>
+	<p th:text="'Student Name: ' + ${firstName} + ' ' + ${lastName}"></p>
+	<p th:text="'Total Records: ' + ${size}">Total Records</p>
+		<a href ="logout"><button>Logout</button></a>
+	<br>
+	<table id="courses">
+	<tr>
+			<!-- <th>Student ID</th> -->
+			<th>Course ID</th>
+			<th>Course Name</th>
+			<th>Credits</th>
+			<th>Grade</th>
+			<th>Course Start Date</th>
+	</tr>
+	 <tr th:each="course : ${studentGrade}" class="table-row">
+			<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
+			<td th:text=${course.key.courseId}>Course ID</td>
+			<td th:text=${course.key.courseName}>Course Name</td>
+			<td th:text=${course.key.credits}>Credits</td>
+			<td th:text=${course.value}>Grade</td>
+			<td th:text="${#temporals.format(course.key.courseStartDate, 'dd-MM-yyyy')}">Course Start Date</td> 
+	</tr>
+	</table>
+	<br>
+	<table id="grades" style="width:25%">
+	<tr>
+		<td th:text="'AY Credits:'"></td>
+		<td th:text=${ayCredits}>AY Credits</td>
+	</tr>
+	<tr>
+		<td th:text="'AY GPA:'"></td>
+		<td th:text=${ayGPA}>AY GPA</td>
+	</tr>
+	<tr>
+		<td th:text="'Cumulative Credits:'"></td>
+		<td th:text=${cuCredits}>Cumulative Credits</td>
+	</tr>
+		<td th:text="'Cumulative GPA:'"></td>
+		<td th:text=${cuGPA}>Cumulative GPA</td>
+	</tr>
+	</table>
+
+
+</body>
+</html>

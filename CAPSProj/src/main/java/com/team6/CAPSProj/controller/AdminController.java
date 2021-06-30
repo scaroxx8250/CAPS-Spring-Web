@@ -1,5 +1,6 @@
 package com.team6.CAPSProj.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -574,5 +575,12 @@ public class AdminController {
 		return listCourse(model, session, true);
 		}
 	}
-	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false); 
+		if(session != null) {
+			session.invalidate();
+		}
+		return "redirect:/logout";
+	}
 }

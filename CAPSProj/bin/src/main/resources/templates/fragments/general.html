@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:fragment="menu" id="menu">
+		<table>
+			<tr>
+				<td><input type="button" value="Manage Students"
+					onclick="window.location.href='/admin/studentlist'; return false"
+					class="button" /> <input type="button" value="Manage Lecturers"
+					onclick="window.location.href='/admin/lecturerlist'; return false"
+					class="button" /> <input type="button" value="Manage Courses"
+					onclick="window.location.href='/admin/courselist'; return false"
+					class="button" /> <input type="button" value="Manage Enrolment"
+					onclick="window.location.href='/admin/enrolmentlist'; return false"
+					class="button" />
+					</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
