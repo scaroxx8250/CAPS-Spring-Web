@@ -1,34 +1,41 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>template</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<title>Manage Enrolment</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</head>
-
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<head>
 <body>
-	    
-  <div class = "container">
-    <div id="top_grid1">Top Grid Cell 1</div>
-    <div id="top_grid2">Top Grid Cell 2</div>
-    <div id="top_grid3">Top Grid Cell 3</div>
-    <div id="top_grid4">Top Grid Cell 4</div>
+    <div class = "container">
+    <heading><div th:replace="fragments/general::heading"></div></heading>
+    <div id="top_grid1">
+ 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 	</div>    <div id="top_grid2"></div>
+    <div id="top_grid3"></div>
+    <div id="top_grid4"><input type="button" value="Logout"
+					onclick="window.location.href='/admin/logout'; return false"
+					class="button-logout" />
+	</div>
+	
     <nav>
-          <div th:replace="fragments/general.html :: menu"></div>
+    	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
-    <main>		
-		<fieldset>
+    <page-title>
+    	<div class="page-title"> Manage Enrolment</div>
+    </page-title>
+    <main>
+<fieldset>
 			<select id="courseNameDropdown" class = "example" th:if="${not #lists.isEmpty(courses)}">
 			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 			</select>
 			&nbsp; &nbsp;
-			<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"> Add Student </a>
+			<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><button class="button">Add Student</button></a>
 			
 <!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
 			
 			<br>
-			<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/{Id} (Id=${id})}" > Show enrolled Students</a>
+			<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/{Id} (Id=${id})}" ><button class="button">Show enroled Students</button></a>
 		</fieldset>
 		
 		<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
@@ -41,15 +48,15 @@
 		</script>
 		
 		<br>
-		<h4>Enrolled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
+		<h4>Enroled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
 	    <span th:if="${status != null}">
-	    <span th:unless="${status}">You are not allowed to enrol this student for now.</span>
-	    <span th:if="${status}">Student has been successfully added to course.</span>
+
+	  	    <h5><span th:unless="${status}">Student cannot be enroled for the course.</span></h5>
+		    <h5><span th:if="${status}">Student has been successfully enroled for course.</span></h5>
 	    </span>
-	   	<span th:if="${enrolment_delete_success == true}">Student has been removed from course.</span>
+	    	<h5><span th:if="${enrolment_delete_success == true}">Student has been removed from course</span></h5>
 	   	
 	   	<span th:if="${#lists.isEmpty(studentlist)}">There are no students in this course.</span>
-	   	
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
@@ -71,8 +78,9 @@
 			</tr>
 		</table>
     </main>
-    <footer>Footer</footer>
-  </div>
+ 	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
+</body>
+</html>
   
   
   

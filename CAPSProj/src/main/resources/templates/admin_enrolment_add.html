@@ -1,38 +1,32 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Add Lecturer</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<title>Enrol Student</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
   <div class = "container">
-    <div id="top_grid1">Top Grid Cell 1</div>
-    <div id="top_grid2">Top Grid Cell 2</div>
-    <div id="top_grid3">Top Grid Cell 3</div>
-    <div id="top_grid4">Top Grid Cell 4</div>
+    <heading><div th:replace="fragments/general::heading"></div></heading>
+    <div id="top_grid1">
+ 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 	</div>    <div id="top_grid2"></div>
+    <div id="top_grid3"></div>
+    <div id="top_grid4"><input type="button" value="Logout"
+					onclick="window.location.href='/admin/logout'; return false"
+					class="button-logout" />
+	</div>
     <nav>
-    	<div th:replace="fragments/general.html :: menu"></div>
+    	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
+    <page-title>
+    	<div class="page-title"> Enrol Student</div>
+    </page-title>
     <main>
-		<h1 th:text="${course.courseName}"></h1>
-		
+
 <!-- 		<h3>Which student do you want to enrol?</h3> -->
-<!-- 		<h2 th:text="${student}"></h2> -->
-<!-- 		<h2 th:text="${course}"></h2> -->
-<!-- 		<form action="#" th:object="${studentcourse}" th:action="@{/admin/enrolstudent}" method="post"> -->
-<!-- 			        <fieldset> -->
-<!-- 					     <input type="text" th:id="*{course}" th:name="*{course}" th:value="${course.getCourseId()}">   -->
-<!-- 					</fieldset> -->
-<!-- 					<fieldset> -->
-<!-- 					     <input type="hidden" th:id="*{student}" th:name="*{student}" th:value="${student.getStudentId()}">   -->
-<!-- 					</fieldset> -->
-<!-- 					<fieldset> -->
-<!-- 						<input type="submit" value="Submit"/>	 -->
-<!-- 						<input type="reset" value="Reset"/> -->
-<!-- 					</fieldset> -->
-<!-- 		</form> -->
 
 		<span th:if="${#lists.isEmpty(notEnrolledStudents)}">There are no students to enrol, please add students first.</span>
 		<span th:unless="${#lists.isEmpty(notEnrolledStudents)}">Which student do you want to enrol?</span>
@@ -53,7 +47,7 @@
 				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
 				<td>
 						<a th:href="@{/admin/enrolstudent/{Id}/{Id2}/{Id3}(Id=${student.matricNo}, Id2=${course.courseName}, Id3 = ${id})}"> 
-        					<button type="button">Enrol</button> 
+        					<button type="button" class="button">Enrol</button> 
    						</a>
 				</td>
 			
@@ -73,7 +67,7 @@
 				</div>
 			</div>				
 	</main>
-	<footer>Footer</footer>
+ 	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
   </div>
 </body>
 </html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table, td, th {  
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 15px;
+}
+
+#input {
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 25%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+ 
+.topnav {
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.topnav a {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #1764DD;
+  color: white;
+}
+</style>
+<meta charset="ISO-8859-1">
+<title>View Course Enrolment</title>
+</head>
+<body>
+<div class="topnav">
+  <a href="/lecturer/Courses">View Courses Taught</a>
+  <a class="active" href="/lecturer/CourseEnrolment">View Course Enrolment</a>
+  <a href="/lecturer/GradeCourse">Grade a Course</a>
+  <a href="/lecturer/StudentPerformance">View Student Performance</a>
+  <a href="/lecturer/logout">Logout</a>
+</div>
+	<h1>View Course Enrolment</h1>
+	<br>
+
+	<select id="courseNameDropdown" class="example">
+	<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
+	</select>
+	&nbsp;&nbsp;
+	<a id = "showenrolledstudents" th:href="@{/lecturer/CourseEnrolment/{Id}/1 (Id=${id})}">Show Enrolled Students</a>
+
+	<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
+	sel.onchange=function(){
+		document.getElementById("showenrolledstudents").href="/lecturer/CourseEnrolment/" + this.value + "/1";
+	}
+	var id = /*[[${id}]]*/
+		document.getElementById("courseNameDropdown").selectedIndex = id; 
+	
+	
+	</script>
+	<br>
+	<h4>Enrolled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
+	<a href="" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}"><button>Grade this course</button></a>
+	<br>	
+	<table id="students">
+	<tr>
+   		<th>Matric No</th>
+   		<th>First Name</th>
+   		<th>Last Name</th>
+   		<th>Student Email</th>
+   		<th>Student Performance</th>
+ 	</tr>
+ 	<tr th:each="student: ${studentslist}">
+   		<td th:text="${student.getStudent().getMatricNo()}">Matric No</td>
+   		<td th:text="${student.getStudent().getFirstName()}">First Name</td>
+   		<td th:text="${student.getStudent().getLastName()}">Last Name</td>
+   		<td th:text="${student.getStudent().getEmail()}">Student Email</td>
+			<td>
+   				<a href="" th:if="${student.getGrade() != null}" th:href="@{/lecturer/StudentPerformance/detail/}+${student.student.studentId}"><button>Select</button></a>
+   				 <span th:unless="${student.getGrade() !=null}">No Records</span>
+   			</td>
+ 	</tr>
+	</table>
+		<div th:if = "${totalPages > 1}">
+	<div>
+		<div>
+			Total Records: [[${totalItems}]]
+		</div>	
+		<div>
+			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+				<a th:if="${currentPage != i}" th:href="@{'/lecturer/CourseEnrolment/{Id}/'+ ${i} (Id=${id})}">[[${i}]]</a>
+				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+			</span>
+		</div>	
+	</div>
+</div>
+</body>
+</html>

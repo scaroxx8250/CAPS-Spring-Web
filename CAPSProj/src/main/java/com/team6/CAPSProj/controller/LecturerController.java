@@ -406,7 +406,7 @@ public class LecturerController {
 		if(session != null) {
 			session.invalidate();
 		}
-		return "redirect:/home";
+		return "redirect:/logout";
 	}
 	
 }
