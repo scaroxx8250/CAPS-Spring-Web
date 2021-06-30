@@ -150,14 +150,27 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/lecturerlist")
-	public String listLecturer(Model model, HttpSession session) {
+	public String listLecturer(Model model, HttpSession session, Boolean status) {
 		Admin ad = (Admin) session.getAttribute("usession");
 		if (ad == null)
 		{
 			return "redirect:/home";
 		}
 		else {
-		model.addAttribute("lecturers", lservice.GetAllLecturers());
+			List<Lecturer> lecturers = lservice.GetAllLecturers();
+//			for(Lecturer l : lecturers)
+//			{
+//				if(l.getFirstName() == "No assigned")
+//					lecturers.remove(l);
+//			}
+			
+			if(status != null)
+			{
+				model.addAttribute("status", status);
+			}
+			
+		model.addAttribute("lecturers", lecturers);
+		
 		return "admin_lecturer_manage";
 		}
 	}
@@ -218,7 +231,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/deletelecturer/{lecturerId}")
-	public String deleteLecturer(@PathVariable("lecturerId") Integer lecturerId,  HttpSession session) {
+	public String deleteLecturer(@PathVariable("lecturerId") Integer lecturerId,  HttpSession session, Model model) {
 		Admin ad = (Admin) session.getAttribute("usession");
 		if (ad == null)
 		{
@@ -226,12 +239,24 @@ public class AdminController {
 		}
 		else {
 		List <Course> course_delete = cservice.findCoursesByLecturerId(lecturerId);
-		for(Course course: course_delete) {
-			course.setLecturer(null);
-			cservice.updateCourse(course);
+		if (course_delete.size() == 0)
+		{
+			lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
+			return listLecturer(model, session, true);
 		}
-		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
-		return "forward:/admin/lecturerlist";
+		else
+		{
+			return listLecturer(model, session, false);
+		}
+		
+		
+		
+//		for(Course course: course_delete) {
+//			course.setLecturer(null);
+//			cservice.updateCourse(course);
+//		}
+//		lservice.deleteLecturer(lservice.findLecturerById(lecturerId));
+//		return "forward:/admin/lecturerlist";
 		}
 	}
 	
@@ -398,7 +423,19 @@ public class AdminController {
 			return "redirect:/home";
 		}
 		else {
-		model.addAttribute("courses", cservice.findAllCourseforCurrentYear());
+			List<Course> courses = cservice.findAllCourseforCurrentYear();
+			for(Course c : courses)
+			{
+				if(c.getLecturer() == null)
+				{
+					Lecturer unassigned = new Lecturer("No assigned", "lecturer", null, "johndoe@gmail.com");
+					lservice.addLecturer(unassigned);
+					c.setLecturer(unassigned);
+					cservice.updateCourse(c);
+				}
+			}
+			
+		model.addAttribute("courses", courses);
 		return "admin_course_manage";
 		}
 	}
