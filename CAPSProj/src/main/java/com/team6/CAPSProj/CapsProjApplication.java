@@ -118,9 +118,10 @@ public class CapsProjApplication {
 
 			// Student 1 not enrolled courses (total 6)
 
-			Course c13 = new Course("SA4111", "JPA", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
-			Course c14 = new Course("SA4112", "Composition", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
-			Course c15 = new Course("SA4113", "Inheritance", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
+			Course c13 = new Course("SA4111", "JPA", Faculty.BUSINESS, 5,LocalDate.of(2021, 07, 11),l2, 2);
+			Course c14 = new Course("SA4112", "Composition", Faculty.BUSINESS, 5,LocalDate.of(2021, 07, 11),l2, 2);
+			Course c15 = new Course("SA4113", "Inheritance", Faculty.MEDICINE, 5,LocalDate.of(2021, 07, 11),l2, 2);
+
 			Course c16 = new Course("SA4114", "Polymorphism", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
 			Course c17 = new Course("SA4115", "Abstract Classes and Interfaces", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
 			Course c18 = new Course("SA4116", "Functional Programming", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);

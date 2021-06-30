@@ -1,12 +1,10 @@
 package com.team6.CAPSProj.model;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class User {
-
+	@Email
 	@NotEmpty
 	private String emailAdd;
 	
