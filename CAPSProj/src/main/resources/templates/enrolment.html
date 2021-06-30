@@ -86,19 +86,20 @@ th, td {
 	<br>	
 	<table id="students">
 	<tr>
-   		<th>Student ID</th>
+   		<th>Matric No</th>
    		<th>First Name</th>
    		<th>Last Name</th>
    		<th>Student Email</th>
    		<th>Student Performance</th>
  	</tr>
- 	<tr th:each="student: ${students}">
-   		<td th:text="${student.studentId}">Student Id</td>
-   		<td th:text="${student.firstName}">First Name</td>
-   		<td th:text="${student.lastName}">Last Name</td>
-   		<td th:text="${student.email}">Student Email</td>
+ 	<tr th:each="student: ${studentslist}">
+   		<td th:text="${student.getStudent().getMatricNo()}">Matric No</td>
+   		<td th:text="${student.getStudent().getFirstName()}">First Name</td>
+   		<td th:text="${student.getStudent().getLastName()}">Last Name</td>
+   		<td th:text="${student.getStudent().getEmail()}">Student Email</td>
 			<td>
-   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.studentId}"><button>Select</button></a>
+   				<a href="" th:if="${student.getGrade() != null}" th:href="@{/lecturer/StudentPerformance/detail/}+${student.student.studentId}"><button>Select</button></a>
+   				 <span th:unless="${student.getGrade() !=null}">No Records</span>
    			</td>
  	</tr>
 	</table>
