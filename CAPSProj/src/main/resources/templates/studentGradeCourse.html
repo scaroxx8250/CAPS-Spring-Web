@@ -18,14 +18,14 @@
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/studentlist'; return false"
+					onclick="window.location.href='/student/logout'; return false"
 					class="button-logout" />
 	</div>
     <nav>
-    	<div th:replace="fragments/general.html :: admin-menu"></div>
+    	<div th:replace="fragments/general.html :: student-menu"></div>
     </nav>
     <page-title>
-    	<h1> Grades and GPA</h1>
+    	<div class="page-title"> Grades and GPA</div>
     </page-title>
     
     <main>
@@ -52,7 +52,7 @@
 		 </tr>
 		</table>
 		<br>
-		<table>
+		<table class="table2">
 		 <tr>
 		   <td>AY Credits</td>
 		   <td th:text="${ayCredits}"></td>
@@ -70,6 +70,10 @@
 		   <td th:text="${cuGPA}"></td>
 		 </tr>
 		</table>
+		<br>
+		<div class="grades-img">
+			<img src="/img/Grade-table.png" width="300px;">
+		</div>
 	</main>
     <footer><div th:replace="fragments/general::footer"></div></footer>
 

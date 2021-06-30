@@ -14,14 +14,14 @@
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/studentlist'; return false"
+					onclick="window.location.href='/lecturer/logout'; return false"
 					class="button-logout" />
 	</div>
     <nav>
-    	<div th:replace="fragments/general.html :: admin-menu"></div>
+    	<div th:replace="fragments/general.html :: lecturer-menu"></div>
     </nav>
     <page-title>
-    	<h1>View Course Enrolment</h1>
+    	<div class="page-title"> View Course Enrolment</div>
     </page-title>
     <main>
 	<div class="year-dropdown">
@@ -60,7 +60,7 @@
 	<p th:text="'Total Records: ' + ${students.size()}">Total Records</p>
 	
 	
-	<table id="students">
+	<table id="students" class="table">
 	<tr>
    		<th>Student ID</th>
    		<th>First Name</th>
@@ -74,7 +74,7 @@
    		<td th:text="${student.lastName}">Last Name</td>
    		<td th:text="${student.email}">Student Email</td>
 			<td>
-   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.studentId}"><button>Select</button></a>
+   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.studentId}"><button class="button" >Select</button></a>
    			</td>
  	</tr>
 	</table>

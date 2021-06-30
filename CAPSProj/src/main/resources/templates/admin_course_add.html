@@ -4,8 +4,9 @@
 	<title>Add Course</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-<head>
+</head>
 <body>
     <div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
@@ -13,35 +14,44 @@
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/studentlist'; return false"
+					onclick="window.location.href='/admin/logout'; return false"
 					class="button-logout" />
 	</div>
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
     <page-title>
-    	<h1> Add Course Form </h1>
+    	<div class="page-title"> Add Course Form </div>
     </page-title>
     <main>
+		<div class="well">
 		<form action="#" th:object="${course}" th:action="@{/admin/savecourse}"
 			method="post">
-			<fieldset>
-				CourseName: <input type="text" th:field="*{courseName}">
-				<p th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}"></p>
-			</fieldset>
-			<fieldset>
-				 Credits: <input type="text" th:field="*{credits}">
-				<p th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></p>
-			</fieldset>
-			<fieldset>
-				Size: <input type="text" th:field="*{size}">
-				<p th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></p>
-			</fieldset>
-			<fieldset>Lecturer: 
-				<select id="lecturerNameDropdown" name="lecturerName" th:field = "*{lecturer}">
-				<option th:each="lecturer:${lecturerList}" th:value="${lecturer.lecturerId}" th:utext="${lecturer.getFirstName + ' ' + lecturer.getLastName()}"/>
-				</select>
-			</fieldset>			
+			<div class="form-group">
+				<fieldset>
+					Course Name <input type="text" th:field="*{courseName}" class="form-control">
+					<p th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}"></p>
+				</fieldset>
+			</div>
+			<div class="form-group">
+				<fieldset>
+					 Credits <input type="text" th:field="*{credits}" class="form-control">
+					<p th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></p>
+				</fieldset>
+			</div>
+			<div class="form-group">
+				<fieldset>
+					Size<input type="text" th:field="*{size}" class="form-control">
+					<p th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></p>
+				</fieldset>
+			</div>
+			<div class="form-group">
+				<fieldset>Lecturer
+					<select id="lecturerNameDropdown" name="lecturerName" th:field = "*{lecturer}" class="form-control">
+					<option th:each="lecturer:${lecturerList}" th:value="${lecturer.lecturerId}" th:utext="${lecturer.getFirstName + ' ' + lecturer.getLastName()}"/>
+					</select>
+				</fieldset>	
+			</div>		
 <!-- 			<fieldset> -->
 <!-- 				Lecturer First Name <input type="text" th:field="*{Lecturer.firstName}"> -->
 <!-- 				<p th:if="${#fields.hasErrors('Lecturer.firstName')}" th:errors="*{Lecturer.firstName}"></p> -->
@@ -54,29 +64,35 @@
 <!-- 				Faculty: <input type="text" th:field="*{faculty}"> -->
 <!-- 				<p th:if="${#fields.hasErrors('faculty')}" th:errors="*{faculty}"></p> -->
 <!-- 			</fieldset> -->
-			<fieldset>Faculty: 
-				<select id="facultyDropdown" name="faculty" th:field = "*{faculty}">
-				<option th:value="BUSINESS" th:utext="BUSINESS"/>
-				<option th:value="COMPUTING" th:utext="COMPUTING"/>
-				<option th:value="ENGINEERING" th:utext="ENGINEERING"/>
-				<option th:value="LAW" th:utext="LAW"/>
-				<option th:value="MEDICINE" th:utext="MEDICINE"/>
-				</select>
-			</fieldset>		
-			<fieldset>
-				Course Start Date: <input type="text" th:field="*{courseStartDate}" placeholder="DD/MM/YYYY">
-				<p th:if="${#fields.hasErrors('courseStartDate')}" th:errors="*{courseStartDate}"></p>
-			</fieldset>
-			<fieldset>
-				Description: <input type="text" th:field="*{description}" size="150">
-				<p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-			</fieldset>
+			<div class="form-group">
+				<fieldset>Faculty: 
+					<select id="facultyDropdown" name="faculty" th:field = "*{faculty}" class="form-control">
+					<option th:value="BUSINESS" th:utext="BUSINESS"/>
+					<option th:value="COMPUTING" th:utext="COMPUTING"/>
+					<option th:value="ENGINEERING" th:utext="ENGINEERING"/>
+					<option th:value="LAW" th:utext="LAW"/>
+					<option th:value="MEDICINE" th:utext="MEDICINE"/>
+					</select>
+				</fieldset>	
+			</div>	
+			<div class="form-group">
+				<fieldset>
+					Course Start Date<input type="text" th:field="*{courseStartDate}" placeholder="DD/MM/YYYY" class="form-control">
+					<p th:if="${#fields.hasErrors('courseStartDate')}" th:errors="*{courseStartDate}"></p>
+				</fieldset>
+			</div>
+			<div class="form-group">
+				<fieldset>
+					Description <input type="text" th:field="*{description}" size="150" class="form-control">
+					<p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+				</fieldset>
+			</div>
 			<fieldset>
 				<input type="submit" class="button" value="Save"/>
-				<input type="reset" class="button" value="Cancel"/>
+				<input type="reset" class="button" value="Cancel" onclick="history.back(-1)"/>
 			</fieldset>
 		</form>
-		<br/>
+		</div>
 	</main>
  	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
   </div>

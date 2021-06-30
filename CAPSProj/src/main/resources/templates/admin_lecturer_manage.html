@@ -14,14 +14,14 @@
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/studentlist'; return false"
+					onclick="window.location.href='/admin/logout'; return false"
 					class="button-logout" />
 	</div>
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
     <page-title>
-    	<h1> Manage Lecturers</h1>
+    	<div class="page-title"> Manage Lecturers</div>
     </page-title>
     <main>
 		<div class="form-outline">
@@ -36,8 +36,9 @@
 			<tr >
 				<th>First Name</th>
 				<th>Last Name</th>
-				<th>Matriculation Date</th>
+				<th>Faculty</th>
 				<th>Email</th>
+				<th></th>
 			</tr>
 			<tr th:each="lecturer:${lecturers}" >
 				<td th:text=${lecturer.firstName}>firstName</td>

@@ -13,14 +13,15 @@
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/studentlist'; return false"
+					onclick="window.location.href='/admin/logout'; return false"
 					class="button-logout" />
 	</div>
+	
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
     <page-title>
-    	<h1>Manage Courses</h1>
+    	<div class="page-title"> Manage Courses</div>
     </page-title>
     <main>
 		<div class="form-outline">

@@ -13,15 +13,18 @@
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/studentlist'; return false"
+					onclick="window.location.href='/admin/logout'; return false"
 					class="button-logout" />
 	</div>
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
+    <page-title>
+    	<div class="page-title"> Edit Lecturer</div>
+    </page-title>
 	    <main>
-		<h3>Edit Lecturer</h3>
-			<form action="" th:object="${lecturer}" th:action="@{/admin/saveLecturer}" method="get">
+			<div class="well">
+				<form action="" th:object="${lecturer}" th:action="@{/admin/saveLecturer}" method="get">
 			        <fieldset>
 					     <input type="hidden" th:field="*{lecturerId}">  
 					</fieldset>
@@ -31,33 +34,41 @@
 					<fieldset>
 					     <input type="hidden" th:field="*{password}">  
 					</fieldset>
+					<div class="form-group">
+						<fieldset>
+							First Name<input type="text" th:field="*{firstName}" class="form-control">
+							<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+						</fieldset>
+					</div>
+					<div class="form-group">
 					<fieldset>
-						First Name: <input type="text" th:field="*{firstName}">
-						<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-					</fieldset>
-					<fieldset>
-						Last Name: <input type="text" th:field="*{lastName}">
+						Last Name <input type="text" th:field="*{lastName}" class="form-control">
 						<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 					</fieldset>
-					<fieldset>
-						Faculty:
-						<select id="facultyDropdown" name="faculty" th:field = "*{faculty}">
-						<option th:value="BUSINESS" th:utext="BUSINESS"/>
-						<option th:value="COMPUTING" th:utext="COMPUTING"/>
-						<option th:value="ENGINEERING" th:utext="ENGINEERING"/>
-						<option th:value="LAW" th:utext="LAW"/>
-						<option th:value="MEDICINE" th:utext="MEDICINE"/>
-						</select>	
-					</fieldset>
-					<fieldset>
-						Personal Email <input type="text" th:field="*{personalEmail}">
-						<p th:if="${#fields.hasErrors('personalEmail')}" th:errors="*{personalEmail}"></p>
-					</fieldset>
+					</div>
+					<div class="form-group">
+						<fieldset>
+							Faculty
+							<select id="facultyDropdown" name="faculty" th:field = "*{faculty}" class="form-control">
+							<option th:value="BUSINESS" th:utext="BUSINESS"/>
+							<option th:value="COMPUTING" th:utext="COMPUTING"/>
+							<option th:value="ENGINEERING" th:utext="ENGINEERING"/>
+							<option th:value="LAW" th:utext="LAW"/>
+							<option th:value="MEDICINE" th:utext="MEDICINE"/>
+							</select>	
+						</fieldset>
+					</div>
+					<div class="form-group">
+						<fieldset>
+							Personal Email <input type="text" th:field="*{personalEmail}" class="form-control">
+							<p th:if="${#fields.hasErrors('personalEmail')}" th:errors="*{personalEmail}"></p>
+						</fieldset>
+					</div>
 					<fieldset>
 						<input type="submit" class="button" value="Save"/>	
 						<input type="reset" class="button" value="Reset"/>
 					</fieldset>
-			</form>
+				</form>
     	</main>
  	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
   </div>

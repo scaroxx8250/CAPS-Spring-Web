@@ -1,10 +1,11 @@
 package com.team6.CAPSProj.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -209,4 +210,12 @@ public class AdminController {
 		return "forward:/admin/courselist";
 	}
 	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false); 
+		if(session != null) {
+			session.invalidate();
+		}
+		return "logout";
+	}
 }

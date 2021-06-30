@@ -4,6 +4,7 @@
 	<title>Edit Student</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <head>
 <body>
@@ -13,14 +14,17 @@
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/studentlist'; return false"
+					onclick="window.location.href='/admin/logout'; return false"
 					class="button-logout" />
 	</div>
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
+    <page-title>
+    	<div class="page-title"> Edit Students</div>
+    </page-title>
 	    <main>
-			<h3>Edit Student</h3>
+	   		<div class="well">
 			<form action="" th:object="${student}" th:action="@{/admin/save}" method="get">
 			    <fieldset>
 				     <input type="hidden" th:field="*{studentId}">  
@@ -34,27 +38,38 @@
 				<fieldset>
 				     <input type="hidden" th:field="*{email}">  
 				</fieldset>
+				<div class="form-group">
+					<fieldset>
+						First Name <input type="text" th:field="*{firstName}" class="form-control">
+						<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+					</fieldset>
+				</div>
+				<div class="form-group">
 				<fieldset>
-					First Name: <input type="text" th:field="*{firstName}">
-					<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-				</fieldset>
-				<fieldset>
-					Last Name: <input type="text" th:field="*{lastName}">
+					Last Name <input type="text" th:field="*{lastName}" class="form-control">
 					<p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 				</fieldset>
+				</div>
+				<div class="form-group">
 				<fieldset>
-					Matriculation Date: <input type="text" th:field="*{matrDate}" placeholder="DD/MM/YYYY">
+					Matriculation Date <input type="text" th:field="*{matrDate}" class="form-control" placeholder="DD/MM/YYYY">
 					<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
 				</fieldset>
+				</div>
+				<div class="form-group">
 				<fieldset>
-					Personal Email <input type="text" th:field="*{personEmail}">
+					Personal Email <input type="text" th:field="*{personEmail}" class="form-control">
 					<p th:if="${#fields.hasErrors('personEmail')}" th:errors="*{personEmail}"></p>
 				</fieldset>
+				</div>
+				<div class="form-group">
 				<fieldset>
 					<input type="submit" class="button" value="Save"/>	
 					<input type="reset" class="button" value="Reset"/>
 				</fieldset>
+				</div>
 			</form>
+			</div>
     	</main>
  	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
   </div>

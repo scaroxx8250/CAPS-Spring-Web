@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Enroll Course</title>
+<title>Enrol Course</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -15,17 +15,17 @@
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/studentlist'; return false"
+					onclick="window.location.href='/student/logout'; return false"
 					class="button-logout" />
 	</div>
     <nav>
-    	<div th:replace="fragments/general.html :: admin-menu"></div>
+    	<div th:replace="fragments/general.html :: student-menu"></div>
     </nav>
     <page-title>
-    	<h1> Enroll for Course</h1>
+    	<div class="page-title"> Enrol for Course</div>
     </page-title>
     <main>
-  <h3 th:text="'Total Records: ' + ${notEnrolCourses.size()}">Total Records</h3>
+  	<h7 th:text="'Total Records: ' + ${notEnrolCourses.size()}">Total Records</h7>
 <form action="" th:object="${selectCourse}" th:action="@{/student/submitEnrol}" method="post">
 <table class="table">
  <tr>
@@ -33,7 +33,7 @@
    <th>Lecture Name</th>
    <th>Credits</th>
    <th>Course Description</th>
-   <th>Enroll</th>
+   <th>Enrol</th>
  </tr>
  <tr th:each="course: ${notEnrolledCourses}">
    <td th:text="${course.courseName}">Course NAME</td>
@@ -45,7 +45,7 @@
 </table>
 <fieldset>
 <div th:if="${not #lists.isEmpty(notEnrolledCourses)}">
-<input type="submit" class="button" value ="Save"/>
+<input type="submit" class="button" value ="Enrol"/>
 &nbsp; &nbsp; 
 <input type="reset" class="button" value="Reset"/>
 </div>
@@ -67,7 +67,7 @@
 		</div>	
 	</div>
 </div>
-    </main>
+</main>
 
     <footer><div th:replace="fragments/general::footer"></div></footer>
 </body>
