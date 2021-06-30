@@ -46,22 +46,6 @@
 			document.getElementById("courseNameDropdown").selectedIndex = id;
 		</script>
 		
-		
-<!-- 		<table> -->
-<!-- 			<tr> -->
-<!-- 			<td> -->
-<!-- 			Select course:  -->
-<!-- 			</td> -->
-<!-- 			<td> -->
-<!-- 			<select class="course-dropdown" id="courseNameDropdown" name="courseName" value = "ADProject"> -->
-<!-- 				<option th:each="course:${courses}" th:value="${course.getCourseName()}" th:text="${course.getCourseName()}"/> -->
-<!-- 			</select> -->
-<!-- 			</td> -->
-<!-- 			<td> -->
-<!-- 			<a id="addstudent" href="ADProject" > Add Student </a> -->
-<!-- 			</td> -->
-<!-- 			</tr> -->
-<!-- 		</table> -->
 		<br>
 		<h4>Enrolled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
 	    <span th:if="${status != null}">
