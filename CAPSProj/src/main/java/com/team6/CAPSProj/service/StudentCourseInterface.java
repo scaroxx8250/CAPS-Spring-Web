@@ -26,5 +26,7 @@ public interface StudentCourseInterface {
 	Page<StudentCourse>findAllPaginatedStudentsByCourse(int pageNo, int pageSize, String CourseName);
 	public List<StudentCourse> findAllGradedCoursesByStudent(Integer studentId);
 	public boolean adminAddStudentToCourse(Course course, Student student);
+	Page<StudentCourse>findAllPaginatedStudentsByGradedCourse(int pageNo, int pageSize, String CourseName);
+
 }
 

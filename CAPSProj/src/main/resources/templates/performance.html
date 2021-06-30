@@ -81,8 +81,7 @@ th, td {
 	<br>
 	<table id="students">
 	<tr>
-			<!-- <th>Student ID</th> -->
-			<th>Student ID</th>
+			<th>Matric No</th>
 			<th>First Name</th>
 			<th>Last Name</th>
 			<th>Grade</th>
@@ -90,7 +89,7 @@ th, td {
 	</tr>
 	 <tr th:each="student : ${studentgrade}" class="table-row">
 			<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
-			<td th:text=${student.key.studentId}>Student ID</td>
+			<td th:text=${student.key.matricNo}>Matric No</td>
 			<td th:text=${student.key.firstName}>First Name</td>
 			<td th:text=${student.key.lastName}>Last Name</td>
 			<td th:text=${student.value}>Grade</td>

@@ -46,11 +46,7 @@ public class LecturerController {
 	
 	@Autowired 
 	private StudentInterface sinterface; 
-	
-//	@Autowired
-//	public void setLecturerInterface(LecturerServiceImpl lserviceImpl) {
-//		this.linterface = lserviceImpl;
-//	}
+
 	
 	@RequestMapping(value="/Courses")
 	public String listCourses(Model model, HttpSession session) {
@@ -121,23 +117,15 @@ public class LecturerController {
 		if (id == 0)
 		{
 			course1 = courselist.get(0);
-			//course1 = cinterface.findAllCourseByYear(LocalDate.now().getYear()).get(0);
 		}
 		else
 		{
 			course1 = courselist.get(id);
-			//course1 = cinterface.findAllCourseByYear(LocalDate.now().getYear()).get(id); 
 		}
 		
 		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course1.getCourseName());
 		List<StudentCourse> studentslist = page.getContent(); 
-		List<Student> students  = new ArrayList<Student>();
-		// get all students in the course 
-		for (StudentCourse sc: studentslist) {
-			// add them into a student list 
-			students.add(sc.getStudent());
-		}
-		model.addAttribute("students", students);
+		model.addAttribute("studentslist", studentslist);
 		
 		if (id != 0)
 		{
@@ -193,7 +181,7 @@ public class LecturerController {
 			course1 = courselist.get(id); 
 		}
 		
-		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course1.getCourseName());
+		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByGradedCourse(pageNo, pageSize, course1.getCourseName());
 		List<StudentCourse> studentslist = page.getContent(); 
 		List<Student> students = new ArrayList<Student>(); 
 		for (StudentCourse sc : studentslist) {
@@ -230,8 +218,7 @@ public class LecturerController {
 				
 
 		int totalPages = page.getTotalPages(); 
-		long totalItems = studentGrade.size();
-		//long totalItems = page.getTotalElements(); 
+		long totalItems = page.getTotalElements(); 
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("totalItems",totalItems);			
