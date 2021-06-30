@@ -30,9 +30,13 @@
 					class="button" /></div>
 	<br>
 	<span th:if="${status != null}">
+
 	    <h5><span th:unless="${status}">There are existing courses linked to the selected lecturer. Lecturer cannot be deleted.</span></h5>
 	    <h5><span th:if="${status}">Lecturer record has been successfully deleted.</span></h5>
 	</span>
+	
+	<span th:if="${#lists.isEmpty(lecturers)}"><br><br>There are no lecturers, please add lecturers first.</span>
+	
 	<table th:if="${not #lists.isEmpty(lecturers)}" class="table">
 			<tr >
 				<th>First Name</th>

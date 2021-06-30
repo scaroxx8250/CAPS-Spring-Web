@@ -50,10 +50,13 @@
 		<br>
 		<h4>Enroled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
 	    <span th:if="${status != null}">
-		    <h5><span th:unless="${status}">Student cannot be enroled for the course.</span></h5>
+
+	  	    <h5><span th:unless="${status}">Student cannot be enroled for the course.</span></h5>
 		    <h5><span th:if="${status}">Student has been successfully enroled for course.</span></h5>
 	    </span>
 	    	<h5><span th:if="${enrolment_delete_success == true}">Student has been removed from course</span></h5>
+	   	
+	   	<span th:if="${#lists.isEmpty(studentlist)}">There are no students in this course.</span>
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>

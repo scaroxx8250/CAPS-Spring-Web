@@ -27,51 +27,55 @@
     	<div class="page-title"> Grades and GPA</div>
     </page-title>
     <main>
-  		<div>
-		  <label>Year</label>
-		  <select th:field="${ay}">
-		  	<option th:each="selectOption : ${ay}" th:value="${selectOption}" th:text="${selectOption}"> selectedOption</option>
-		  </select>
-		 </div>
-  	<br>
-	<table class="table">
-		 <tr>
-		   <th>Course Name</th>
-		   <th>Credits</th>
-		   <th>Grade</th>
-		 </tr>
-		 <tr th:each="gc: ${gradedCourse}">
-		   <td th:text="${gc.course.courseName}">Course Name</td>
-		   <td th:text="${gc.course.credits}  ">Credits</td>
-		   <td th:text="${gc.grade}">Grade</td>
-		 </tr>
-	</table>
-	<br>
-	<table class="table2">
-		 <tr>
-		   <td>AY Credits</td>
-		   <td th:text="${ayCredits}"></td>
-		 </tr>
-		 <tr>
-		   <td>AY GPA:</td>
-		   <td th:text="${ayGPA}"></td>
-		 </tr>
-		 <tr>
-		   <td>Cumulative Credits:</td>
-		   <td th:text="${cuCredits}"></td>
-		 </tr>
-		 <tr>
-		   <td>Cumulative GPA:</td>
-		   <td th:text="${cuGPA}"></td>
-		 </tr>
-	</table>
-	<br>
-	<div class="grades-img">
+<div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
+ <div th:text= "'Welcome to '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></div>
+  <h1>Grades and GPA</h1>
+  <div>
+  <label>Year</label>
+  <select th:field="${ay}">
+  <option th:each="selectOption : ${ay}" th:value="${selectOption}"
+  th:text="${selectOption}"> selectedOption
+  </option>
+  </select>
+  </div>
+  <br>
+<table id="recTable" class="table">
+ <tr>
+   <th>Course Name</th>
+   <th>Credits</th>
+   <th>Grade</th>
+ </tr>
+  <tr id ="editable" th:each="gc: ${gradedCourse}">
+   <td th:text="${gc.course.courseName}">Course Name</td>
+   <td th:text="${gc.course.credits}  ">Credits</td>
+   <td th:text="${gc.grade}">Grade</td>
+ </tr>
+</table>
+<br>
+<table>
+ <tr>
+   <td>AY Credits</td>
+   <td id="ayCredits" th:text="${ayCredits}"></td>
+ </tr>
+ <tr>
+   <td>AY GPA:</td>
+   <td id="ayGPA" th:text="${ayGPA}"></td>
+ </tr>
+ <tr>
+   <td>Cumulative Credits:</td>
+   <td id="cuCredits" th:text="${cuCredits}"></td>
+ </tr>
+ <tr>
+   <td>Cumulative GPA:</td>
+   <td id="cuGPA" th:text="${cuGPA}"></td>
+ </tr>
+</table>
+    <br>
+    <div class="grades-img">
 		<img src="/img/Grade-table.png" width="300px;">
 	</div>
 	</main>
  <footer><div th:replace="fragments/general::footer"></div></footer>
- 
 <script>
 $(document).ready(function(){
 	$("select").change(function(){
@@ -100,16 +104,8 @@ $(document).ready(function(){
 				$('#cuCredits').html(cuCredit);
 				$('#ayGPA').html(ayGPA);
 				$('#cuGPA').html(cuGPA);
-				console.log(data.cuGPA);
-				console.log(data.ayGPA);
-				console.log(data.cuCredits);
-				console.log(data.ayCredits);
-				console.log(data.gradedCourse.length);
 			}
-		
-		});
-	    
-	    
+		}); 
 	});
 });
 </script>

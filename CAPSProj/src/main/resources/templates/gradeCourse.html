@@ -26,6 +26,7 @@
     </page-title>
     <main>
 	<div class="course-dropdown">
+
 	<select id="courseNameDropdown" class="example">
 		<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 	</select>	
