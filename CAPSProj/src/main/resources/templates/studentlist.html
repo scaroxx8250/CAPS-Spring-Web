@@ -21,6 +21,9 @@
         <div th:replace="fragments/student.html :: menu"></div>
     </nav> 
     <main>
+    <div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
+ <div th:text= "'Welcome to '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></div>
+    
     <h1>View Courses</h1>
 <table>
  <tr>

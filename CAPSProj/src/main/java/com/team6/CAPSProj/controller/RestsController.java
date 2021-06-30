@@ -15,20 +15,23 @@ import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.model.StudentGPA;
+import com.team6.CAPSProj.service.CourseInterface;
 import com.team6.CAPSProj.service.StudentCourseInterface;
 import com.team6.CAPSProj.service.StudentInterface;
 
 @RestController
 @RequestMapping("/api")
-public class StudentRestController {
+public class RestsController {
 	@Autowired
 	private StudentCourseInterface scservice;
 	@Autowired
 	private StudentInterface stservice;
+	@Autowired
+	private CourseInterface cservice;
 	
 	@RequestMapping("/student/{id}/{year}")
 	@ResponseBody
-	public HashMap<String,Object> getViewCourses(@PathVariable("id") int id,@PathVariable("year") int year ) {
+	public HashMap<String,Object> getGradedCourse(@PathVariable("id") int id,@PathVariable("year") int year ) {
 		if( id ==0) {
 			return null;
 		}
@@ -108,4 +111,28 @@ public class StudentRestController {
 				return Items;
 	}
 
+	
+	
+//	@RequestMapping(value="/student/getFaculty", method=RequestMethod.POST, produces="application/json")
+//	@ResponseBody
+//	public ResponseEntity<LecturerSelectedCourse> getEnrolledCourses(@RequestBody LecturerSelectedCourse sf ){
+//		if( sf.getId() ==0) {
+//			return null;
+//		}
+//		int pageSize = 5;
+//		
+//		int fac = Faculty.valueOf(sf.getFaculty()).ordinal();
+//		
+//
+//		Page<Course> page = cservice.findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(sf.getPageNo(), pageSize, sf.getId(),fac);
+//	
+//		
+//		LecturerSelectedCourse selectedFaculty = new LecturerSelectedCourse();
+//		selectedFaculty.setPageNo(sf.getPageNo());
+//		selectedFaculty.setTotalPages(page.getTotalPages());
+//		selectedFaculty.setTotaltems(page.getTotalElements());
+//		selectedFaculty.setEnrolCourses(page.getContent());
+//		
+//		return new ResponseEntity<>(selectedFaculty, HttpStatus.OK);
+//	}
 }
