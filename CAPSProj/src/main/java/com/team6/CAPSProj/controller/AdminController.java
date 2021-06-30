@@ -237,7 +237,7 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/enrolmentlist")
-	public String listEnrolment(Model model, Integer id, Integer statusId)
+	public String listEnrolment(Model model, Integer id, Integer statusId, boolean enrolment_delete_success)
 	{
 		//List<Course> courselist = cservice.getAllCourses();
 		List<Course> courselist = cservice.findAllCourseforCurrentYear();
@@ -296,19 +296,25 @@ public class AdminController {
 				model.addAttribute("status", false);
 		}
 		
+
+		// the status comes from controller action "/removeenrolment"
+		// if true, the student has been successfully removed from the course
+		if(enrolment_delete_success == true) 
+			model.addAttribute("enrolment_delete_success", enrolment_delete_success);
+		
 		return "admin_enrolment_manage";
 	}
 	
 	@RequestMapping(value = "/enrolmentlist/{id}")
 	public String listEnrolment(@PathVariable("id") Integer id, Model model)
 	{	
-		return listEnrolment(model, id, null);
+		return listEnrolment(model, id, null, false);
 	}
 	
 	@RequestMapping(value = "/enrolmentlist/{id}/{statusId}")
 	public String listEnrolment(@PathVariable("id") Integer id, Model model, @PathVariable("statusId") Integer statusId)
 	{	
-		return listEnrolment(model, id, statusId);
+		return listEnrolment(model, id, statusId, false);
 	}
 	
 //	@GetMapping("/addenrollment/{coursename}")
@@ -371,6 +377,25 @@ public class AdminController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "/removeenrolment/{matricNo}/{coursename}/{id}")
+	public String removeEnrollment(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model) {
+		
+		//get Student
+		Student student = stservice.findStudentByMatricNo(matricNo);
+		//get course
+		Course course = cservice.findCourseByCourseName(coursename);
+		//find assignment
+		st_cs_service.removeStudentFromCourse(course, student);
+		
+//		return "redirect:/admin/enrolmentlist/{id}";
+		return listEnrolment(model, id, null, true);
+
+	}
+	
+	
+	
+	
 
 //	@RequestMapping(value = "/enrolstudent")
 //	public String enrolStudent(@ModelAttribute("studentcourse") @Valid StudentCourse studentcourse, 
