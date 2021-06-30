@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -33,6 +34,7 @@ public class Course {
 	private Faculty faculty;
 
 	@Max(15)
+	@Min(1)
 	@NotNull
 	private int credits;
 	
@@ -48,7 +50,7 @@ public class Course {
 
 
 @Max(80)
-
+@Min(1)
 	@NotNull
 	private int size;
 	

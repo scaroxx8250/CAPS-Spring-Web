@@ -36,18 +36,6 @@
 				<option th:each="lecturer:${lecturerList}" th:value="${lecturer.lecturerId}" th:utext="${lecturer.getFirstName() + ' ' + lecturer.getLastName()}"/>
 				</select>
 			</fieldset>			
-<!-- 			<fieldset> -->
-<!-- 				Lecturer First Name <input type="text" th:field="*{Lecturer.firstName}"> -->
-<!-- 				<p th:if="${#fields.hasErrors('Lecturer.firstName')}" th:errors="*{Lecturer.firstName}"></p> -->
-<!-- 			</fieldset> -->
-<!-- 			<fieldset> -->
-<!-- 				Lecturer Last Name <input type="text" th:field="*{Lecturer.lastName}"> -->
-<!-- 				<p th:if="${#fields.hasErrors('Lecturer.lastName')}" th:errors="*{Lecturer.lastName}"></p> -->
-<!-- 			</fieldset> -->
-<!-- 			<fieldset> -->
-<!-- 				Faculty: <input type="text" th:field="*{faculty}"> -->
-<!-- 				<p th:if="${#fields.hasErrors('faculty')}" th:errors="*{faculty}"></p> -->
-<!-- 			</fieldset> -->
 			<fieldset>Faculty: 
 				<select id="facultyDropdown" name="faculty" th:field = "*{faculty}">
 				<option th:value="BUSINESS" th:utext="BUSINESS"/>
@@ -67,7 +55,7 @@
 			</fieldset>
 			<fieldset>
 				<input type="submit" value="Save"/>
-				<input type="reset" value="Cancel"/>
+				<input class="button" type="button" onclick="window.location.replace('/admin/courselist')" value="Cancel" />
 			</fieldset>
 		</form>
 		<br/>
