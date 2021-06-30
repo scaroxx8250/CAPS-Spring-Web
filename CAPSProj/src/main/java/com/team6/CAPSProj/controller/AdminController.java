@@ -266,8 +266,14 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/enrolmentlist")
-	public String listEnrolment(Model model, Integer id, Boolean enrol_student_course_status)
+	public String listEnrolment(Model model, Integer id, Integer statusId, HttpSession session, Boolean enrol_student_course_status)
 	{
+		Admin ad = (Admin) session.getAttribute("usession");
+		if (ad == null)
+		{
+			return "redirect:/home";
+		}
+		else {
 		//List<Course> courselist = cservice.getAllCourses();
 		List<Course> courselist = cservice.findAllCourseforCurrentYear();
 		model.addAttribute("courses", courselist);
@@ -317,21 +323,35 @@ public class AdminController {
 		}
 		
 		return "admin_enrolment_manage";
+		}
 	}
 	
 	@RequestMapping(value = "/enrolmentlist/{id}")
-	public String listEnrolment(@PathVariable("id") Integer id, Model model)
+	public String listEnrolment(@PathVariable("id") Integer id, Model model, HttpSession session)
 	{	
-		return listEnrolment(model, id, null);
+		Admin ad = (Admin) session.getAttribute("usession");
+		if (ad == null)
+		{
+			return "redirect:/home";
+		}
+		else {
+		return listEnrolment(model, id, null, session);
+		}
 	}
 	
 	@RequestMapping(value = "/enrolmentlist/{id}/{statusId}")
-	public String listEnrolment(@PathVariable("id") Integer id, Model model, @PathVariable("statusId") Integer statusId)
+	public String listEnrolment(@PathVariable("id") Integer id, Model model, @PathVariable("statusId") Integer statusId, HttpSession session)
 	{	
+    Admin ad = (Admin) session.getAttribute("usession");
+    if (ad == null)
+	  {
+		  return "redirect:/home";
+    }
+    
 		if(statusId == 1)
-			return listEnrolment(model, id, true);
+			return listEnrolment(model, id, session, true);
 		else
-			return listEnrolment(model, id, false);
+			return listEnrolment(model, id, session, false);
 	}
 	
 //	@GetMapping("/addenrollment/{coursename}")
@@ -344,8 +364,13 @@ public class AdminController {
 
 	
 	@RequestMapping(value = "/addenrolment/{id}/{pageNo}")
-	public String addEnrolment(@PathVariable(value = "pageNo") int pageNo, Model model, @PathVariable("id") int id) {
-		
+	public String addEnrolment(@PathVariable(value = "pageNo") int pageNo, Model model, @PathVariable("id") int id, HttpSession session) {
+		Admin ad = (Admin) session.getAttribute("usession");
+		if (ad == null)
+		{
+			return "redirect:/home";
+		}
+		else {
 		//get course
 		Course course = cservice.findAllCourseByYear(LocalDate.now().getYear()).get(id);
 		
@@ -372,12 +397,18 @@ public class AdminController {
 		model.addAttribute("notEnrolledStudents", notEnrolledStudents);
 		model.addAttribute("id", id);
 		return "admin_enrolment_add";
+		}
 	}
 	
 	
 	@RequestMapping(value = "/enrolstudent/{matricNo}/{coursename}/{id}")
-	public String enrollStudent(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model) {
-	
+	public String enrollStudent(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model, HttpSession session) {
+		Admin ad = (Admin) session.getAttribute("usession");
+		if (ad == null)
+		{
+			return "redirect:/home";
+		}
+		else {
 		//get Student
 		Student student = stservice.findStudentByMatricNo(matricNo);
 		//get course
@@ -391,6 +422,7 @@ public class AdminController {
 		else // status == false means student could not be added to course
 		{
 			return "redirect:/admin/enrolmentlist/{id}/0";
+		}
 		}
 		
 	}

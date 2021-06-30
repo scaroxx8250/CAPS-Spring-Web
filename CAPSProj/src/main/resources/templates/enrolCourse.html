@@ -55,14 +55,14 @@
    <td th:text="${course.lecturer.firstName} +' '+ ${course.lecturer.lastName}  ">Lecture Name</td>
    <td th:text="${course.credits}">Credits</td>
    <td th:text="${course.description}">Course Description</td>
-   <td><input type = "checkbox" th:field="*{course}" th:value="${course.courseId}"/></td>
+   <td><input type = "checkbox" class="checkboxes" th:field="*{course}" th:value="${course.courseId}"/></td>
  </tr>
 </table>
 <fieldset>
 <div th:if="${not #lists.isEmpty(notEnrolledCourses)}">
-<input type="submit"value ="Save"/>
+<input type="submit"value ="Save" />
 &nbsp; &nbsp; 
-<input type="reset" value="Reset"/>
+<input type="reset" value="Reset" />
 </div>
 </fieldset>
 </form>
@@ -86,9 +86,35 @@
 <script>
 $(document).ready(function(){
 	
+	// disable the submit and reset button
+	$('input[type="submit"]').prop('disabled',true);
+	 $('input[type="reset"]').prop('disabled',true);
 	 
+	 // update the Show Courses URL link
 	facultyId = $('#facultyDropdown').val();
 	 document.getElementById("showfaculty").href="/student/enrolCourse/" + facultyId + "/1";
+	 
+	
+	// toggle between disable submit and reset button if at least one of the checkbox is checked or unchecked
+	$('.checkboxes').change(function(){
+		if($('.checkboxes:checkbox:checked').length >0){
+			 $('input[type="submit"]').prop('disabled',false);
+			 $('input[type="reset"]').prop('disabled',false);
+		}
+		else{
+			$('input[type="submit"]').prop('disabled',true);
+			 $('input[type="reset"]').prop('disabled',true);
+		}
+	});
+	
+	// disable the submit and reset button if no checkbox is checked
+	$('input[type="reset"]').click(function(){
+		if($('.checkboxes:checkbox:checked').length <0){
+			 $('input[type="submit"]').prop('disabled',true);
+			 $('input[type="reset"]').prop('disabled',true);
+		}
+	})
+	
 });
 
 // $(document).ready(function(){
