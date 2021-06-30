@@ -2,6 +2,8 @@ package com.team6.CAPSProj.repo;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -22,5 +24,9 @@ public interface StudentRepository extends JpaRepository<Student, Integer>, Pagi
 	
 	Student findByEmailAndPassword(String email, String password);
 	
+//	@Query(value = "SELECT * from student where student.student_Id NOT IN (Select student_id from student_course WHERE student_course.course_Id = :courseId", nativeQuery = true)
+//	Page<Student> findAllNotEnrolledStudentsByCourseByPage(@Param("courseId") int courseId, Pageable pageable);
 
+	@Query(value = "SELECT * from student where student.student_Id NOT IN (Select student_id from student_course WHERE student_course.course_Id = :courseId)", nativeQuery = true)
+	Page<Student> findAllNotEnrolledStudentsByCourseByPage(@Param("courseId") int courseId, Pageable pageable);
 }

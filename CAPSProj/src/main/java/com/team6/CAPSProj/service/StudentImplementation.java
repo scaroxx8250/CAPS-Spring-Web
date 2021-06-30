@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.team6.CAPSProj.model.Student;
@@ -129,6 +132,13 @@ public class StudentImplementation implements StudentInterface {
 	public void deleteStudent(Student student) {
 			srepo.delete(student);
 	}
+	
+	@Override
+	public Page<Student> findAllPaginatedNotEnrolledStudentsByCourse(int pageNo, int pageSize, Integer courseId) {
+	Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+	return srepo.findAllNotEnrolledStudentsByCourseByPage(courseId, pageable);
+	}
+	
 	
 	
 }

@@ -9,6 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,17 +26,23 @@ public class Student {
 
 	private String matricNo;
 	
+	@NotEmpty
 	private String firstName;
-
+	
+	@NotEmpty
 	private String lastName;
 
+	@Email
+	@NotEmpty
 	private String personEmail;
 
 	private String email;
 
 	private String password;
 
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@NotNull
 	private LocalDate matrDate;
 	
 	
