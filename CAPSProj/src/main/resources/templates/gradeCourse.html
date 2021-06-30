@@ -55,20 +55,31 @@ th, td {
 </head>
 <body>
 <div class="topnav">
-  <a href="Courses">View Courses Taught</a>
-  <a href="CourseEnrolment">View Course Enrolment</a>
+  <a href="/lecturer/Courses">View Courses Taught</a>
+  <a href="/lecturer/CourseEnrolment">View Course Enrolment</a>
   <a class="active" href="GradeCourse">Grade a Course</a>
-  <a href="StudentPerformance">View Student Performance</a>
-  <a href="logout">Logout</a>
+  <a href="/lecturer/StudentPerformance">View Student Performance</a>
+  <a href="/lecturer/logout">Logout</a>
 </div>
 	<h1>Grade Course</h1>
 	<br>
-	<div class="course-dropdown">
-	<select th:field="${courses}">
-		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
-	</select>	
-	</div>
+	<select id="courseNameDropdown" class="example">
+	<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
+	</select>
+	&nbsp;&nbsp;
+	<a id = "showenrolledstudents" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}">Show Enrolled Students</a>
+	
+	
+	<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
+	sel.onchange=function(){
+		document.getElementById("showenrolledstudents").href="/lecturer/GradeCourse/" + this.value + "/1";
+	}
+	var id = /*[[${id}]]*/
+		document.getElementById("courseNameDropdown").selectedIndex = id; 
+	</script>
 	<br>
+	<h4>Enrolled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
+	
 	<form action="#" th:object="${studentGrade}" th:action="@{/lecturer/GradeCourse/save}" method="post">
 	<table id="students">
 	<tr>
@@ -98,7 +109,7 @@ th, td {
 		</div>	
 		<div>
 			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-				<a th:if="${currentPage != i}" th:href="@{'/lecturer/GradeCourse/' + ${i}}">[[${i}]]</a>
+				<a th:if="${currentPage != i}" th:href="@{'/lecturer/GradeCourse/{Id}/' + ${i} (Id = ${id})}">[[${i}]]</a>
 				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
 			</span>
 		</div>	

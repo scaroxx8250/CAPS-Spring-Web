@@ -56,21 +56,32 @@ th, td {
 </head>
 <body>
 <div class="topnav">
-  <a href="Courses">View Courses Taught</a>
-  <a class="active" href="CourseEnrolment">View Course Enrolment</a>
-  <a href="GradeCourse">Grade a Course</a>
-  <a href="StudentPerformance">View Student Performance</a>
-  <a href="logout">Logout</a>
+  <a href="/lecturer/Courses">View Courses Taught</a>
+  <a class="active" href="/lecturer/CourseEnrolment">View Course Enrolment</a>
+  <a href="/lecturer/GradeCourse">Grade a Course</a>
+  <a href="/lecturer/StudentPerformance">View Student Performance</a>
+  <a href="/lecturer/logout">Logout</a>
 </div>
 	<h1>View Course Enrolment</h1>
 	<br>
-	<div class="course-dropdown">
-	<select th:field="${courses}">
-		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
-	</select>	
-	</div>
-	<br>
+
+	<select id="courseNameDropdown" class="example">
+	<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
+	</select>
+	&nbsp;&nbsp;
+	<a id = "showenrolledstudents" th:href="@{/lecturer/CourseEnrolment/{Id}/1 (Id=${id})}">Show Enrolled Students</a>
+
+	<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
+	sel.onchange=function(){
+		document.getElementById("showenrolledstudents").href="/lecturer/CourseEnrolment/" + this.value + "/1";
+	}
+	var id = /*[[${id}]]*/
+		document.getElementById("courseNameDropdown").selectedIndex = id; 
 	
+	
+	</script>
+	<br>
+	<h4>Enrolled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
 	<a href="" th:href="@{/lecturer/GradeCourse}"><button>Grade this course</button></a>
 	<br>	
 	<table id="students">
@@ -98,7 +109,7 @@ th, td {
 		</div>	
 		<div>
 			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-				<a th:if="${currentPage != i}" th:href="@{'/lecturer/CourseEnrolment/' + ${i}}">[[${i}]]</a>
+				<a th:if="${currentPage != i}" th:href="@{'/lecturer/CourseEnrolment/{Id}/'+ ${i} (Id=${id})}">[[${i}]]</a>
 				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
 			</span>
 		</div>	
