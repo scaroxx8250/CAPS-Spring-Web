@@ -46,6 +46,7 @@
 	    <span th:unless="${status}">You are not allowed to enroll this student for now</span>
 	    <span th:if="${status}">Student has been successfully added to course</span>
 	    </span>
+	   	<span th:if="${enrolment_delete_success == true}">Student has been removed from course</span>
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
@@ -60,13 +61,9 @@
 				<td th:text=${student.lastName}>lastName</td>
 				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
 				<td>
-						<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}"> 
-        					<button type="button">Edit</button> 
-   						</a>
-		
-					    <a th:href="@{/admin/deletestudent/{Id}(Id=${student.matricNo})}"> 
-        					<button type="button">Delete</button> 
-   						</a>
+						<a th:href="@{/admin/removeenrolment/{matricNo}/{coursename}/{Id}(matricNo = ${student.matricNo}, coursename = ${selectedCourse.getCourseName()}, Id=${id})}"> 
+        					<button type="button">Remove from course</button> 
+   						</a>				
 				</td>
 			</tr>
 		</table>

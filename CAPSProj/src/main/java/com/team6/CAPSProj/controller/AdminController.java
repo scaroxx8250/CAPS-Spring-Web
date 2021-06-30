@@ -266,7 +266,7 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/enrolmentlist")
-	public String listEnrolment(Model model, Integer id, Integer statusId, HttpSession session, Boolean enrol_student_course_status)
+	public String listEnrolment(Model model, Integer id, Integer statusId, HttpSession session, Boolean enrol_student_status, boolean unenrol_student_status)
 	{
 		Admin ad = (Admin) session.getAttribute("usession");
 		if (ad == null)
@@ -317,10 +317,16 @@ public class AdminController {
 			model.addAttribute("selectedCourse", selectedCourse);
 		}
 		
-		if(enrol_student_course_status != null)
+		if(enrol_student_status!= null)
 		{
-			model.addAttribute("status", enrol_student_course_status);
+			model.addAttribute("status", enrol_student_status);
 		}
+		
+
+		// the status comes from controller action "/removeenrolment"
+		// if true, the student has been successfully removed from the course
+		if(unenrol_student_status == true) 
+			model.addAttribute("enrolment_delete_success", unenrol_student_status);
 		
 		return "admin_enrolment_manage";
 		}
@@ -335,7 +341,7 @@ public class AdminController {
 			return "redirect:/home";
 		}
 		else {
-		return listEnrolment(model, id, null, session);
+		return listEnrolment(model, id, null, session, null, false);
 		}
 	}
 	
@@ -349,9 +355,9 @@ public class AdminController {
     }
     
 		if(statusId == 1)
-			return listEnrolment(model, id, session, true);
+			return listEnrolment(model, id, statusId, session, true, false);
 		else
-			return listEnrolment(model, id, session, false);
+			return listEnrolment(model, id, statusId, session, false, false);
 	}
 	
 //	@GetMapping("/addenrollment/{coursename}")
@@ -426,6 +432,25 @@ public class AdminController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "/removeenrolment/{matricNo}/{coursename}/{id}")
+	public String removeEnrollment(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model) {
+		
+		//get Student
+		Student student = stservice.findStudentByMatricNo(matricNo);
+		//get course
+		Course course = cservice.findCourseByCourseName(coursename);
+		//find assignment
+		st_cs_service.removeStudentFromCourse(course, student);
+		
+//		return "redirect:/admin/enrolmentlist/{id}";
+		return listEnrolment(model, id, null, session, null, true);
+
+	}
+	
+	
+	
+	
 
 //	@RequestMapping(value = "/enrolstudent")
 //	public String enrolStudent(@ModelAttribute("studentcourse") @Valid StudentCourse studentcourse, 
