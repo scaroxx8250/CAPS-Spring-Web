@@ -20,6 +20,9 @@
 	    <input type="button" value="Add Course"
 					onclick="window.location.href='/admin/addcourse'; return false"
 					class="button" />
+					
+		<br>
+		<span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled</span>
 	    <table th:if="${not #lists.isEmpty(courses)}" class="table">
 			<tr >
 				<th>CourseID</th>

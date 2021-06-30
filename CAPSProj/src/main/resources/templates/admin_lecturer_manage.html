@@ -20,7 +20,11 @@
 	<input type="button" value="Add Lecturer"
 					onclick="window.location.href='/admin/addlecturer'; return false"
 					class="button" />
-	
+	<br>
+	<span th:if="${status != null}">
+	    <span th:unless="${status}">There are still courses linked to this lecturer, you cannot delete this lecturer as of now</span>
+	    <span th:if="${status}">Lecturer has been deleted successfully</span>
+	</span>
 	<table th:if="${not #lists.isEmpty(lecturers)}" class="table">
 			<tr >
 				<th>First Name</th>
