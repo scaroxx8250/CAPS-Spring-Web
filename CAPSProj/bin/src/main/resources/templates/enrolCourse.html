@@ -2,35 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Enroll Course</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script
-  src="https://code.jquery.com/jquery-3.6.0.js"
-  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
-
+<title>Enrol Course</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
- <div class = "container">
-    <div id="top_grid1">Top Grid Cell 1</div>
-    <div id="top_grid2">Top Grid Cell 2</div>
-    <div id="top_grid3">Top Grid Cell 3</div>
-    <div id="top_grid4">Top Grid Cell 4</div>
+ 
+  <div class = "container">
+    <heading><div th:replace="fragments/general::heading"></div></heading>
+    <div id="top_grid1">
+ 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 	</div>
+    <div id="top_grid2"></div>
+    <div id="top_grid3"></div>
+    <div id="top_grid4"><input type="button" value="Logout"
+					onclick="window.location.href='/student/logout'; return false"
+					class="button-logout" />
+	</div>
     <nav>
-        <div th:replace="fragments/student.html :: menu"></div>
-    </nav> 
+    	<div th:replace="fragments/general.html :: student-menu"></div>
+    </nav>
+    <page-title>
+    	<div class="page-title"> Enrol for Course</div>
+    </page-title>
     <main>
-    <div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
- <div th:text= "'Welcome to '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></div>
-    
-  <h1>Enroll for a Course</h1>
-  Select Faculty <select id="facultyDropdown" class="example">
+  	<div>Select Faculty <select id="facultyDropdown" class="example">
   <option th:each="faculty, stat : ${facultyList}" th:value="${stat.index}" th:text="${faculty.toString()}"></option>
   </select>
   &nbsp;&nbsp;
-  <a id = "showfaculty" th:href="@{/student/enrolCourse/{FacultyId}/1 (FacultyId=${facultyId})}">Show Courses</a>
+  <a id = "showfaculty" th:href="@{/student/enrolCourse/{FacultyId}/1 (FacultyId=${facultyId})}"><button class="button">Show Courses</button></a>
   
   <script th:inline="javascript"> var sel= document.getElementById('facultyDropdown');
   sel.onchange=function(){
@@ -39,8 +41,9 @@
   var facultyId= /*[[${facultyId}]]*/
   		document.getElementById("facultyDropdown").selectedIndex = facultyId;
   </script>
+  </div>
   <br>
-  <h3 id = "noRecord" th:if="${#lists.isEmpty(notEnrolledCourses)}">No courses found</h3>
+  <h5 id = "noRecord" th:if="${#lists.isEmpty(notEnrolledCourses)}">No courses found</h5>
 <form action="" th:object="${selectCourse}" th:action="@{/student/submitEnrol}" method="post">
 <table id="recTable" class="table" th:if="${not #lists.isEmpty(notEnrolledCourses)}">
  <tr>
@@ -60,9 +63,9 @@
 </table>
 <fieldset>
 <div th:if="${not #lists.isEmpty(notEnrolledCourses)}">
-<input type="submit"value ="Save" />
+<input type="submit" class="button" value ="Save" />
 &nbsp; &nbsp; 
-<input type="reset" value="Reset" />
+<input type="reset" class="button" value="Reset" />
 </div>
 </fieldset>
 </form>
@@ -81,7 +84,7 @@
 	</div>
 </div>
  </main>
-  	<footer>Footer</footer>
+	<footer><div th:replace="fragments/general::footer"></div></footer>
 </div>
 <script>
 $(document).ready(function(){
@@ -116,37 +119,6 @@ $(document).ready(function(){
 	})
 	
 });
-
-// $(document).ready(function(){
-// 	$("select").change(function(){
-// 		var selectedFaculty = $(this).val();
-// 		var stId = $("#stId").text();
-// 		 $.ajax({
-// 		        url: '/api/student/getFaculty',
-// 		        type: 'POST',
-// 		        contentType: 'application/json',
-// 		        data: JSON.stringify( { "id": 1, "faculty":"MEDICINE", "pageNo":1 } ),
-// 		        success: function(data) {
-// 		        	$("#recTable tr").not(':first').remove();
-		        	
-// 		        	$.each(data.enrolCourses, (i, enrolcourse) =>{
-// 		        		let enrolcourseRow = '<tr><td>'  + enrolcourse.courseName + '</td>' +
-// 		        								  '<td>' + enrolcourse.lecturer.firstName + ' ' + enrolcourse.lecturer.lastName+ '</td>' +
-// 		        								  '<td>' + enrolcourse.credits + '</td>'
-// 		        								  '<td>' + enrolcourse.description + '</td>'
-// 		        								  '<td><input type = "checkbox" value="'+enrolcourse.courseId+ '" id="course'+ i +'" name= "course">'+
-// 		        								  '<input type="hidden" name="_course" value="on">'+ '</td></tr>'
-		        								  
-// 		        		$("#recTable tr").append(enrolcourseRow);						  
-		        		                         
-// 		        	});
-// 					console.log(data);
-// 				}
-// 		    });
-// 	})
-	
-// });
-
 </script>
 </body>
 </html>

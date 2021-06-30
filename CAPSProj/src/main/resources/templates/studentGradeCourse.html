@@ -12,7 +12,7 @@
  	<div class = "container">
     	<heading><div th:replace="fragments/general::heading"></div></heading>
 	    <div id="top_grid1">
-	 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+	 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
 	 	</div>    
 	 	<div id="top_grid2"></div>
 	    <div id="top_grid3"></div>
@@ -20,16 +20,12 @@
 						onclick="window.location.href='/student/logout'; return false"
 						class="button-logout" />
 		</div>
-    <nav>
-    	<div th:replace="fragments/general.html :: student-menu"></div>
-    </nav>
+		<nav> <div th:replace="fragments/general.html :: student-menu"></div> </nav>
     <page-title>
     	<div class="page-title"> Grades and GPA</div>
     </page-title>
     <main>
-<div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
- <div th:text= "'Welcome to '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></div>
-  <h1>Grades and GPA</h1>
+    <div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
   <div>
   <label>Year</label>
   <select th:field="${ay}">
@@ -52,7 +48,7 @@
  </tr>
 </table>
 <br>
-<table>
+<table class= "table2"  style="width:25%">
  <tr>
    <td>AY Credits</td>
    <td id="ayCredits" th:text="${ayCredits}"></td>
@@ -76,6 +72,7 @@
 	</div>
 	</main>
  <footer><div th:replace="fragments/general::footer"></div></footer>
+ </div>
 <script>
 $(document).ready(function(){
 	$("select").change(function(){

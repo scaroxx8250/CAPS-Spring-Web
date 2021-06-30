@@ -11,7 +11,7 @@
 <div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
     <div id="top_grid1">
- 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
  	</div>
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
@@ -42,13 +42,13 @@
 	
 	
 	</script>
-	<a href="" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}"><button class="button">Grade this course</button></a>
+	<a href="" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}"><button class="button" th:if="${not #lists.isEmpty(studentslist)}">Grade this course</button></a>
 	</div>
 	<br>
 	
 	<h4>Enroled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
-			
-	<table class="table" id="students">
+	<h4 th:if="${#lists.isEmpty(studentslist)}">No records found</h4>		
+	<table class="table" id="students"  th:if="${not #lists.isEmpty(studentslist)}">
 	<tr>
    		<th>Matric No</th>
    		<th>First Name</th>
@@ -81,6 +81,7 @@
 	</div>
 </div>
 </main>
+</div>
     <footer><div th:replace="fragments/general::footer"></div></footer>
 </body>
 </html>
