@@ -57,8 +57,6 @@ public class AdminController {
 			return "redirect:/home";
 		}
 		else {
-
-	public String listStudent(Model model) {
 		model.addAttribute("studentlist", stservice.findAllStudents());
 		return "admin_student_manage";
 		}
@@ -293,9 +291,9 @@ public class AdminController {
 		if(statusId != null)
 		{
 			if(statusId == 1)
-				model.addAttribute("status", false);
-			else
 				model.addAttribute("status", true);
+			else
+				model.addAttribute("status", false);
 		}
 		
 		return "admin_enrolment_manage";
@@ -363,7 +361,6 @@ public class AdminController {
 		Course course = cservice.findCourseByCourseName(coursename);
 		//do assignment
 		boolean status = st_cs_service.adminAddStudentToCourse(course, student);
-		int statusId;
 		if(status)
 		{
 			return "redirect:/admin/enrolmentlist/{id}/1";
