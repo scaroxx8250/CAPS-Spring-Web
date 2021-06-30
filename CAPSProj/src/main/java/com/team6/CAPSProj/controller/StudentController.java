@@ -1,13 +1,12 @@
 package com.team6.CAPSProj.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,7 @@ import com.team6.CAPSProj.service.StudentInterface;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
-	@Autowired
-	private StudentInterface stservice;	
-
+	
 	@Autowired
 	private StudentCourseInterface scservice;
 		
@@ -59,18 +56,6 @@ public class StudentController {
 		if(s == null) {
 			return "redirect:/home"; 
 		}
-//		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
-//		List<StudentCourse> scList2 = new ArrayList<StudentCourse>();
-//		// get the current course that student has enrolled
-//		List<Course> clist = new ArrayList<Course>();
-//		for(StudentCourse sc : scList) {
-//			if(sc.getGrade() == null && sc.getCourse().getCourseStartDate().getYear() == LocalDate.now().getYear()) {
-//				scList2.add(sc);
-//			}
-//		}
-//		// passing the data to view
-//		model.addAttribute("Courses",clist);
-//		model.addAttribute("scList2", scList2);
 		
 		int pageSize = 5;
 		Page<StudentCourse> page = scservice.findAllPaginatedCoursesByStudent(pageNo, pageSize, s.getStudentId());
@@ -100,37 +85,12 @@ public class StudentController {
 			return "redirect:/home";
 		}
 		int pageSize = 5;
-//		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
-//		List<Course> allCourses = cservice.findAllCourseforCurrentYear();
-//		
-//		// retrieve the list of courses that student has enrolled
-//		List<Course> enrolCourses = new ArrayList<Course>();
-//		for(StudentCourse sc : scList) {
-//			enrolCourses.add(sc.getCourse());
-//		}
-//		
-//		// filter the courses that student has not enrolled
-//		List<Course> availableCourses = new ArrayList<Course>();
-//		availableCourses.addAll(allCourses);
-//		for(Course ac: allCourses) {
-//			for(Course ec: enrolCourses) {
-//				if(ac.getCourseId() == ec.getCourseId()) {
-//					availableCourses.remove(ac);
-//				}
-//			}
-//		}
-//
-//		// filter the courses that student has not enrolled and is available to start tomorrow onwards
-//		availableCourses = availableCourses.stream().
-//				filter(c->c.getCourseStartDate().isAfter(LocalDate.now()) && scservice.CountTotalStudentEnrol(c.getCourseId())<c.getSize())
-//				.collect(Collectors.toList());
 		
 		// passing the data to view
 		StudentSelectedCourses ssc = new StudentSelectedCourses(new ArrayList<Course>());
-		//model.addAttribute("notEnrolCourses",availableCourses);
 		model.addAttribute("selectCourse", ssc);
 		
-		// fill up facultyList with from faculty enums
+		// fill up facultyList with from faculty enum
 		List<Faculty> facultyList = Arrays.asList(Faculty.values());
 		model.addAttribute("facultyList", facultyList);	
 		
@@ -143,7 +103,6 @@ public class StudentController {
 		else {
 			faculty1 = facultyList.get(facultyId);
 		}	
-		//page = cservice.findAllPaginatedNotEnrolledCoursesByStudent(pageNo, pageSize, s.getStudentId());
 		
 		int fac = faculty1.ordinal();
 		
@@ -151,8 +110,6 @@ public class StudentController {
 		Page<Course> page = cservice.findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(pageNo, pageSize, s.getStudentId(),fac);
 		List<Course> notEnrolledCourses = page.getContent();
 			
-	//facultyList.addAll( notEnrolledCourses.stream().map(c->c.getFaculty().toString()).distinct().sorted().collect(Collectors.toList()));
-		
 		
 		int totalPages = page.getTotalPages();
 		long totalItems = page.getTotalElements();
@@ -250,6 +207,13 @@ public class StudentController {
 		return "studentGradeCourse";
 	}
 	
-
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false); 
+		if(session != null) {
+			session.invalidate();
+		}
+		return "redirect:/home";
+	}
 	
 }

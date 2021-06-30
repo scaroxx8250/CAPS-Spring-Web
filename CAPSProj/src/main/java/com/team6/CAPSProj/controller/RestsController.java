@@ -26,8 +26,6 @@ public class RestsController {
 	private StudentCourseInterface scservice;
 	@Autowired
 	private StudentInterface stservice;
-	@Autowired
-	private CourseInterface cservice;
 	
 	@RequestMapping("/student/{id}/{year}")
 	@ResponseBody
@@ -110,29 +108,4 @@ public class RestsController {
 				Items.put("ay",acadYears);
 				return Items;
 	}
-
-	
-	
-//	@RequestMapping(value="/student/getFaculty", method=RequestMethod.POST, produces="application/json")
-//	@ResponseBody
-//	public ResponseEntity<LecturerSelectedCourse> getEnrolledCourses(@RequestBody LecturerSelectedCourse sf ){
-//		if( sf.getId() ==0) {
-//			return null;
-//		}
-//		int pageSize = 5;
-//		
-//		int fac = Faculty.valueOf(sf.getFaculty()).ordinal();
-//		
-//
-//		Page<Course> page = cservice.findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(sf.getPageNo(), pageSize, sf.getId(),fac);
-//	
-//		
-//		LecturerSelectedCourse selectedFaculty = new LecturerSelectedCourse();
-//		selectedFaculty.setPageNo(sf.getPageNo());
-//		selectedFaculty.setTotalPages(page.getTotalPages());
-//		selectedFaculty.setTotaltems(page.getTotalElements());
-//		selectedFaculty.setEnrolCourses(page.getContent());
-//		
-//		return new ResponseEntity<>(selectedFaculty, HttpStatus.OK);
-//	}
 }

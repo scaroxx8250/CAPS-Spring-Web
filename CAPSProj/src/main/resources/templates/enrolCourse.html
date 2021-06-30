@@ -116,37 +116,6 @@ $(document).ready(function(){
 	})
 	
 });
-
-// $(document).ready(function(){
-// 	$("select").change(function(){
-// 		var selectedFaculty = $(this).val();
-// 		var stId = $("#stId").text();
-// 		 $.ajax({
-// 		        url: '/api/student/getFaculty',
-// 		        type: 'POST',
-// 		        contentType: 'application/json',
-// 		        data: JSON.stringify( { "id": 1, "faculty":"MEDICINE", "pageNo":1 } ),
-// 		        success: function(data) {
-// 		        	$("#recTable tr").not(':first').remove();
-		        	
-// 		        	$.each(data.enrolCourses, (i, enrolcourse) =>{
-// 		        		let enrolcourseRow = '<tr><td>'  + enrolcourse.courseName + '</td>' +
-// 		        								  '<td>' + enrolcourse.lecturer.firstName + ' ' + enrolcourse.lecturer.lastName+ '</td>' +
-// 		        								  '<td>' + enrolcourse.credits + '</td>'
-// 		        								  '<td>' + enrolcourse.description + '</td>'
-// 		        								  '<td><input type = "checkbox" value="'+enrolcourse.courseId+ '" id="course'+ i +'" name= "course">'+
-// 		        								  '<input type="hidden" name="_course" value="on">'+ '</td></tr>'
-		        								  
-// 		        		$("#recTable tr").append(enrolcourseRow);						  
-		        		                         
-// 		        	});
-// 					console.log(data);
-// 				}
-// 		    });
-// 	})
-	
-// });
-
 </script>
 </body>
 </html>

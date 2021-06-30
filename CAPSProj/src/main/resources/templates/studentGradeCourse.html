@@ -29,19 +29,18 @@
   <label>Year</label>
   <select th:field="${ay}">
   <option th:each="selectOption : ${ay}" th:value="${selectOption}"
-  th:text="${selectOption}">
-  selectedOption
+  th:text="${selectOption}"> selectedOption
   </option>
   </select>
   </div>
   <br>
-<table id="recTable">
+<table id="recTable" class="table">
  <tr>
    <th>Course Name</th>
    <th>Credits</th>
    <th>Grade</th>
  </tr>
- <tr  id ="editable" th:each="gc: ${gradedCourse}">
+  <tr id ="editable" th:each="gc: ${gradedCourse}">
    <td th:text="${gc.course.courseName}">Course Name</td>
    <td th:text="${gc.course.credits}  ">Credits</td>
    <td th:text="${gc.grade}">Grade</td>
@@ -97,16 +96,8 @@ $(document).ready(function(){
 				$('#cuCredits').html(cuCredit);
 				$('#ayGPA').html(ayGPA);
 				$('#cuGPA').html(cuGPA);
-				console.log(data.cuGPA);
-				console.log(data.ayGPA);
-				console.log(data.cuCredits);
-				console.log(data.ayCredits);
-				console.log(data.gradedCourse.length);
 			}
-		
-		});
-	    
-	    
+		}); 
 	});
 });
 
