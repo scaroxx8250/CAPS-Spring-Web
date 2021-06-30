@@ -91,7 +91,7 @@ public class CapsProjApplication {
 			srepo.save(s1);srepo.save(s2);srepo.save(s3);srepo.save(s4);srepo.save(s5);srepo.save(s6);
 			 
 			Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
-			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com",null, null);
+			Lecturer l2 = new Lecturer("Tin", "Ng", Faculty.COMPUTING, "tin@gmail.com","tin@u.nus.edu", "tin");
 			
 
 			lservice.addLecturer(l1);

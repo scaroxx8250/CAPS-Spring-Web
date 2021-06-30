@@ -25,22 +25,61 @@ th, td {
   border: 1px solid #ddd;
   margin-bottom: 12px;
 }
+
+.topnav {
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.topnav a {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #1764DD;
+  color: white;
+}
 </style>
 <meta charset="ISO-8859-1">
 <title>Grade Course</title>
 </head>
 <body>
+<div class="topnav">
+  <a href="/lecturer/Courses">View Courses Taught</a>
+  <a href="/lecturer/CourseEnrolment">View Course Enrolment</a>
+  <a class="active" href="GradeCourse">Grade a Course</a>
+  <a href="/lecturer/StudentPerformance">View Student Performance</a>
+  <a href="/lecturer/logout">Logout</a>
+</div>
 	<h1>Grade Course</h1>
 	<br>
-	<div class="course-dropdown">
-	<select th:field="${courses}">
-		<option th:each="course:${courses}" th:value="${course}" th:text="${course.getCourseName()}"/>
-	</select>	
-	</div>
-	<br>
+	<select id="courseNameDropdown" class="example">
+	<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
+	</select>
+	&nbsp;&nbsp;
+	<a id = "showenrolledstudents" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}">Show Enrolled Students</a>
 	
-	<input type="text" id="input" onkeyup="" placeholder="Search By Student ID/Student Name" title="search">
-	<p th:text="'Total Records: ' + ${studentGrade.size()}">Total Records</p>
+	
+	<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
+	sel.onchange=function(){
+		document.getElementById("showenrolledstudents").href="/lecturer/GradeCourse/" + this.value + "/1";
+	}
+	var id = /*[[${id}]]*/
+		document.getElementById("courseNameDropdown").selectedIndex = id; 
+	</script>
+	<br>
+	<h4>Enrolled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
+	
 	<form action="#" th:object="${studentGrade}" th:action="@{/lecturer/GradeCourse/save}" method="post">
 	<table id="students">
 	<tr>
@@ -66,11 +105,11 @@ th, td {
 	<div th:if = "${totalPages > 1}">
 	<div>
 		<div>
-			Total Rows: [[${totalItems}]]
+			Total Records: [[${totalItems}]]
 		</div>	
 		<div>
 			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-				<a th:if="${currentPage != i}" th:href="@{'/lecturer/GradeCourse/' + ${i}}">[[${i}]]</a>
+				<a th:if="${currentPage != i}" th:href="@{'/lecturer/GradeCourse/{Id}/' + ${i} (Id = ${id})}">[[${i}]]</a>
 				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
 			</span>
 		</div>	

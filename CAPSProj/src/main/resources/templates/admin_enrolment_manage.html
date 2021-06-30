@@ -39,7 +39,7 @@
 		
 		<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
 		sel.onchange = function () {
-	    	document.getElementById("addstudent").href = "/admin/addenrolment/" + this.value + "/1";
+	    	document.getElementById("addstudent").href = "/admin/addenrolment/" + this.value + "/1"
 	    	document.getElementById("showenrolledstudents").href = "/admin/enrolmentlist/" + this.value;
 		}
 		var id = /*[[${id}]]*/
