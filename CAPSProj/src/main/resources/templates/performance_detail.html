@@ -25,77 +25,129 @@ th, td {
   border: 1px solid #ddd;
   margin-bottom: 12px;
 }
+.topnav {
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.topnav a {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #1764DD;
+  color: white;
+}
 </style>
 <meta charset="ISO-8859-1">
-<title>View Student Performance</title>
+<title>View Detailed Student Performance</title>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
 </head>
 <body>
-	<h1>View Student Performance</h1>
+<div class="topnav">
+  <a href="/lecturer/Courses">View Courses Taught</a>
+  <a href="/lecturer/CourseEnrolment">View Course Enrolment</a>
+  <a href="/lecturer/GradeCourse">Grade a Course</a>
+  <a href="/lecturer/StudentPerformance">View Student Performance</a>
+  <a href="/lecturer/logout">Logout</a>
+</div>
+<div style="display:none;" id="stId" th:text="${student.studentId}"></div>
+	<h1>View Detailed Student Performance</h1>
 	<div class="year-dropdown">
 	<form>
 		<label for="year">Year: </label>
-		<select id='date-dropdown'>
-  		</select>
-  		<script>
-    		let dateDropdown = document.getElementById('date-dropdown');
-
-    		let currentYear = new Date().getFullYear();
-    		let earliestYear = 2018;
-
-    		while (currentYear >= earliestYear) {
-      			let dateOption = document.createElement('option');
-      			dateOption.text = currentYear;
-      			dateOption.value = currentYear;
-      			dateDropdown.add(dateOption);
-      			currentYear -= 1;
-      		}
-  		</script>
+		 <select th:field="${ay}">
+  			<option th:each="selectOption : ${ay}" th:value="${selectOption}"
+ 				 th:text="${selectOption}"> selectedOption
+  			</option>
+ 		  </select> 		
 	</form>
 	</div>
 	<br>
 	
-	<p th:text="'Student ID: ' + ${id}"></p>
-	<p th:text="'Student Name: ' + ${firstName} + ' ' + ${lastName}"></p>
-	<p th:text="'Total Records: ' + ${size}">Total Records</p>
-		<a href ="logout"><button>Logout</button></a>
+	<p th:text="'Matric No: ' + ${student.matricNo}"></p>
+	<p th:text="'Student Name: ' + ${studentName}"></p>
 	<br>
-	<table id="courses">
-	<tr>
-			<!-- <th>Student ID</th> -->
-			<th>Course ID</th>
+	<table id="recTable" class="table">
+		<tr>
 			<th>Course Name</th>
 			<th>Credits</th>
 			<th>Grade</th>
-			<th>Course Start Date</th>
-	</tr>
-	 <tr th:each="course : ${studentGrade}" class="table-row">
-			<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
-			<td th:text=${course.key.courseId}>Course ID</td>
-			<td th:text=${course.key.courseName}>Course Name</td>
-			<td th:text=${course.key.credits}>Credits</td>
-			<td th:text=${course.value}>Grade</td>
-			<td th:text="${#temporals.format(course.key.courseStartDate, 'dd-MM-yyyy')}">Course Start Date</td> 
-	</tr>
+		</tr>
+		<tr id ="editable" th:each="gc: ${gradedCourse}">
+	   		<td th:text="${gc.course.courseName}">Course Name</td>
+	   		<td th:text="${gc.course.credits}  ">Credits</td>
+	   		<td th:text="${gc.grade}">Grade</td>
+	 	</tr>
 	</table>
 	<br>
 	<table id="grades" style="width:25%">
 	<tr>
 		<td th:text="'AY Credits:'"></td>
-		<td th:text=${ayCredits}>AY Credits</td>
+		<td id="ayCredits" th:text=${ayCredits}>AY Credits</td>
 	</tr>
 	<tr>
 		<td th:text="'AY GPA:'"></td>
-		<td th:text=${ayGPA}>AY GPA</td>
+		<td id="ayGPA" th:text=${ayGPA}>AY GPA</td>
 	</tr>
 	<tr>
 		<td th:text="'Cumulative Credits:'"></td>
-		<td th:text=${cuCredits}>Cumulative Credits</td>
+		<td id="cuCredits" th:text=${cuCredits}>Cumulative Credits</td>
 	</tr>
+	<tr>
 		<td th:text="'Cumulative GPA:'"></td>
-		<td th:text=${cuGPA}>Cumulative GPA</td>
+		<td id="cuGPA" th:text=${cuGPA}>Cumulative GPA</td>
 	</tr>
 	</table>
+<script>
+$(document).ready(function(){
+	$("select").change(function(){
+	    var selectedYear = $(this).val();
+	    var stId = $("#stId").text();
+	    $.ajax({
+			type: "Get",
+			url: "/api/student/"+stId+"/"+selectedYear,
+			success: function(data) {
+				$('#recTable tr').not(':first').remove();
+				var html = '';
+				for(var i=0; i<data.gradedCourse.length; i++)
+					{
+					 html += '<tr><td>' + data.gradedCourse[i].courseName + '</td><td>' +data.gradedCourse[i].credits+'</td><td>'
+					         + data.gradedCourse[i].grade + "</td></tr>";
+					          
+					}
+				$('#recTable tr').first().after(html);
+				
+				var ayCredit = data.ayCredits;
+				var cuCredit = data.cuCredits;
+				var ayGPA = data.ayGPA;
+				var cuGPA = data.cuGPA;
+				
+				$('#ayCredits').html(ayCredit);
+				$('#cuCredits').html(cuCredit);
+				$('#ayGPA').html(ayGPA);
+				$('#cuGPA').html(cuGPA);
 
+			}
+		});
+	       
+	});
+});
+
+</script>
 
 </body>
 </html>
