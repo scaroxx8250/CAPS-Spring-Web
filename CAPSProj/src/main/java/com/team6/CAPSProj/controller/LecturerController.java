@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -61,10 +62,13 @@ public class LecturerController {
 	public String listCourses (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model ) {
 		// get session
 		Lecturer l = (Lecturer) session.getAttribute("usession");
+
 		// session not found
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		int pageSize = 5; 
 
@@ -93,28 +97,39 @@ public class LecturerController {
 	
 	@RequestMapping(value="/CourseEnrolment")
 	public String listCourseEnrolment(Model model, HttpSession session) {
-		return listCourseEnrolment(1, session, model);
+		return listCourseEnrolment(0, 1, session, model);
 	}
 	
 	// View Course Enrolment (No. of students enrolled in a course)
-	@RequestMapping(value = "/CourseEnrolment/{pageNo}")
-	public String listCourseEnrolment (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model) {
+	@RequestMapping(value = "/CourseEnrolment/{id}/{pageNo}")
+	public String listCourseEnrolment (@PathVariable(value="id") int id, @PathVariable(value="pageNo") int pageNo, HttpSession session, Model model) {
 		Lecturer l = (Lecturer) session.getAttribute("usession");	
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		int pageSize = 5; 
 		
-		// find list of courses that lecturer teaches 
-		List<Course> courselist = cinterface.findCoursesByLecturerId(l.getLecturerId());
+		// find list of courses that lecturer teaches for current year 
+		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(), l.getLecturerId());
 		model.addAttribute("courses", courselist);
 		
-		if(courselist.iterator().hasNext()) {
-			// iterate through the course list to get a singular course 
-			Course course = courselist.iterator().next();
+		Course course1; 
 		
-		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course.getCourseName());
+		if (id == 0)
+		{
+			course1 = courselist.get(0);
+			//course1 = cinterface.findAllCourseByYear(LocalDate.now().getYear()).get(0);
+		}
+		else
+		{
+			course1 = courselist.get(id);
+			//course1 = cinterface.findAllCourseByYear(LocalDate.now().getYear()).get(id); 
+		}
+		
+		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course1.getCourseName());
 		List<StudentCourse> studentslist = page.getContent(); 
 		List<Student> students  = new ArrayList<Student>();
 		// get all students in the course 
@@ -124,13 +139,25 @@ public class LecturerController {
 		}
 		model.addAttribute("students", students);
 		
+		if (id != 0)
+		{
+			model.addAttribute("id", id); 
+			Course selectedCourse = courselist.get(id); 
+			model.addAttribute("selectedCourse", selectedCourse); 
+		}
+		else
+		{
+			model.addAttribute("id", 0);
+			Course selectedCourse = courselist.get(0); 
+			model.addAttribute("selectedCourse", selectedCourse); 
+		}
+		
 		int totalPages = page.getTotalPages(); 
 		long totalItems = page.getTotalElements(); 
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("totalItems",totalItems);
 		
-		}
 		return "enrolment"; 
 	}
 	
@@ -141,6 +168,8 @@ public class LecturerController {
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		// Get list of courses taught by lecturer (user) 
 		List<Course> courselist = cinterface.findCoursesByLecturerId(l.getLecturerId()); 
@@ -174,17 +203,19 @@ public class LecturerController {
 	
 	@RequestMapping(value="/GradeCourse")
 	public String listGrades (Model model, HttpSession session) {
-		return listGrades(1, session, model);
+		return listGrades(0, 1, session, model);
 		
 	}
 	
-	@RequestMapping(value="/GradeCourse/{pageNo}")
-	public String listGrades (@PathVariable(value="pageNo") int pageNo, HttpSession session, Model model) {
+	@RequestMapping(value="/GradeCourse/{id}/{pageNo}")
+	public String listGrades (@PathVariable(value="id") int id, @PathVariable(value="pageNo") int pageNo, HttpSession session, Model model) {
 		
 		Lecturer l = (Lecturer) session.getAttribute("usession");
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		// 5 records displayed on one page 
 		int pageSize = 5;
@@ -192,26 +223,52 @@ public class LecturerController {
 		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(),l.getLecturerId()); 
 		model.addAttribute("courses", courselist);
 		
-		if(courselist.iterator().hasNext()) {
-			Course course = courselist.iterator().next();
-			
-			// find all students according to page number and size 
-			Page<StudentCourse>page = scinterface.findAllPaginatedStudentsByLecturer(pageNo, pageSize, l.getLecturerId(), course);
-			List<StudentCourse> studentGrade =  page.getContent();
-			int totalPages = page.getTotalPages();
-			long totalItems = page.getTotalElements();
-			model.addAttribute("currentPage", pageNo);
-			model.addAttribute("totalPages",totalPages);
-			model.addAttribute("totalItems",totalItems);
-			
-			CourseGrades cg = new CourseGrades(new ArrayList<StudentCourse>());
-			
-			model.addAttribute("selectedGrade", cg);
-			model.addAttribute("studentGrade",studentGrade);
-			
-			
+		Course course1; 
+		
+		if (id == 0)
+		{
+			course1 = courselist.get(0);
 		}
-
+		else
+		{
+			course1 = courselist.get(id); 
+		}
+		
+		// find all students according to page number and size 
+		Page<StudentCourse>page = scinterface.findAllPaginatedStudentsByLecturer(pageNo, pageSize, l.getLecturerId(), course1);
+		List<StudentCourse> studentslist =  page.getContent();
+		List<Student> students = new ArrayList<Student>(); 
+		
+		for (StudentCourse sc : studentslist) {
+			students.add(sc.getStudent());
+		}
+		
+		model.addAttribute("students", students); 
+		
+		if (id != 0)
+		{
+			model.addAttribute("id", id); 
+			Course selectedCourse = courselist.get(id);
+			model.addAttribute("selectedCourse", selectedCourse); 
+		}
+		else
+		{
+			model.addAttribute("id", 0); 
+			Course selectedCourse = courselist.get(0); 
+			model.addAttribute("selectedCourse", selectedCourse);
+		}
+		
+		int totalPages = page.getTotalPages();
+		long totalItems = page.getTotalElements();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("totalItems",totalItems);
+			
+		CourseGrades cg = new CourseGrades(new ArrayList<StudentCourse>());
+			
+		model.addAttribute("selectedGrade", cg);
+		model.addAttribute("studentGrade",studentslist);
+			
 		return "gradeCourse"; 
 	}
 	
@@ -239,6 +296,8 @@ public class LecturerController {
 		if(l == null) {
 			return "redirect:/home";
 		}
+		String name = l.getFirstName();
+		model.addAttribute("name", name);
 		
 		// find all courses that selected student is enrolled in 
 		List<StudentCourse> scourses = scinterface.findAllGradedCoursesByStudent(id);
@@ -312,6 +371,15 @@ public class LecturerController {
 		model.addAttribute("ay",acadYears);
 		
 		return "performance_detail";
+	}
+	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false); 
+		if(session != null) {
+			session.invalidate();
+		}
+		return "redirect:/home";
 	}
 	
 }

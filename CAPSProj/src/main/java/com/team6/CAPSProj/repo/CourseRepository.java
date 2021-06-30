@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 
 import com.team6.CAPSProj.model.Course;
+
 import com.team6.CAPSProj.model.Student;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
@@ -39,5 +40,12 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
 	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId")
 	Page<Course> findCourseByLecturerByPage(@Param("lecId") Integer lecId, Pageable pageable);
+	
+	@Query(value = "SELECT * FROM course "
+			+ "WHERE course.course_start_date > CURRENT_DATE AND course.faculty =:faculty "
+			+ "AND course.course_id NOT IN (SELECT course_id FROM student_course WHERE student_course.student_id = :studentId) "
+			+ "AND course.course_occupancy = 0", nativeQuery = true)
+	Page<Course> findAllNotEnrolledCoursesByStudentAndFacultyByPage(@Param("studentId") int studentId, @Param("faculty")int faculty,
+			Pageable pageable);
 	
 }
