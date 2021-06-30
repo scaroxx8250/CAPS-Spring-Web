@@ -3,13 +3,46 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Enroll Course</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+
 </head>
 <body>
- 
+ <div class = "container">
+    <div id="top_grid1">Top Grid Cell 1</div>
+    <div id="top_grid2">Top Grid Cell 2</div>
+    <div id="top_grid3">Top Grid Cell 3</div>
+    <div id="top_grid4">Top Grid Cell 4</div>
+    <nav>
+        <div th:replace="fragments/student.html :: menu"></div>
+    </nav> 
+    <main>
+    <div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
+ <div th:text= "'Welcome to '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></div>
+    
   <h1>Enroll for a Course</h1>
-  <h3 th:text="'Total Records: ' + ${notEnrolCourses.size()}">Total Records</h3>
+  Select Faculty <select id="facultyDropdown" class="example">
+  <option th:each="faculty, stat : ${facultyList}" th:value="${stat.index}" th:text="${faculty.toString()}"></option>
+  </select>
+  &nbsp;&nbsp;
+  <a id = "showfaculty" th:href="@{/student/enrolCourse/{FacultyId}/1 (FacultyId=${facultyId})}">Show Courses</a>
+  
+  <script th:inline="javascript"> var sel= document.getElementById('facultyDropdown');
+  sel.onchange=function(){
+	  document.getElementById("showfaculty").href="/student/enrolCourse/" + this.value + "/1";
+  }
+  var facultyId= /*[[${facultyId}]]*/
+  		document.getElementById("facultyDropdown").selectedIndex = facultyId;
+  </script>
+  <br>
+  <h3 id = "noRecord" th:if="${#lists.isEmpty(notEnrolledCourses)}">No courses found</h3>
 <form action="" th:object="${selectCourse}" th:action="@{/student/submitEnrol}" method="post">
-<table>
+<table id="recTable" class="table" th:if="${not #lists.isEmpty(notEnrolledCourses)}">
  <tr>
    <th>Course Name</th>
    <th>Lecture Name</th>
@@ -31,24 +64,63 @@
 &nbsp; &nbsp; 
 <input type="reset" value="Reset"/>
 </div>
-
 </fieldset>
-
 </form>
 
 <div th:if = "${totalPages > 1}">
 	<div>
 		<div>
-			Total Rows: [[${totalItems}]]
+			Total Records: [[${totalItems}]]
 		</div>	
 		<div>
 			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-				<a th:if="${currentPage != i}" th:href="@{'/student/enrolCourse/' + ${i}}">[[${i}]]</a>
+				<a th:if="${currentPage != i}" th:href="@{'/student/enrolCourse/{FacultyId}/' + ${i} (FacultyId=${facultyId})}">[[${i}]]</a>
 				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
 			</span>
 		</div>	
 	</div>
 </div>
+ </main>
+  	<footer>Footer</footer>
+</div>
+<script>
+$(document).ready(function(){
+	
+	 
+	facultyId = $('#facultyDropdown').val();
+	 document.getElementById("showfaculty").href="/student/enrolCourse/" + facultyId + "/1";
+});
 
+// $(document).ready(function(){
+// 	$("select").change(function(){
+// 		var selectedFaculty = $(this).val();
+// 		var stId = $("#stId").text();
+// 		 $.ajax({
+// 		        url: '/api/student/getFaculty',
+// 		        type: 'POST',
+// 		        contentType: 'application/json',
+// 		        data: JSON.stringify( { "id": 1, "faculty":"MEDICINE", "pageNo":1 } ),
+// 		        success: function(data) {
+// 		        	$("#recTable tr").not(':first').remove();
+		        	
+// 		        	$.each(data.enrolCourses, (i, enrolcourse) =>{
+// 		        		let enrolcourseRow = '<tr><td>'  + enrolcourse.courseName + '</td>' +
+// 		        								  '<td>' + enrolcourse.lecturer.firstName + ' ' + enrolcourse.lecturer.lastName+ '</td>' +
+// 		        								  '<td>' + enrolcourse.credits + '</td>'
+// 		        								  '<td>' + enrolcourse.description + '</td>'
+// 		        								  '<td><input type = "checkbox" value="'+enrolcourse.courseId+ '" id="course'+ i +'" name= "course">'+
+// 		        								  '<input type="hidden" name="_course" value="on">'+ '</td></tr>'
+		        								  
+// 		        		$("#recTable tr").append(enrolcourseRow);						  
+		        		                         
+// 		        	});
+// 					console.log(data);
+// 				}
+// 		    });
+// 	})
+	
+// });
+
+</script>
 </body>
 </html>

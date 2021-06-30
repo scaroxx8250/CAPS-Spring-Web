@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.team6.CAPSProj.model.Course;
+import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.repo.CourseRepository;
 import com.team6.CAPSProj.repo.StudentRepository;
@@ -56,6 +57,11 @@ public class CourseServiceImpl implements CourseInterface {
 	public void addCourse(Course course) {
 		
 		crepo.save(course);
+	}
+	
+	public Course findCourseByCourseId(int courseId) {
+		return crepo.findByCourseId(courseId);
+		
 	}
 
 	
@@ -120,6 +126,14 @@ public class CourseServiceImpl implements CourseInterface {
 	public Page<Course> findAllPaginatedCoursesByLecturerId(int pageNo, int pageSize, int lecturerId) {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		return crepo.findCourseByLecturerByPage(lecturerId, pageable);
+	}
+
+
+	@Override
+	public Page<Course> findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(int pageNo, int pageSize,
+			Integer studentId,int faculty) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return crepo.findAllNotEnrolledCoursesByStudentAndFacultyByPage(studentId,faculty, pageable);
 	}
 	
 }

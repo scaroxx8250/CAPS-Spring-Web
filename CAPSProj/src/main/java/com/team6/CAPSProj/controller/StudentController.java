@@ -3,7 +3,9 @@ package com.team6.CAPSProj.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team6.CAPSProj.model.Course;
+
+import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.model.StudentSelectedCourses;
@@ -85,58 +89,79 @@ public class StudentController {
 	@GetMapping("/enrolCourse")
 	public String EnrolCourses(Model model, HttpSession session) {
 		
-		return EnrolCourses(1, session, model);
+		return EnrolCourses(0,1, session, model);
 	}
 	
-	@RequestMapping(value="/enrolCourse/{pageNo}")
-	public String EnrolCourses(@PathVariable(value = "pageNo") int pageNo, HttpSession session, Model model) {
+	@RequestMapping(value="/enrolCourse/{facultyId}/{pageNo}")
+	public String EnrolCourses(@PathVariable(value = "facultyId") int facultyId, @PathVariable(value = "pageNo") int pageNo, HttpSession session, Model model) {
 		Student s = (Student) session.getAttribute("usession");
 		
 		// session not found
 		if(s == null) {
 			return "redirect:/home";
 		}
-
-		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
-		List<Course> allCourses = cservice.findAllCourseforCurrentYear();
-		
-		// retrieve the list of courses that student has enrolled
-		List<Course> enrolCourses = new ArrayList<Course>();
-		for(StudentCourse sc : scList) {
-			enrolCourses.add(sc.getCourse());
-		}
-		
-		// filter the courses that student has not enrolled
-		List<Course> availableCourses = new ArrayList<Course>();
-		availableCourses.addAll(allCourses);
-		for(Course ac: allCourses) {
-			for(Course ec: enrolCourses) {
-				if(ac.getCourseId() == ec.getCourseId()) {
-					availableCourses.remove(ac);
-				}
-			}
-		}
-
-		// filter the courses that student has not enrolled and is available to start tomorrow onwards
-		availableCourses = availableCourses.stream().
-				filter(c->c.getCourseStartDate().isAfter(LocalDate.now()) && scservice.CountTotalStudentEnrol(c.getCourseId())<c.getSize())
-				.collect(Collectors.toList());
+		int pageSize = 5;
+//		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s.getStudentId());
+//		List<Course> allCourses = cservice.findAllCourseforCurrentYear();
+//		
+//		// retrieve the list of courses that student has enrolled
+//		List<Course> enrolCourses = new ArrayList<Course>();
+//		for(StudentCourse sc : scList) {
+//			enrolCourses.add(sc.getCourse());
+//		}
+//		
+//		// filter the courses that student has not enrolled
+//		List<Course> availableCourses = new ArrayList<Course>();
+//		availableCourses.addAll(allCourses);
+//		for(Course ac: allCourses) {
+//			for(Course ec: enrolCourses) {
+//				if(ac.getCourseId() == ec.getCourseId()) {
+//					availableCourses.remove(ac);
+//				}
+//			}
+//		}
+//
+//		// filter the courses that student has not enrolled and is available to start tomorrow onwards
+//		availableCourses = availableCourses.stream().
+//				filter(c->c.getCourseStartDate().isAfter(LocalDate.now()) && scservice.CountTotalStudentEnrol(c.getCourseId())<c.getSize())
+//				.collect(Collectors.toList());
 		
 		// passing the data to view
 		StudentSelectedCourses ssc = new StudentSelectedCourses(new ArrayList<Course>());
-		model.addAttribute("notEnrolCourses",availableCourses);
+		//model.addAttribute("notEnrolCourses",availableCourses);
 		model.addAttribute("selectCourse", ssc);
 		
+		// fill up facultyList with from faculty enums
+		List<Faculty> facultyList = Arrays.asList(Faculty.values());
+		model.addAttribute("facultyList", facultyList);	
 		
-		int pageSize = 5;
-		Page<Course> page = cservice.findAllPaginatedNotEnrolledCoursesByStudent(pageNo, pageSize, s.getStudentId());
+		
+		// get the faculty enum
+		Faculty faculty1;
+		if(facultyId == 0) {
+				faculty1 = facultyList.get(0);
+		}
+		else {
+			faculty1 = facultyList.get(facultyId);
+		}	
+		//page = cservice.findAllPaginatedNotEnrolledCoursesByStudent(pageNo, pageSize, s.getStudentId());
+		
+		int fac = faculty1.ordinal();
+		
+		//  retrieve the page object
+		Page<Course> page = cservice.findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(pageNo, pageSize, s.getStudentId(),fac);
 		List<Course> notEnrolledCourses = page.getContent();
+			
+	//facultyList.addAll( notEnrolledCourses.stream().map(c->c.getFaculty().toString()).distinct().sorted().collect(Collectors.toList()));
+		
+		
 		int totalPages = page.getTotalPages();
 		long totalItems = page.getTotalElements();
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("notEnrolledCourses", notEnrolledCourses);	
+		
 		
 		return "enrolCourse";
 	}
@@ -161,7 +186,7 @@ public class StudentController {
 		}
 		return "enrolCourse";	
 	}
-	@GetMapping(value="/GradesGPA")
+	@GetMapping(value="/gradesGPA")
 	public String gradesAndGPA(Model model,HttpSession session ) {
 		Student s = (Student) session.getAttribute("usession");
 		

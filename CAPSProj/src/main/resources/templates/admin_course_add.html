@@ -17,7 +17,7 @@
     </nav>
     <main>
 		<h3>Add Course</h3>
-		<form action="#" th:object="${course}" th:action="@{/admin/savecourse}"
+		<form action="#" th:object="${course}" th:action="@{/admin/addcourse/save}"
 			method="post">
 			<fieldset>
 				CourseName: <input type="text" th:field="*{courseName}">
@@ -33,7 +33,7 @@
 			</fieldset>
 			<fieldset>Lecturer: 
 				<select id="lecturerNameDropdown" name="lecturerName" th:field = "*{lecturer}">
-				<option th:each="lecturer:${lecturerList}" th:value="${lecturer.lecturerId}" th:utext="${lecturer.getFirstName + ' ' + lecturer.getLastName()}"/>
+				<option th:each="lecturer:${lecturerList}" th:value="${lecturer.lecturerId}" th:utext="${lecturer.getFirstName() + ' ' + lecturer.getLastName()}"/>
 				</select>
 			</fieldset>			
 <!-- 			<fieldset> -->
@@ -58,7 +58,7 @@
 				</select>
 			</fieldset>		
 			<fieldset>
-				Course Start Date: <input type="text" th:field="*{courseStartDate}" placeholder="DD/MM/YYYY">
+				Course Start Date: <input type="date" th:value="*{courseStartDate}" th:field="*{courseStartDate}">
 				<p th:if="${#fields.hasErrors('courseStartDate')}" th:errors="*{courseStartDate}"></p>
 			</fieldset>
 			<fieldset>

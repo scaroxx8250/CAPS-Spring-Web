@@ -36,6 +36,15 @@ public class Admin {
 		this.email = email;
 		this.password = password;
 	}
+	
+	
+
+	public Admin(String firstName, String lastName, String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+	}
 
 	public int getAdminId() {
 		return adminId;

@@ -17,7 +17,7 @@
     </nav>
     <main>
 		<h1>Lecturer Form</h1>
-			<form action="#" th:object="${lecturer}" th:action="@{/admin/saveLecturer}"
+			<form action="#" th:object="${lecturer}" th:action="@{/admin/addlecturer/save}"
 				method="post">
 				<fieldset>
 					First Name <input type="text" th:field="*{firstName}">
