@@ -22,7 +22,10 @@
 					class="button" />
 					
 		<br>
-		<span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled</span>
+		<span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled.</span>
+		
+		<span th:if="${#lists.isEmpty(courses)}"><br><br>There are no courses, please add courses first.</span>
+		
 	    <table th:if="${not #lists.isEmpty(courses)}" class="table">
 			<tr >
 				<th>CourseID</th>

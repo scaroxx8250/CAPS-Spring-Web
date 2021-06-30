@@ -20,8 +20,14 @@
 	    <input type="button" value="Add Student"
 					onclick="window.location.href='/admin/addstudent'; return false"
 					class="button" />
+		<br>
 		<br>			
-		<span th:if="${status != null}">Student has been deleted and unenrolled from his/her courses</span>
+		<span th:if="${status != null}">Student has been deleted and unenrolled from his/her courses.<br></span>
+		<span th:if="${#lists.isEmpty(studentlist)}">
+		<br>
+		There are no students in this system.
+		<br>
+		Click "Add Student" to add a student.</span>
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>

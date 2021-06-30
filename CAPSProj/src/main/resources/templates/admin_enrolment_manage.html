@@ -43,10 +43,13 @@
 		<br>
 		<h4>Enrolled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
 	    <span th:if="${status != null}">
-	    <span th:unless="${status}">You are not allowed to enroll this student for now</span>
-	    <span th:if="${status}">Student has been successfully added to course</span>
+	    <span th:unless="${status}">You are not allowed to enrol this student for now.</span>
+	    <span th:if="${status}">Student has been successfully added to course.</span>
 	    </span>
-	   	<span th:if="${enrolment_delete_success == true}">Student has been removed from course</span>
+	   	<span th:if="${enrolment_delete_success == true}">Student has been removed from course.</span>
+	   	
+	   	<span th:if="${#lists.isEmpty(studentlist)}">There are no students in this course.</span>
+	   	
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
