@@ -340,18 +340,22 @@ public class LecturerController {
 		
 		// find all courses that selected student is enrolled in 
 		List<StudentCourse> scourses = scinterface.findAllGradedCoursesByStudent(id);
-				
-		Student student = scourses.stream().map(s->s.getStudent()).findFirst().get();
-		String studentName = student.getFirstName() + ' ' + student.getLastName();
-				
-				
-				//sinterface.findFirstNameByStudentId(id);
-		model.addAttribute("studentName", studentName); 
 		
-//		String lastName = sinterface.findLastNameByStudentId(id); 
-//		model.addAttribute("lastName", lastName); 
+		Student student = new Student();
+		String studentName = null;
+		
+		if(scourses.size()>0) {
+			student = scourses.stream().map(s->s.getStudent()).findFirst().get();
+			
+					
+		}
+		else {
+			student = sinterface.findStudentByStudentId(id);
+
+		}
+		studentName = student.getFirstName() + ' ' + student.getLastName();
 				
-		//Student student = sinterface.findStudentByStudentId(id);
+		model.addAttribute("studentName", studentName); 
 		model.addAttribute("student", student);
 				
 		List<Course> courses = new ArrayList<Course>(); 
