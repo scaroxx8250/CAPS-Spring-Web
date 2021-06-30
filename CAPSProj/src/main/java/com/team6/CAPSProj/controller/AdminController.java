@@ -434,8 +434,12 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/removeenrolment/{matricNo}/{coursename}/{id}")
-	public String removeEnrollment(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model) {
-		
+	public String removeEnrollment(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model, HttpSession session) {
+		Admin ad = (Admin) session.getAttribute("usession");
+		if (ad == null)
+		{
+			return "redirect:/home";
+		}
 		//get Student
 		Student student = stservice.findStudentByMatricNo(matricNo);
 		//get course
@@ -445,7 +449,6 @@ public class AdminController {
 		
 //		return "redirect:/admin/enrolmentlist/{id}";
 		return listEnrolment(model, id, null, session, null, true);
-
 	}
 	
 	

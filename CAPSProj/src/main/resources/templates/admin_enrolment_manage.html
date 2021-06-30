@@ -42,6 +42,7 @@
 		
 		<br>
 		<h4>Enrolled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
+		<span th:if="${#lists.isEmpty(studentlist)}">There are no students in this course</span>
 	    <span th:if="${status != null}">
 	    <span th:unless="${status}">You are not allowed to enroll this student for now</span>
 	    <span th:if="${status}">Student has been successfully added to course</span>
