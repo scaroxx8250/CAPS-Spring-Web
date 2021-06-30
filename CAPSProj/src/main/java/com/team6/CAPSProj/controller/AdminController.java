@@ -434,20 +434,21 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value = "/removeenrolment/{matricNo}/{coursename}/{id}")
-	public String removeEnrollment(@PathVariable("matricNo") String matricNo, @PathVariable("coursename") String coursename, @PathVariable("id") int id, Model model) {
-		
-		//get Student
-		Student student = stservice.findStudentByMatricNo(matricNo);
-		//get course
-		Course course = cservice.findCourseByCourseName(coursename);
-		//find assignment
-		st_cs_service.removeStudentFromCourse(course, student);
-		
-//		return "redirect:/admin/enrolmentlist/{id}";
-		return listEnrolment(model, id, null, session, null, true);
-
-	}
+	/*
+	 * @RequestMapping(value = "/removeenrolment/{matricNo}/{coursename}/{id}")
+	 * public String removeEnrollment(@PathVariable("matricNo") String
+	 * matricNo, @PathVariable("coursename") String coursename, @PathVariable("id")
+	 * int id, Model model) {
+	 * 
+	 * //get Student Student student = stservice.findStudentByMatricNo(matricNo);
+	 * //get course Course course = cservice.findCourseByCourseName(coursename);
+	 * //find assignment st_cs_service.removeStudentFromCourse(course, student);
+	 * 
+	 * // return "redirect:/admin/enrolmentlist/{id}"; return listEnrolment(model,
+	 * id, null, session, null, true);
+	 * 
+	 * }
+	 */
 	
 	
 	
