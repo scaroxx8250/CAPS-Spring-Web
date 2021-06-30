@@ -341,13 +341,17 @@ public class LecturerController {
 		// find all courses that selected student is enrolled in 
 		List<StudentCourse> scourses = scinterface.findAllGradedCoursesByStudent(id);
 				
-		String firstName = sinterface.findFirstNameByStudentId(id);
-		model.addAttribute("firstName", firstName); 
-		
-		String lastName = sinterface.findLastNameByStudentId(id); 
-		model.addAttribute("lastName", lastName); 
+		Student student = scourses.stream().map(s->s.getStudent()).findFirst().get();
+		String studentName = student.getFirstName() + ' ' + student.getLastName();
 				
-		Student student = sinterface.findStudentByStudentId(id);
+				
+				//sinterface.findFirstNameByStudentId(id);
+		model.addAttribute("studentName", studentName); 
+		
+//		String lastName = sinterface.findLastNameByStudentId(id); 
+//		model.addAttribute("lastName", lastName); 
+				
+		//Student student = sinterface.findStudentByStudentId(id);
 		model.addAttribute("student", student);
 				
 		List<Course> courses = new ArrayList<Course>(); 

@@ -54,9 +54,8 @@ th, td {
 	</div>
 	<br>
 	
-	<p th:text="'Student ID: ' + ${id}"></p>
-	<p th:text="'Student Name: ' + ${firstName} + ' ' + ${lastName}"></p>
-	<p th:text="'Total Records: ' + ${size}">Total Records</p>
+	<p th:text="'Student Matric no: ' + ${student.matricNo}"></p>
+	<p th:text="'Student Name: ' + ${studentName}"></p>
 		<a href ="logout"><button>Logout</button></a>
 	<br>
 	<table id="courses">
