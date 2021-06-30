@@ -161,9 +161,14 @@ public class LecturerController {
 		return "enrolment"; 
 	}
 	
+	@RequestMapping(value="/StudentPerformance") 
+	public String listPerformance(Model model, HttpSession session) {
+		return listPerformance(0, 1, session, model); 
+	}
+	
 	// View Student Performance for a course 
-	@RequestMapping(value="/StudentPerformance")
-	public String listPerformance (HttpSession session, Model model) {
+	@RequestMapping(value="/StudentPerformance/{id}/{pageNo}")
+	public String listPerformance (@PathVariable(value="id") int id, @PathVariable(value="pageNo") int pageNo, HttpSession session, Model model) {
 		Lecturer l = (Lecturer) session.getAttribute("usession");		
 		if(l == null) {
 			return "redirect:/home";
@@ -171,34 +176,68 @@ public class LecturerController {
 		String name = l.getFirstName();
 		model.addAttribute("name", name);
 		
+		int pageSize = 5; 
+		
 		// Get list of courses taught by lecturer (user) 
-		List<Course> courselist = cinterface.findCoursesByLecturerId(l.getLecturerId()); 
+		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(), l.getLecturerId()); 
 		model.addAttribute("courses", courselist);
-		if(courselist.iterator().hasNext()) {
-			Course course = courselist.iterator().next();
-				List<StudentCourse> studentcourse = scinterface.findAllStudentsByCourse(course.getCourseName());
-				List<Student> students = new ArrayList<Student>(); 
-				for (StudentCourse sc : studentcourse) {
-					// get all students in the course and add them to a list 
-					students.add(sc.getStudent());
-				}
-				model.addAttribute("students", students);
 		
-				Map<Student, Double> studentGrade = new HashMap<>();
-				// for each student in the course, get their grades 
-				for (Student s: students) {
-				     StudentCourse selectedSc = scinterface.findGradeByStudentAndCourse(s, course);
+		Course course1; 
 		
-					if( selectedSc.getGrade() !=null) {
-						studentGrade.put(s, selectedSc.getGrade());
-					}
-					
-				}			
-				
-				model.addAttribute("studentgrade", studentGrade);
+		if (id == 0)
+		{
+			course1 = courselist.get(0); 
+		}
+		else
+		{
+			course1 = courselist.get(id); 
+		}
+		
+		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course1.getCourseName());
+		List<StudentCourse> studentslist = page.getContent(); 
+		List<Student> students = new ArrayList<Student>(); 
+		for (StudentCourse sc : studentslist) {
+			// get all students in the course and add them to a list 
+			students.add(sc.getStudent());
+		}
+		
+		model.addAttribute("students", students);
+		
+		Map<Student, Double> studentGrade = new HashMap<>();
+		// for each student in the course, get their grades 
+		for (Student s: students) {
+			StudentCourse selectedSc = scinterface.findGradeByStudentAndCourse(s, course1);
+		
+			if( selectedSc.getGrade() !=null) {
+				studentGrade.put(s, selectedSc.getGrade());
 			}
+		}
+		
+		model.addAttribute("studentgrade", studentGrade);
+		
+		if (id != 0)
+		{
+			model.addAttribute("id", id); 
+			Course selectedCourse = courselist.get(id); 
+			model.addAttribute("selectedCourse", selectedCourse); 
+		}
+		else
+		{
+			model.addAttribute("id", 0); 
+			Course selectedCourse = courselist.get(0); 
+			model.addAttribute("selectedCourse", selectedCourse); 
+		}
+				
+
+		int totalPages = page.getTotalPages(); 
+		long totalItems = studentGrade.size();
+		//long totalItems = page.getTotalElements(); 
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("totalItems",totalItems);			
 		
 		return "performance"; 
+	
 	}
 	
 	@RequestMapping(value="/GradeCourse")
