@@ -28,7 +28,6 @@ import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.model.StudentSelectedCourses;
 import com.team6.CAPSProj.service.CourseInterface;
 import com.team6.CAPSProj.service.StudentCourseInterface;
-import com.team6.CAPSProj.service.StudentInterface;
 
 @Controller
 @RequestMapping("/student")
@@ -142,7 +141,7 @@ public class StudentController {
 		}
 		return "enrolCourse";	
 	}
-	@GetMapping(value="/gradesGPA")
+	@GetMapping(value="/GradesGPA")
 	public String gradesAndGPA(Model model,HttpSession session ) {
 		Student s = (Student) session.getAttribute("usession");
 		
@@ -213,7 +212,7 @@ public class StudentController {
 		if(session != null) {
 			session.invalidate();
 		}
-		return "redirect:/home";
+		return "logout";
 	}
 	
 }

@@ -26,9 +26,7 @@ import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.service.CourseInterface;
-import com.team6.CAPSProj.service.LecturerInterface;
 import com.team6.CAPSProj.service.StudentCourseInterface;
-import com.team6.CAPSProj.service.StudentInterface;
 
 
 @Controller
@@ -37,17 +35,10 @@ public class LecturerController {
 	
 	@Autowired
 	private CourseInterface cinterface;
-	
-	@Autowired 
-	private LecturerInterface linterface; 
-	
+
 	@Autowired 
 	private StudentCourseInterface scinterface;
-	
-	@Autowired 
-	private StudentInterface sinterface; 
 
-	
 	@RequestMapping(value="/Courses")
 	public String listCourses(Model model, HttpSession session) {
 		return listCourses(1, session, model);
@@ -343,17 +334,12 @@ public class LecturerController {
 		
 				
 		List<Course> courses = new ArrayList<Course>(); 
-		Map<Course, Double> studentGrade = new HashMap<>();
 		
 		// get a list of courses
-		// get a list of courses and its grade into map for display in html
 		for (StudentCourse sc: scourses) {
 			courses.add(sc.getCourse());
-			//studentGrade.put(sc.getCourse(), sc.getGrade());
 		}		
-		//model.addAttribute("studentGrade", studentGrade);
 	
-				
 		int ayCredits=0, cuCredits=0; 
 		double ayGPA=0, cuGPA=0;
 		List<StudentCourse>AyGradedCourses = scinterface.findAllGradeByYearAndStudent(courses, student, LocalDate.now().getYear());
@@ -406,7 +392,7 @@ public class LecturerController {
 		if(session != null) {
 			session.invalidate();
 		}
-		return "redirect:/logout";
+		return "logout";
 	}
 	
 }

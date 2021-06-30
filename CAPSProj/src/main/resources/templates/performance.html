@@ -12,7 +12,7 @@
 	<div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
     <div id="top_grid1">
- 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
  	</div>    
  	<div id="top_grid2"></div>
     <div id="top_grid3"></div>
@@ -32,12 +32,10 @@
 		<select id="courseNameDropdown" class="example">
 			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 		</select>
+		&nbsp;&nbsp;
+	<a id = "showenrolledstudents" th:href="@{/lecturer/StudentPerformance/{Id}/1 (Id=${id})}"><button class="button">Show Graded Students</button></a>
 	</div>
-
-	<br>
-	&nbsp;&nbsp;
-	<a id = "showenrolledstudents" th:href="@{/lecturer/StudentPerformance/{Id}/1 (Id=${id})}">Show Graded Students</a>
-
+	
 	<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
 	sel.onchange=function(){
 		document.getElementById("showenrolledstudents").href="/lecturer/StudentPerformance/" + this.value + "/1";
@@ -46,10 +44,10 @@
 		document.getElementById("courseNameDropdown").selectedIndex = id; 
 	</script>
 	<br>
-	<h5>Graded Students for Course: <span th:text="${selectedCourse.courseName}"></span></h5>
+	<h4>Graded Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
 	<br>
       
-	<h3 th:if="${#maps.isEmpty(studentgrade)}">No records found</h3>
+	<h4 th:if="${#maps.isEmpty(studentgrade)}">No records found</h4>
 	<table id="students" class= "table" th:if="${not #maps.isEmpty(studentgrade)}">
 	<tr>
 			<th>Matric No</th>
@@ -79,9 +77,10 @@
 				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
 			</span>
 		</div>	
+		</div>
 	</div>
-
 	</main>
+	</div>
 	<footer><div th:replace="fragments/general::footer"></div></footer>
 </body>
 </html>

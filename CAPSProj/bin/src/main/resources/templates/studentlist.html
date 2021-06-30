@@ -3,38 +3,39 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>View Courses</title>
-<!-- <link rel="stylesheet" 
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
-	integrity="sha384-MCw98/SFnGE8fJT3GXwE0ngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
-	crossorigin="anonymous"> -->
+	<title>Manage Students</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body>
- <div class = "container">
-    <div id="top_grid1">Top Grid Cell 1</div>
-    <div id="top_grid2">Top Grid Cell 2</div>
-    <div id="top_grid3">Top Grid Cell 3</div>
-    <div id="top_grid4">Top Grid Cell 4</div>
+<div class = "container">
+    <heading><div th:replace="fragments/general::heading"></div></heading>
+    <div id="top_grid1">
+ 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 	</div>    <div id="top_grid2"></div>
+    <div id="top_grid3"></div>
+    <div id="top_grid4"><input type="button" value="Logout"
+					onclick="window.location.href='/student/logout'; return false"
+					class="button-logout" />
+	</div>
     <nav>
-        <div th:replace="fragments/student.html :: menu"></div>
-    </nav> 
-    <main>
-    <div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
- <div th:text= "'Welcome to '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></div>
-    
-    <h1>View Courses</h1>
-<table>
+    	<div th:replace="fragments/general.html :: student-menu"></div>
+    </nav>
+    <page-title>
+    	<div class="page-title"> View Courses</div>
+    </page-title>
+	<main>
+<table class="table">
  <tr>
    <th>Course Name</th>
-   <th>Lecture Name</th>
+   <th>Lecturer Name</th>
    <th>Credits</th>
    <th>Course Description</th>
  </tr>
  <tr th:each="sc: ${listStudentCourses}">
    <td th:text="${sc.getCourse().getCourseName()}">Course Name</td>
-   <td th:text="${sc.getCourse().getLecturer().getFirstName()} +' '+ ${sc.getCourse().getLecturer().getLastName()}  ">Lecture Name</td>
+   <td th:text="${sc.getCourse().getLecturer().getFirstName()} +' '+ ${sc.getCourse().getLecturer().getLastName()} ">Lecture Name</td>
    <td th:text="${sc.getCourse().getCredits()}">Credits</td>
    <td th:text="${sc.getCourse().getDescription()}">Course Description</td> 
  </tr>
@@ -55,7 +56,7 @@
 </div>
     
     </main>
-  	<footer>Footer</footer>
+	<footer><div th:replace="fragments/general::footer"></div></footer>
 </div>
 </body>
 </html>
