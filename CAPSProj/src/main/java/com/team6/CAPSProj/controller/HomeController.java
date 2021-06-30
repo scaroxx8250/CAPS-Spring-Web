@@ -58,7 +58,7 @@ public class HomeController {
 			
 			if( s!=null) {
 				session.setAttribute("usession", s);
-				return "redirect:/student/list";
+				return "redirect:/student/gradesGPA";
 			}
 			
 				return "index";

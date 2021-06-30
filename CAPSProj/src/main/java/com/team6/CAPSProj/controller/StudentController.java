@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team6.CAPSProj.model.Course;
+
 import com.team6.CAPSProj.model.Faculty;
-import com.team6.CAPSProj.model.LetterGrade;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.model.StudentSelectedCourses;
