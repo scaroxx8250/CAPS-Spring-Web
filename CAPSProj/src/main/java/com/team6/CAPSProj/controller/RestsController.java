@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team6.CAPSProj.exception.GpaRecordNotFoundException;
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
@@ -31,7 +32,7 @@ public class RestsController {
 	@ResponseBody
 	public HashMap<String,Object> getGradedCourse(@PathVariable("id") int id,@PathVariable("year") int year ) {
 		if( id ==0) {
-			return null;
+			throw new GpaRecordNotFoundException();
 		}
 		HashMap<String,Object> Items = new HashMap<String, Object>();
 		
@@ -44,11 +45,15 @@ public class RestsController {
 				for(StudentCourse sc : scList) {
 					enrolCourses.add(sc.getCourse());
 				}
-				// get student's grades for current year and the past years
+				// get student's grades for current year and all years
 				int ayCredits =0, cuCredits =0 ;
 				double ayGPA = 0, cuGPA =0;
+				List<StudentCourse> AllTimeGradedCourses = scservice.findAllGradeByStudent(enrolCourses, s);
 				List<StudentCourse> AyGradedCourses = scservice.findAllGradeByYearAndStudent(enrolCourses, s, year);
 				
+				if(AyGradedCourses.isEmpty()) {
+					throw new GpaRecordNotFoundException();
+				}
 				
 				// put into Data Transfer object cuurentYearGC
 				List<StudentGPA> currentYearGC = new ArrayList<StudentGPA>();
@@ -63,11 +68,10 @@ public class RestsController {
 					currentYearGC.add(sgpa);
 				}
 				
-				// get student's grades for current year 
-				List<StudentCourse> AllTimeGradedCourses = scservice.findAllGradeByStudent(enrolCourses, s);
-			
+				
 				DecimalFormat df = new DecimalFormat("0.00"); 
-				// calculate the current year graded courses' credits and GPA score
+				
+				// calculate the given year graded courses' credits and GPA score
 				for (StudentCourse sc: AyGradedCourses) {
 					ayCredits += sc.getCourse().getCredits();
 					ayGPA += sc.getGrade() * sc.getCourse().getCredits();
