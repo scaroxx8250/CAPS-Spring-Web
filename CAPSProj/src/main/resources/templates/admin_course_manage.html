@@ -27,7 +27,7 @@
 					onclick="window.location.href='/admin/addcourse'; return false"
 					class="button" /></div>
 		<br>
-		<h5><span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled.</span></h5>
+		<span th:if="${status != null}"><h5>Course has been deleted successfully and all students that were in the course are unenrolled.</h5></span>
 		
 		<span th:if="${#lists.isEmpty(courses)}"><br><br>There are no courses, please add courses first.</span>
       

@@ -84,7 +84,7 @@ public class CapsProjApplication {
 			LocalDate ld = LocalDate.parse("2021-05-22",df);
 
 			// Test Administrators 
-			Admin ad1 = new Admin("admin","admin","admin@gmail.com","admin");
+			Admin ad1 = new Admin("John","Doe","admin@gmail.com","admin");
 			Admin ad2 = new Admin("Dan","Harmon","dan.harmon@u.nus.edu","1234");
 			adrepo.save(ad1);
 			adrepo.save(ad2);
