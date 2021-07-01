@@ -132,6 +132,7 @@ public class CapsProjApplication {
 			
 			crepo.save(c1);crepo.save(c2);crepo.save(c3);crepo.save(c4);crepo.save(c5);
 			crepo.save(c6);crepo.save(c7);crepo.save(c8);crepo.save(c9);crepo.save(c10);
+
 			
 			
 			// Test Student Course Assignments
