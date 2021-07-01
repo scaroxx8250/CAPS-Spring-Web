@@ -1,7 +1,6 @@
 package com.team6.CAPSProj.controller;
 
 import java.text.DecimalFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -185,14 +184,27 @@ public class StudentController {
 			enrolCourses.add(sc.getCourse());
 		}
 		
-		// get student's grades for current year and the past years
+		// get student's grades for all years
 		int ayCredits =0, cuCredits =0 ;
 		double ayGPA = 0, cuGPA =0;
-		List<StudentCourse> AyGradedCourses = scservice.findAllGradeByYearAndStudent(enrolCourses, s, LocalDate.now().getYear());
+		
 		List<StudentCourse> AllTimeGradedCourses = scservice.findAllGradeByStudent(enrolCourses, s);
+		
+		
+		//get the latest year from the graded courses
+		int year = 1000;
+		for(StudentCourse sc :AllTimeGradedCourses) {
+			if(sc.getCourse().getCourseStartDate().getYear()>year) {
+				year = sc.getCourse().getCourseStartDate().getYear();
+			}
+		}
+		// get student's grades for latest year		
+		List<StudentCourse> AyGradedCourses = scservice.findAllGradeByYearAndStudent(enrolCourses, s, year);
+		
 	
 		DecimalFormat df = new DecimalFormat("0.00"); 
-		// calculate the current year graded courses' credits and GPA score
+		
+		// calculate the latest year graded courses' credits and GPA score
 		for (StudentCourse sc: AyGradedCourses) {
 			ayCredits += sc.getCourse().getCredits();
 			ayGPA += sc.getGrade() * sc.getCourse().getCredits();
