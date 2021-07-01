@@ -60,7 +60,7 @@ public class LecturerController {
 		
 		int pageSize = 5; 
 
-		Page<Course> page = cinterface.findAllPaginatedCoursesByLecturerId(pageNo, pageSize, l.getLecturerId());
+		Page<Course> page = cinterface.findAllPaginatedCourseByYearAndLecturer(pageNo, pageSize, l.getLecturerId());
 		List<Course> courselist = page.getContent();
 		int studentsEnrolled = 0;
 		// instantiate hash map
@@ -104,36 +104,43 @@ public class LecturerController {
 		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(), l.getLecturerId());
 		model.addAttribute("courses", courselist);
 		
-		Course course1; 
+		Course course1; int totalPages=0; long totalItems =0;
 		
-		if (id == 0)
-		{
-			course1 = courselist.get(0);
+		if(!courselist.isEmpty()) {
+			if (id == 0)
+			{
+				course1 = courselist.get(0);
+			}
+			else
+			{
+				course1 = courselist.get(id);
+			}
+			
+			Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course1.getCourseName());
+			List<StudentCourse> studentslist = page.getContent(); 
+			model.addAttribute("studentslist", studentslist);
+			
+			if (id != 0)
+			{
+				model.addAttribute("id", id); 
+				Course selectedCourse = courselist.get(id); 
+				model.addAttribute("selectedCourse", selectedCourse); 
+			}
+			else
+			{
+				model.addAttribute("id", 0);
+				Course selectedCourse = courselist.get(0); 
+				model.addAttribute("selectedCourse", selectedCourse); 
+			}
+			 totalPages = page.getTotalPages(); 
+			totalItems = page.getTotalElements(); 
 		}
-		else
-		{
-			course1 = courselist.get(id);
+		else {
+			model.addAttribute("selectedCourse", null); 
 		}
 		
-		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course1.getCourseName());
-		List<StudentCourse> studentslist = page.getContent(); 
-		model.addAttribute("studentslist", studentslist);
 		
-		if (id != 0)
-		{
-			model.addAttribute("id", id); 
-			Course selectedCourse = courselist.get(id); 
-			model.addAttribute("selectedCourse", selectedCourse); 
-		}
-		else
-		{
-			model.addAttribute("id", 0);
-			Course selectedCourse = courselist.get(0); 
-			model.addAttribute("selectedCourse", selectedCourse); 
-		}
 		
-		int totalPages = page.getTotalPages(); 
-		long totalItems = page.getTotalElements(); 
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("totalItems",totalItems);
@@ -163,54 +170,62 @@ public class LecturerController {
 		model.addAttribute("courses", courselist);
 		
 		Course course1; 
+		int totalPages = 0; 
+		long totalItems = 0; 
 		
-		if (id == 0)
-		{
-			course1 = courselist.get(0); 
-		}
-		else
-		{
-			course1 = courselist.get(id); 
-		}
-		
-		Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByGradedCourse(pageNo, pageSize, course1.getCourseName());
-		List<StudentCourse> studentslist = page.getContent(); 
-		List<Student> students = new ArrayList<Student>(); 
-		for (StudentCourse sc : studentslist) {
-			// get all students in the course and add them to a list 
-			students.add(sc.getStudent());
-		}
-		
-		model.addAttribute("students", students);
-		
-		Map<Student, Double> studentGrade = new HashMap<>();
-		// for each student in the course, get their grades 
-		for (Student s: students) {
-			StudentCourse selectedSc = scinterface.findGradeByStudentAndCourse(s, course1);
-		
-			if( selectedSc.getGrade() !=null) {
-				studentGrade.put(s, selectedSc.getGrade());
+		if(!courselist.isEmpty()) {
+			if (id == 0)
+			{
+				course1 = courselist.get(0); 
 			}
-		}
+			else
+			{
+				course1 = courselist.get(id); 
+			}
+			
+			Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByGradedCourse(pageNo, pageSize, course1.getCourseName());
+			List<StudentCourse> studentslist = page.getContent(); 
+			List<Student> students = new ArrayList<Student>(); 
+			for (StudentCourse sc : studentslist) {
+				// get all students in the course and add them to a list 
+				students.add(sc.getStudent());
+			}
 		
-		model.addAttribute("studentgrade", studentGrade);
-		
-		if (id != 0)
-		{
-			model.addAttribute("id", id); 
-			Course selectedCourse = courselist.get(id); 
-			model.addAttribute("selectedCourse", selectedCourse); 
+			model.addAttribute("students", students);
+			
+			Map<Student, Double> studentGrade = new HashMap<>();
+			// for each student in the course, get their grades 
+			for (Student s: students) {
+				StudentCourse selectedSc = scinterface.findGradeByStudentAndCourse(s, course1);
+			
+				if( selectedSc.getGrade() !=null) {
+					studentGrade.put(s, selectedSc.getGrade());
+				}
+			}
+			
+			model.addAttribute("studentgrade", studentGrade);
+			
+			if (id != 0)
+			{
+				model.addAttribute("id", id); 
+				Course selectedCourse = courselist.get(id); 
+				model.addAttribute("selectedCourse", selectedCourse); 
+			}
+			else
+			{
+				model.addAttribute("id", 0); 
+				Course selectedCourse = courselist.get(0); 
+				model.addAttribute("selectedCourse", selectedCourse); 
+			}
+			totalPages = page.getTotalPages(); 
+			totalItems = page.getTotalElements(); 
 		}
 		else
 		{
-			model.addAttribute("id", 0); 
-			Course selectedCourse = courselist.get(0); 
-			model.addAttribute("selectedCourse", selectedCourse); 
-		}
-				
+			model.addAttribute("selectedCourse", null); 
 
-		int totalPages = page.getTotalPages(); 
-		long totalItems = page.getTotalElements(); 
+		}
+	
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("totalItems",totalItems);			
@@ -242,15 +257,17 @@ public class LecturerController {
 		model.addAttribute("courses", courselist);
 		
 		Course course1; 
+		int totalPages = 0; 
+		long totalItems = 0; 
 		
-		if (id == 0)
-		{
-			course1 = courselist.get(0);
-		}
-		else
-		{
-			course1 = courselist.get(id); 
-		}
+		if(!courselist.isEmpty()) {
+			if (id == 0) {
+				course1 = courselist.get(0);
+			}
+	
+			else {
+			course1 = courselist.get(id);
+			}
 		
 		// find all students according to page number and size 
 		Page<StudentCourse>page = scinterface.findAllPaginatedStudentsByLecturer(pageNo, pageSize, l.getLecturerId(), course1);
@@ -276,8 +293,15 @@ public class LecturerController {
 			model.addAttribute("selectedCourse", selectedCourse);
 		}
 		
-		int totalPages = page.getTotalPages();
-		long totalItems = page.getTotalElements();
+		totalPages = page.getTotalPages();
+		totalItems = page.getTotalElements();
+		model.addAttribute("studentGrade",studentslist);
+		} 
+		else {
+			model.addAttribute("selectedCourse", null);
+			model.addAttribute("studentGrade",null);
+
+		}
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("totalItems",totalItems);
@@ -285,7 +309,7 @@ public class LecturerController {
 		CourseGrades cg = new CourseGrades(new ArrayList<StudentCourse>());
 			
 		model.addAttribute("selectedGrade", cg);
-		model.addAttribute("studentGrade",studentslist);
+		
 			
 		return "gradeCourse"; 
 	}

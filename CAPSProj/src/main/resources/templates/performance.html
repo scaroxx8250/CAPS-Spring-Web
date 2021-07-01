@@ -29,11 +29,11 @@
     
     <main>
 	<div class="course-dropdown">
-		<select id="courseNameDropdown" class="example">
+		<select id="courseNameDropdown" class="example" th:if="${not #lists.isEmpty(courses)}">
 			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 		</select>
 		&nbsp;&nbsp;
-	<a id = "showenrolledstudents" th:href="@{/lecturer/StudentPerformance/{Id}/1 (Id=${id})}"><button class="button">Show Graded Students</button></a>
+	<a id = "showenrolledstudents" th:href="@{/lecturer/StudentPerformance/{Id}/1 (Id=${id})}" th:if="${not #lists.isEmpty(courses)}"><button class="button">Show Graded Students</button></a>
 	</div>
 	
 	<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
@@ -44,7 +44,7 @@
 		document.getElementById("courseNameDropdown").selectedIndex = id; 
 	</script>
 	<br>
-	<h4>Graded Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
+	<h4 th:text="'Graded Students for Course: ' + ${selectedCourse.courseName}" th:if="${not #lists.isEmpty(selectedCourse)}"></h4>
 	<br>
       
 	<h4 th:if="${#maps.isEmpty(studentgrade)}">No records found</h4>

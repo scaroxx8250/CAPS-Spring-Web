@@ -18,15 +18,15 @@
 					class="button-logout" />
 	</div>
     <nav>
-    	<div th:replace="fragments/general.html :: lecturer-menu"></div>
+    	<div th:replace="fragments/general.html::lecturer-menu"></div>
     </nav>
     <page-title>
     	<div class="page-title">View Courses Taught</div>
     </page-title>
     <main>
 	<br>
-<!-- 	<table id="listCourses" th:if="${not #lists.isEmpty(courses)}">
- -->	<table id="courses" class = "table">
+	<h4 th:if="${#maps.isEmpty(courses)}">No records found</h4>
+		<table id="courses" class = "table" th:if="${not #maps.isEmpty(courses)}">
 	<tr>
 			<th>Course Name</th>
 			<th>Credits</th>
@@ -52,9 +52,8 @@
 		</div>
 	</div>
 	 </main>
-	 </div>
  <footer><div th:replace="fragments/general::footer"></div></footer>
- 	 </div>
+ </div>
 <script>
 	function countRows(){
 		var rowCount = 0;

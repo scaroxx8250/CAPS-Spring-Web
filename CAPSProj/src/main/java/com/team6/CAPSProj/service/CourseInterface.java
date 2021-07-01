@@ -23,7 +23,7 @@ public interface CourseInterface {
 	public List<Course>getAllCourses();
 	Page<Course> findAllPaginatedNotEnrolledCoursesByStudent(int pageNo, int pageSize, Integer studentId);
 	Page<Course> findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(int pageNo, int pageSize, Integer studentId,int faculty);
-	Page<Course> findAllPaginatedCoursesByLecturerId(int pageNo, int pageSize, int lecturerId);
+	Page<Course> findAllPaginatedCourseByYearAndLecturer(int pageNo, int pageSize, int lecturerId);
 	public Course findCourseByCourseId(int courseId);
 	Page<Course> findAllPaginatedCourseForCurrentYear(int pageNo, int pageSize);
 	

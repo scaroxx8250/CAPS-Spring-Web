@@ -26,12 +26,13 @@
     	<div class="page-title">View Course Enrolment</div>
     </page-title>
 <main>
+
 	<div class="course-dropdown">
-	<select id="courseNameDropdown" class="example">
+	<select id="courseNameDropdown" class="example" th:if="${not #lists.isEmpty(courses)}">
 	<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 	</select>
 	&nbsp;&nbsp;
-	<a id = "showenrolledstudents" th:href="@{/lecturer/CourseEnrolment/{Id}/1 (Id=${id})}"><button class="button">Show Enrolled Students</button></a>
+	<a id = "showenrolledstudents" th:href="@{/lecturer/CourseEnrolment/{Id}/1 (Id=${id})}" th:if="${not #lists.isEmpty(courses)}"><button class="button">Show Enrolled Students</button></a>
 
 	<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
 	sel.onchange=function(){
@@ -46,7 +47,7 @@
 	</div>
 	<br>
 	
-	<h4>Enroled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
+	<h4 th:text=" 'Enroled Students for Course:' + ${selectedCourse.courseName}" th:if="${not #lists.isEmpty(selectedCourse)}"></h4>
 	<h4 th:if="${#lists.isEmpty(studentslist)}">No records found</h4>		
 	<table class="table" id="students"  th:if="${not #lists.isEmpty(studentslist)}">
 	<tr>

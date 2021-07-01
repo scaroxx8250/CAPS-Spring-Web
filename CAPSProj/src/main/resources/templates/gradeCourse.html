@@ -26,12 +26,11 @@
     </page-title>
     <main>
 	<div class="course-dropdown">
-
-	<select id="courseNameDropdown" class="example">
+	<select id="courseNameDropdown" class="example" th:if="${not #lists.isEmpty(courses)}">
 		<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 	</select>	
 	&nbsp;&nbsp;
-	<a id = "showenrolledstudents" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}"><button class="button">Show Enroled Students</button></a>
+	<a id = "showenrolledstudents" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}" th:if="${not #lists.isEmpty(courses)}"><button class="button">Show Enroled Students</button></a>
 	
 	<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
 	sel.onchange=function(){
@@ -43,12 +42,11 @@
 	</div>
 	<br>
 	
-	<h4>Enroled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
+	<h4 th:text=" 'Enroled Students for Course: ' + ${selectedCourse.courseName}" th:if="${not #lists.isEmpty(courses)}"></h4>
 	<h4 th:if="${#lists.isEmpty(studentGrade)}">No records found</h4>		
 	<form action="#" th:object="${studentGrade}" th:action="@{/lecturer/GradeCourse/save}" method="post">
 	<table id="students" class="table" th:if="${not #lists.isEmpty(studentGrade)}">
 	<tr>
-			<!-- <th>Student ID</th> -->
 			<th>Student ID</th>
 			<th>First Name</th>
 			<th>Last Name</th>
