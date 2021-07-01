@@ -13,7 +13,7 @@
   <div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
     <div id="top_grid1">
- 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
  	</div>
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
@@ -43,18 +43,18 @@
   </script>
   </div>
   <br>
-  <h5 id = "noRecord" th:if="${#lists.isEmpty(notEnrolledCourses)}">No courses found</h5>
+  <h4 id = "noRecord" th:if="${#lists.isEmpty(notEnrolledCourses)}">There are no courses available for enrolment.</h4>
 <form action="" th:object="${selectCourse}" th:action="@{/student/submitEnrol}" method="post">
 <table id="recTable" class="table" th:if="${not #lists.isEmpty(notEnrolledCourses)}">
  <tr>
    <th>Course Name</th>
-   <th>Lecture Name</th>
+   <th>Lecturer Name</th>
    <th>Credits</th>
    <th>Course Description</th>
-   <th>Enroll</th>
+   <th>Enrol</th>
  </tr>
  <tr th:each="course: ${notEnrolledCourses}">
-   <td th:text="${course.courseName}">Course NAME</td>
+   <td th:text="${course.courseName}">Course Name</td>
    <td th:text="${course.lecturer.firstName} +' '+ ${course.lecturer.lastName}  ">Lecture Name</td>
    <td th:text="${course.credits}">Credits</td>
    <td th:text="${course.description}">Course Description</td>
@@ -110,13 +110,14 @@ $(document).ready(function(){
 		}
 	});
 	
-	// disable the submit and reset button if no checkbox is checked
+	// when reset button is clicked, disabled submit and reset button and uncheck all the checkboxes
 	$('input[type="reset"]').click(function(){
-		if($('.checkboxes:checkbox:checked').length <0){
+		
+			$('input[type=checkbox]').prop('checked',false);
 			 $('input[type="submit"]').prop('disabled',true);
 			 $('input[type="reset"]').prop('disabled',true);
-		}
-	})
+		
+	});
 	
 });
 </script>

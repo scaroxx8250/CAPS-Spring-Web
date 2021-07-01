@@ -10,7 +10,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.team6.CAPSProj.model.Student;
-import com.team6.CAPSProj.model.StudentCourse;
 
 public interface StudentRepository extends JpaRepository<Student, Integer>, PagingAndSortingRepository<Student, Integer> {
 	
@@ -24,9 +23,6 @@ public interface StudentRepository extends JpaRepository<Student, Integer>, Pagi
 	
 	Student findByEmailAndPassword(String email, String password);
 	
-//	@Query(value = "SELECT * from student where student.student_Id NOT IN (Select student_id from student_course WHERE student_course.course_Id = :courseId", nativeQuery = true)
-//	Page<Student> findAllNotEnrolledStudentsByCourseByPage(@Param("courseId") int courseId, Pageable pageable);
-
 	@Query(value = "SELECT * from student where student.student_Id NOT IN (Select student_id from student_course WHERE student_course.course_Id = :courseId)", nativeQuery = true)
 	Page<Student> findAllNotEnrolledStudentsByCourseByPage(@Param("courseId") int courseId, Pageable pageable);
 	

@@ -15,7 +15,7 @@
 	<div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
 	<div id="top_grid1">
- 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
  	</div>      <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
@@ -41,8 +41,8 @@
 	</form>
 	</div>
 	<br>
-	<p th:text="'Matric No: ' + ${student.matricNo}"></p>
-	<p th:text="'Student Name: ' + ${studentName}"></p>
+	<h4><p th:text="'Matric No: ' + ${student.matricNo}"></p></h4>
+	<h4><p th:text="'Student Name: ' + ${studentName}"></p></h4>
 	<br>
 	<table id="recTable" class="table">
 		<tr>
@@ -59,23 +59,25 @@
 	<br>
 	<table class="table2" id="grades" style="width:25%">
 	<tr>
-		<td th:text="'AY Credits:'"></td>
+		<td th:text="'AY Credits'"></td>
 		<td id="ayCredits" th:text=${ayCredits}>AY Credits</td>
 	</tr>
 	<tr>
-		<td th:text="'AY GPA:'"></td>
+		<td th:text="'AY GPA'"></td>
 		<td id="ayGPA" th:text=${ayGPA}>AY GPA</td>
 	</tr>
 	<tr>
-		<td th:text="'Cumulative Credits:'"></td>
+		<td th:text="'Cumulative Credits'"></td>
 		<td id="cuCredits" th:text=${cuCredits}>Cumulative Credits</td>
 	</tr>
 	<tr>
-		<td th:text="'Cumulative GPA:'"></td>
+		<td th:text="'Cumulative GPA'"></td>
 		<td id="cuGPA" th:text=${cuGPA}>Cumulative GPA</td>
 	</tr>
 	</table>
       </main>
+      <footer><div th:replace="fragments/general::footer"></div></footer>
+          </div>
 <script>
 $(document).ready(function(){
 	$("select").change(function(){
@@ -110,9 +112,6 @@ $(document).ready(function(){
 	       
 	});
 });
-  	
-	<footer><div th:replace="fragments/general::footer"></div></footer>
-    </script>
-
+  </script>
 </body>
 </html>

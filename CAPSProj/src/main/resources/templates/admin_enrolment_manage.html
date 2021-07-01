@@ -17,7 +17,6 @@
 					onclick="window.location.href='/admin/logout'; return false"
 					class="button-logout" />
 	</div>
-	
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
@@ -25,21 +24,17 @@
     	<div class="page-title"> Manage Enrolment</div>
     </page-title>
     <main>
-<fieldset>
-			<select id="courseNameDropdown" class = "example" th:if="${not #lists.isEmpty(courses)}">
-			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
-			</select>
-			&nbsp; &nbsp;
-			
-			<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><span th:if="${selectedCourse.courseOccupancy.name() == 'NOTFULL'}"><button class="button">Add Student</button></span></a>
-			
-			<span th:if="${selectedCourse.courseOccupancy.name() == 'FULL'}">
-			This course is already full
-			</span>
-			<br>
-			<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/1/{Id} (Id=${id})}" ><button class="button">Show enrolled Students</button></a>
-		</fieldset>
-		
+		<div class="course-dropdown">
+				<select id="courseNameDropdown" class = "example" th:if="${not #lists.isEmpty(courses)}">
+				<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
+				</select>
+				&nbsp; &nbsp;
+				<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/{Id} (Id=${id})}" ><button class="button">Show Enroled Students</button></a>
+				
+	<!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
+				<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><button class="button">Add Student</button></a>
+				<br>
+		</div>
 		<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
 		sel.onchange = function () {
 	    	document.getElementById("addstudent").href = "/admin/addenrolment/" + this.value + "/1"
@@ -74,7 +69,7 @@
 				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
 				<td>
 						<a th:href="@{/admin/removeenrolment/{matricNo}/{coursename}/{Id}(matricNo = ${student.matricNo}, coursename = ${selectedCourse.getCourseName()}, Id=${id})}"> 
-        					<button type="button">Remove from course</button> 
+        					<button type="button" class="button">Remove from course</button> 
    						</a>				
 				</td>
 			</tr>

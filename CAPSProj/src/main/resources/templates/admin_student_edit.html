@@ -59,7 +59,7 @@
 				</div>
 				<div class="form-group">
 				<fieldset>
-					Matriculation Date: <input type="date" th:value="*{matrDate}" th:field="*{matrDate}">
+					Matriculation Date: <input type="date" th:value="*{matrDate}" th:field="*{matrDate}" class="form-control">
 					<p th:if="${#fields.hasErrors('matrDate')}" th:errors="*{matrDate}"></p>
 				</fieldset>
 				</div>

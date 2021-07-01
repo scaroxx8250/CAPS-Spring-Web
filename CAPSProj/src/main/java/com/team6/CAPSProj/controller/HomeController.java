@@ -51,6 +51,7 @@ public class HomeController {
 			return "index";
 		}
 		
+		model.addAttribute("error", "Incorrect user ID or password. Please try again.");
 		Role role = user.getRole();
 		if(role == Role.STUDENT)
 		{
@@ -58,9 +59,8 @@ public class HomeController {
 			
 			if( s!=null) {
 				session.setAttribute("usession", s);
-				return "redirect:/student/gradesGPA";
+				return "redirect:/student/GradesGPA";
 			}
-			
 				return "index";
 		}
 		else if(role == Role.LECTURER)

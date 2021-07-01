@@ -79,7 +79,7 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 		 
 	}
 
-	public void addStudentToCourse(Course course, Student student) {
+	public boolean addStudentToCourse(Course course, Student student) {
 		// Can only add student to a course if the course has not yet started
 		// i.e. courseStartDate is later than the current date
 		
@@ -99,8 +99,10 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 					course.setCourseOccupancy(CourseOccupancy.FULL);
 					cservice.updateCourse(course);
 				}
+				return true;
 			}	
 		}
+		return false;
 	}
 	
 	public boolean adminAddStudentToCourse(Course course, Student student) {
