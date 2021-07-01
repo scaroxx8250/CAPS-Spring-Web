@@ -38,8 +38,8 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 			+ "AND course.course_occupancy = 0", nativeQuery = true)
 	Page<Course> findAllNotEnrolledCoursesByStudentByPage(@Param("studentId") int studentId, Pageable pageable);
 	
-	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId")
-	Page<Course> findCourseByLecturerByPage(@Param("lecId") Integer lecId, Pageable pageable);
+	@Query("Select c from Course c where c.lecturer.lecturerId = :lecId and YEAR(c.courseStartDate) =:year ")
+	Page<Course> findCourseByYearAndLecturerByPage(@Param("lecId") Integer lecId, @Param("year") int year, Pageable pageable);
 	
 	@Query(value = "SELECT * FROM course "
 			+ "WHERE course.course_start_date > CURRENT_DATE AND course.faculty =:faculty "
