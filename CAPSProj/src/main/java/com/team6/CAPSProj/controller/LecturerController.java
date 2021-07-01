@@ -1,5 +1,6 @@
 package com.team6.CAPSProj.controller;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -339,7 +340,8 @@ public class LecturerController {
 		for (StudentCourse sc: scourses) {
 			courses.add(sc.getCourse());
 		}		
-	
+		
+		DecimalFormat df = new DecimalFormat("0.00");
 		int ayCredits=0, cuCredits=0; 
 		double ayGPA=0, cuGPA=0;
 		List<StudentCourse>AyGradedCourses = scinterface.findAllGradeByYearAndStudent(courses, student, LocalDate.now().getYear());
@@ -351,6 +353,7 @@ public class LecturerController {
 			ayGPA += sc.getGrade() * sc.getCourse().getCredits();
 		}
 		ayGPA = ayGPA/ayCredits;
+		String ayGPAFormatted = df.format(ayGPA);
 		
 		 // calculate all year graded course' credits and all year GPA score
 		List<String> acadYears = new ArrayList<String>();
@@ -364,7 +367,8 @@ public class LecturerController {
 			acadYears.add(String.valueOf(sc.getCourse().getCourseStartDate().getYear()));
 			}
 		}
-		cuGPA = cuGPA/cuCredits;
+		cuGPA = (cuGPA/cuCredits);
+		String cuGPAFormatted = df.format(cuGPA);
 		
 		// sort the acadYears in descending order
 		acadYears = acadYears.stream().sorted((p1,p2) -> {
@@ -378,9 +382,9 @@ public class LecturerController {
 		
 		model.addAttribute("gradedCourse", AyGradedCourses);
 		model.addAttribute("ayCredits", ayCredits);
-		model.addAttribute("ayGPA", ayGPA);
+		model.addAttribute("ayGPA", ayGPAFormatted);
 		model.addAttribute("cuCredits", cuCredits);
-		model.addAttribute("cuGPA", cuGPA);
+		model.addAttribute("cuGPA", cuGPAFormatted);
 		model.addAttribute("ay",acadYears);
 		
 		return "performance_detail";
