@@ -30,10 +30,12 @@
 			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 			</select>
 			&nbsp; &nbsp;
-			<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><button class="button">Add Student</button></a>
 			
-<!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
+			<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><span th:if="${selectedCourse.courseOccupancy.name() == 'NOTFULL'}"><button class="button">Add Student</button></span></a>
 			
+			<span th:if="${selectedCourse.courseOccupancy.name() == 'FULL'}">
+			This course is already full
+			</span>
 			<br>
 			<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/1/{Id} (Id=${id})}" ><button class="button">Show enrolled Students</button></a>
 		</fieldset>

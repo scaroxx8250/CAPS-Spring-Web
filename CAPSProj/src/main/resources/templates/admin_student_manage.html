@@ -25,7 +25,7 @@
     <main>
 	    <div><input type="button" value="Add Student"
 					onclick="window.location.href='/admin/addstudent'; return false"
-					class="button" />
+					class="button" /></div>
 		<br>			
 	  <h5><span th:if="${status != null}">Student record has been successfully deleted and unenroled from his/her courses.</span></h5>
 		<span th:if="${#lists.isEmpty(studentlist)}">
