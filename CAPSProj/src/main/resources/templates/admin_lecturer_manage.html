@@ -44,6 +44,8 @@
 				<th>Faculty</th>
 				<th>Email</th>
 				<th></th>
+				<th></th>
+				
 			</tr>
 			<tr th:each="lecturer:${lecturers}" >
 				<td th:text=${lecturer.firstName}>firstName</td>
@@ -51,13 +53,16 @@
 				<td th:text=${lecturer.faculty}>faculty</td>
 				<td th:text=${lecturer.email}>email</td>
 				<td>
+						
 						<a th:href="@{/admin/editLecturer/{Id}(Id=${lecturer.lecturerId})}"> 
         					<button type="button" class="button">Edit</button> 
    						</a>
-		
+				</td>
+				<td>
 					    <a th:href="@{/admin/deletelecturer/{Id}(Id=${lecturer.lecturerId})}"> 
         					<button type="button" class="button">Delete</button> 
    						</a>
+   						
 				</td>
 			</tr>
 		</table>

@@ -44,6 +44,7 @@
 				<th>Size</th>
 				<th>Lecturer Name</th>
 				<th></th>
+				<th></th>
 			</tr>
 			<tr th:each="course:${courses}" >
 				<td th:text=${course.courseId}>CourseID</td>
@@ -54,10 +55,12 @@
 				<td th:text="${course.size}">Size</td>
 				<td th:text="${course.Lecturer.firstName} + ' ' + ${course.Lecturer.lastName}">Lecturer Name</td>
 				<td>
+						
 						<a th:href="@{/admin/editcourse/{Id}(Id=${course.courseId})}"> 
         					<button type="button" class="button">Edit</button> 
    						</a>
-		
+				</td>
+				<td>
 					    <a th:href="@{/admin/deletecourse/{Id}(Id=${course.courseId})}"> 
         					<button type="button" class="button">Delete</button> 
    						</a>

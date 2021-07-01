@@ -468,7 +468,7 @@ public class AdminController {
 		if(session != null) {
 			session.invalidate();
 		}
-		return "redirect:/logout";
+		return "logout";
 	}
 
 }

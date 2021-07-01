@@ -42,8 +42,9 @@
 				<th>Last Name</th>
 				<th>Matriculation Date</th>
 				<th></th>
+				<th></th>
 			</tr>
-			<tr th:each="student:${students}" >
+			<tr th:each="student:${studentlist}" >
 				<td th:text=${student.matricNo}>matricNo</td>
 				<td th:text="${student.firstName}">firstName</td>
 				<td th:text=${student.lastName}>lastName</td>
@@ -52,7 +53,8 @@
 						<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}"> 
         					<button type="button" class="button"/>Edit</button> 
    						</a>
-		
+				</td>
+				<td>
 					    <a th:href="@{/admin/deletestudent/{Id}(Id=${student.matricNo})}"> 
         					<button type="button"class="button"/>Delete</button> 
    						</a>
