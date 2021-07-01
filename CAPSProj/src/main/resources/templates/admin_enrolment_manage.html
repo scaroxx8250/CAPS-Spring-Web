@@ -29,7 +29,7 @@
 				<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 				</select>
 				&nbsp; &nbsp;
-				<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/{Id} (Id=${id})}" ><button class="button">Show Enroled Students</button></a>
+				<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/1/{Id} (Id=${id})}" ><button class="button">Show Enroled Students</button></a>
 				
 	<!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
 				<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><button class="button">Add Student</button></a>
