@@ -15,7 +15,7 @@
 	<div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
 	<div id="top_grid1">
- 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
  	</div>      <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
@@ -76,6 +76,8 @@
 	</tr>
 	</table>
       </main>
+      </div>
+      <footer><div th:replace="fragments/general::footer"></div></footer>
 <script>
 $(document).ready(function(){
 	$("select").change(function(){
@@ -110,9 +112,6 @@ $(document).ready(function(){
 	       
 	});
 });
-  	</script>
-	<footer><div th:replace="fragments/general::footer"></div></footer>
-    
-
+  </script>
 </body>
 </html>

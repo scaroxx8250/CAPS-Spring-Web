@@ -12,7 +12,7 @@
 <div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
     <div id="top_grid1">
- 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
  	</div>    <div id="top_grid2"></div>
     <div id="top_grid3"></div>
     <div id="top_grid4"><input type="button" value="Logout"
@@ -26,7 +26,15 @@
     	<div class="page-title"> View Courses</div>
     </page-title>
 	<main>
-<table class="table">
+	<h4 th:if="${#lists.isEmpty(listStudentCourses)}">You have not enrolled for any courses.
+	<a id = "enrol" th:href="@{/student/enrolCourse}"><button class="button"><b>Click here to enrol course</b></button></a>
+	</h4>
+	<div th:if="${status!=null}">
+	<h4 th:unless="${status}">You have not successfully enrolled in some course(s). Please try again.</h4>
+	<h4 th:if="${status}">You have successfully enrolled in the course(s).</h4>
+	
+	</div>
+<table class="table" th:if="${not #lists.isEmpty(listStudentCourses)}">
  <tr>
    <th>Course Name</th>
    <th>Lecturer Name</th>

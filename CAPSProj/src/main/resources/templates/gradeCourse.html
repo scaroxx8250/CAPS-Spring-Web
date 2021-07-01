@@ -10,7 +10,7 @@
   <div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
     <div id="top_grid1">
- 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+ 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
  	</div>
     <div id="top_grid2"></div>
     <div id="top_grid3"></div>
@@ -44,9 +44,9 @@
 	<br>
 	
 	<h4>Enroled Students for Course: <span th:text="${selectedCourse.courseName}"></span></h4>
-
+	<h4 th:if="${#lists.isEmpty(studentGrade)}">No records found</h4>		
 	<form action="#" th:object="${studentGrade}" th:action="@{/lecturer/GradeCourse/save}" method="post">
-	<table id="students" class="table">
+	<table id="students" class="table" th:if="${not #lists.isEmpty(studentGrade)}">
 	<tr>
 			<!-- <th>Student ID</th> -->
 			<th>Student ID</th>
@@ -59,12 +59,12 @@
 			<input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.matricNo'}" th:name="${'studentCourse['+__${stat.index}__+'].student.matricNo'}" th:value="${sc.student.matricNo}" readonly/></fieldset></td>
 			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.firstName'}" th:name="${'studentCourse['+__${stat.index}__+'].student.firstName'}" th:value="${sc.student.firstName}" readonly/></fieldset></td>
 			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.student.lastName'}" th:name="${'studentCourse['+__${stat.index}__+'].student.lastName'}"th:value="${sc.student.lastName}" readonly/></fieldset></td>
-			<td><fieldset><input type="text" th:id="${'studentCourse'+__${stat.index}__+'.grade'}" th:name="${'studentCourse['+__${stat.index}__+'].grade'}" th:value="${sc.grade}"/> 
+			<td><fieldset><input type="number" th:id="${'studentCourse'+__${stat.index}__+'.grade'}" th:name="${'studentCourse['+__${stat.index}__+'].grade'}" th:value="${sc.grade}" max="5" min="0" step="0.01"/> 
 			<input type="hidden" th:id="${'studentCourse'+__${stat.index}__+'.course.courseId'}" th:name="${'studentCourse['+__${stat.index}__+'].course.courseId'}" th:value="${sc.course.courseId}"/></fieldset></td>
 	</tr>
 	</table>
 	<br>
-	<input type="submit" class="button" value ="Save"/>
+	<input type="submit" class="button" value ="Save" th:if="${not #lists.isEmpty(studentGrade)}"/>
 	</form>
 	
 	<div th:if = "${totalPages > 1}">
@@ -81,7 +81,7 @@
 	</div>
 </div>
     </main>
-
+</div>
 <footer><div th:replace="fragments/general::footer"></div></footer>
 </body>
 </html>

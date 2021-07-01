@@ -40,6 +40,20 @@
 			<td th:text=${course.value}>Students Enrolled</td>	
 	</tr>
 	</table>
+	<div th:if = "${totalPages > 1}">
+		<div>
+			<div>Total Records: [[${totalItems}]]</div>
+		<div>
+		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+			<a th:if="${currentPage != i}" th:href="@{'/lecturer/Courses/' + ${i}}">[[${i}]]</a>
+			<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+		</span>
+		</div>
+		</div>
+	</div>
+	 </main>
+	 </div>
+ <footer><div th:replace="fragments/general::footer"></div></footer>
 <script>
 	function countRows(){
 		var rowCount = 0;
@@ -53,7 +67,5 @@
 		return "Total Records: " + rowCount;	
 	}
 	</script>
- </main>
- <footer><div th:replace="fragments/general::footer"></div></footer>
 </body>
 </html>

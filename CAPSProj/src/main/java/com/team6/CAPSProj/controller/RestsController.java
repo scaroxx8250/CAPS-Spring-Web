@@ -1,5 +1,6 @@
 package com.team6.CAPSProj.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,6 @@ import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.model.StudentGPA;
-import com.team6.CAPSProj.service.CourseInterface;
 import com.team6.CAPSProj.service.StudentCourseInterface;
 import com.team6.CAPSProj.service.StudentInterface;
 
@@ -66,13 +66,14 @@ public class RestsController {
 				// get student's grades for current year 
 				List<StudentCourse> AllTimeGradedCourses = scservice.findAllGradeByStudent(enrolCourses, s);
 			
-				
+				DecimalFormat df = new DecimalFormat("0.00"); 
 				// calculate the current year graded courses' credits and GPA score
 				for (StudentCourse sc: AyGradedCourses) {
 					ayCredits += sc.getCourse().getCredits();
 					ayGPA += sc.getGrade() * sc.getCourse().getCredits();
 				}
 				ayGPA = ayGPA/ayCredits;
+				String ayGPAFormatted = df.format(ayGPA);
 				
 				 // calculate all year graded course' credits and all year GPA score
 				List<String> acadYears = new ArrayList<String>();
@@ -87,6 +88,7 @@ public class RestsController {
 					}
 				}
 				cuGPA = cuGPA/cuCredits;
+				String cuGPAFormatted = df.format(cuGPA);
 				
 				// sort the acadYears in descending order
 				acadYears = acadYears.stream().sorted((p1,p2) -> {
@@ -102,9 +104,9 @@ public class RestsController {
 				// passing the data to view
 				Items.put("gradedCourse", currentYearGC);
 				Items.put("ayCredits", ayCredits);
-				Items.put("ayGPA", ayGPA);
+				Items.put("ayGPA", ayGPAFormatted);
 				Items.put("cuCredits", cuCredits);
-				Items.put("cuGPA", cuGPA);
+				Items.put("cuGPA", cuGPAFormatted);
 				Items.put("ay",acadYears);
 				return Items;
 	}

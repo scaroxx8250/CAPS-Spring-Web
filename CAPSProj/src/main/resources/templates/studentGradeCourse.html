@@ -12,7 +12,7 @@
  	<div class = "container">
     	<heading><div th:replace="fragments/general::heading"></div></heading>
 	    <div id="top_grid1">
-	 		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
+	 		<b><span th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></span></b>
 	 	</div>    
 	 	<div id="top_grid2"></div>
 	    <div id="top_grid3"></div>
@@ -20,23 +20,23 @@
 						onclick="window.location.href='/student/logout'; return false"
 						class="button-logout" />
 		</div>
-    <nav>
-    	<div th:replace="fragments/general.html :: student-menu"></div>
-    </nav>
+		<nav> <div th:replace="fragments/general.html :: student-menu"></div> </nav>
     <page-title>
     	<div class="page-title"> Grades and GPA</div>
     </page-title>
     <main>
+    <div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
   <div>
-  <label>Year</label>
-  <select th:field="${ay}">
+  <label th:if= "${not #lists.isEmpty(ay)}">Year</label>
+  <h4 th:unless="${not #lists.isEmpty(ay)}">Results are currently unavailable.</h4>
+  <select th:field="${ay}" th:if= "${not #lists.isEmpty(ay)}">
   <option th:each="selectOption : ${ay}" th:value="${selectOption}"
   th:text="${selectOption}"> selectedOption
   </option>
   </select>
   </div>
   <br>
-<table id="recTable" class="table">
+<table id="recTable" class="table" th:if= "${not #lists.isEmpty(gradedCourse)}">
  <tr>
    <th>Course Name</th>
    <th>Credits</th>
@@ -49,7 +49,7 @@
  </tr>
 </table>
 <br>
-<table class="table2" id="grades" style="width:25%">
+<table class= "table2"  style="width:25%" th:if= "${not #lists.isEmpty(ay)}">
  <tr>
    <td>AY Credits</td>
    <td id="ayCredits" th:text="${ayCredits}"></td>
@@ -73,6 +73,7 @@
 	</div>
 	</main>
  <footer><div th:replace="fragments/general::footer"></div></footer>
+ </div>
 <script>
 $(document).ready(function(){
 	$("select").change(function(){

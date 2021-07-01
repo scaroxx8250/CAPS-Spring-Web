@@ -27,6 +27,7 @@
 	              <br>
 	              <h2 class="login-heading">Login</h2>
 	              <br>
+                <p style= "color:red" th:text="${error}"></p>
 	              <form action="" th:object="${user}" th:action="@{/authenticate}" method="post">
 	                <div class="form-label-group">
 				        <fieldset>
@@ -66,3 +67,4 @@
 
 	</div>
 </body>
+</html>
