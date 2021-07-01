@@ -22,6 +22,7 @@ public interface StudentInterface {
 	public String findLastNameByStudentId(Integer id);
 	public Student findStudentByStudentId(Integer id);
 	Page<Student> findAllPaginatedNotEnrolledStudentsByCourse(int pageNo, int pageSize, Integer courseId);
-
+	Page<Student> findAllPaginatedStudents(int pageNo, int pageSize);
+	Page<Student> findAllPaginatedStudentsByCourse(int pageNo, int pageSize, Integer courseId);
 
 }

@@ -13,11 +13,9 @@
  		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
  	</div>    <div id="top_grid2"></div>
     <div id="top_grid3"></div>
-    <div id="top_grid4"><input type="button" value="Logout"
-					onclick="window.location.href='/admin/logout'; return false"
-					class="button-logout" />
+    <div id="top_grid4">
+    <input type="button" value="Logout" onclick="window.location.href='/admin/logout'; return false" class="button-logout" />
 	</div>
-	
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
@@ -29,8 +27,7 @@
 					onclick="window.location.href='/admin/addcourse'; return false"
 					class="button" /></div>
 		<br>
-
-		<span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled.</span>
+		<h5><span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled.</span></h5>
 		
 		<span th:if="${#lists.isEmpty(courses)}"><br><br>There are no courses, please add courses first.</span>
       
@@ -40,8 +37,9 @@
 				<th>Course Name</th>
 				<th>Faculty</th>
 				<th>Description</th>
-				<th>Credits</th>
+				<th>Course Start Date</th>
 				<th>Size</th>
+				<th>Course Occupancy</th>
 				<th>Lecturer Name</th>
 				<th></th>
 				<th></th>
@@ -51,8 +49,9 @@
 				<td th:text="${course.courseName}">CourseName</td>
 				<td th:text="${course.faculty}">Faculty</td>
 				<td th:text="${course.description}">Description</td>
-				<td th:text="${course.credits}">Credits</td>
+				<td th:text="${course.courseStartDate}">CourseStartDate</td>
 				<td th:text="${course.size}">Size</td>
+				<td th:text="${course.courseOccupancy.name()}">CourseOccupancy</td>
 				<td th:text="${course.Lecturer.firstName} + ' ' + ${course.Lecturer.lastName}">Lecturer Name</td>
 				<td>
 						
@@ -67,6 +66,19 @@
 				</td>
 			</tr>
 		</table>
+		<div th:if = "${totalPages > 1}">
+				<div>
+					<div>
+						Total Rows: [[${totalItems}]]
+					</div>
+					<div>
+						<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+							<a th:if="${currentPage != i}" th:href="@{'/admin/courselist/' + ${i}}">[[${i}]]</a>
+							<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+						</span>
+					</div>
+				</div>
+			</div>
     </main>
  	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
 </body>

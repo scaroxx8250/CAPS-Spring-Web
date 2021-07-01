@@ -78,7 +78,7 @@ public class HomeController {
 			Admin a = aservice.findByEmailAndPassword(user.getEmailAdd(), user.getPassword());
 			if( a!=null) {
 				session.setAttribute("usession", a);
-				return "redirect:/admin/studentlist";
+				return "redirect:/admin/studentlist/1";
 			}
 			return "index";
 		}

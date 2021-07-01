@@ -25,6 +25,7 @@ public interface CourseInterface {
 	Page<Course> findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(int pageNo, int pageSize, Integer studentId,int faculty);
 	Page<Course> findAllPaginatedCoursesByLecturerId(int pageNo, int pageSize, int lecturerId);
 	public Course findCourseByCourseId(int courseId);
+	Page<Course> findAllPaginatedCourseForCurrentYear(int pageNo, int pageSize);
 	
 }
 

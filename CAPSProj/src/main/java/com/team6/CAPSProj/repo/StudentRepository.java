@@ -25,4 +25,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer>, Pagi
 	
 	@Query(value = "SELECT * from student where student.student_Id NOT IN (Select student_id from student_course WHERE student_course.course_Id = :courseId)", nativeQuery = true)
 	Page<Student> findAllNotEnrolledStudentsByCourseByPage(@Param("courseId") int courseId, Pageable pageable);
+	
+	@Query(value = "SELECT * FROM student WHERE student_Id IN (SELECT student_id FROM student_course WHERE course_id = :courseId)", nativeQuery = true)
+	Page<Student> findAllStudentsByCourseByPage(@Param("courseId") int courseId, Pageable pageable);
 }
