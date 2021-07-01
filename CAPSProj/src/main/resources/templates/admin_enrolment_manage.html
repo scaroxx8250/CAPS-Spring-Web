@@ -25,19 +25,17 @@
     	<div class="page-title"> Manage Enrolment</div>
     </page-title>
     <main>
-<fieldset>
-			<select id="courseNameDropdown" class = "example" th:if="${not #lists.isEmpty(courses)}">
-			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
-			</select>
-			&nbsp; &nbsp;
-			<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><button class="button">Add Student</button></a>
-			
-<!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
-			
-			<br>
-			<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/{Id} (Id=${id})}" ><button class="button">Show enroled Students</button></a>
-		</fieldset>
-		
+		<div class="course-dropdown">
+				<select id="courseNameDropdown" class = "example" th:if="${not #lists.isEmpty(courses)}">
+				<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
+				</select>
+				&nbsp; &nbsp;
+				<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/{Id} (Id=${id})}" ><button class="button">Show Enroled Students</button></a>
+				
+	<!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
+				<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><button class="button">Add Student</button></a>
+				<br>
+		</div>
 		<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
 		sel.onchange = function () {
 	    	document.getElementById("addstudent").href = "/admin/addenrolment/" + this.value + "/1"
@@ -50,10 +48,13 @@
 		<br>
 		<h4>Enroled students for course: <span th:text="${selectedCourse.getCourseName()}"></span> </h4>
 	    <span th:if="${status != null}">
-		    <h5><span th:unless="${status}">Student cannot be enroled for the course.</span></h5>
+
+	  	    <h5><span th:unless="${status}">Student cannot be enroled for the course.</span></h5>
 		    <h5><span th:if="${status}">Student has been successfully enroled for course.</span></h5>
 	    </span>
 	    	<h5><span th:if="${enrolment_delete_success == true}">Student has been removed from course</span></h5>
+	   	
+	   	<span th:if="${#lists.isEmpty(studentlist)}">There are no students in this course.</span>
 	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
@@ -69,7 +70,7 @@
 				<td th:text="${#temporals.format(student.matrDate, 'dd-MM-yyyy')}">matrDate</td>
 				<td>
 						<a th:href="@{/admin/removeenrolment/{matricNo}/{coursename}/{Id}(matricNo = ${student.matricNo}, coursename = ${selectedCourse.getCourseName()}, Id=${id})}"> 
-        					<button type="button">Remove from course</button> 
+        					<button type="button" class="button">Remove from course</button> 
    						</a>				
 				</td>
 			</tr>

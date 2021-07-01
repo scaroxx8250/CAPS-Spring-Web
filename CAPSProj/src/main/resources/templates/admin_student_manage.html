@@ -26,19 +26,25 @@
     <main>
 	    <div><input type="button" value="Add Student"
 					onclick="window.location.href='/admin/addstudent'; return false"
-					class="button" /></div>
+					class="button" />
 		<br>
-		<h5><span th:if="${status != null}">Student record has been successfully deleted and unenroled from his/her courses.</span></h5>
-
-	    <table th:if="${not #lists.isEmpty(students)}" class="table">
+		<br>			
+	  <h5><span th:if="${status != null}">Student record has been successfully deleted and unenroled from his/her courses.</span></h5>
+		<span th:if="${#lists.isEmpty(studentlist)}">
+		<br>
+		There are no students in this system.
+		<br>
+		Click "Add Student" to add a student.</span>
+	    <table th:if="${not #lists.isEmpty(studentlist)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Matriculation Date</th>
 				<th></th>
+				<th></th>
 			</tr>
-			<tr th:each="student:${students}" >
+			<tr th:each="student:${studentlist}" >
 				<td th:text=${student.matricNo}>matricNo</td>
 				<td th:text="${student.firstName}">firstName</td>
 				<td th:text=${student.lastName}>lastName</td>
@@ -47,7 +53,8 @@
 						<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}"> 
         					<button type="button" class="button"/>Edit</button> 
    						</a>
-		
+				</td>
+				<td>
 					    <a th:href="@{/admin/deletestudent/{Id}(Id=${student.matricNo})}"> 
         					<button type="button"class="button"/>Delete</button> 
    						</a>

@@ -1,8 +1,8 @@
 :root {
   --main-radius: 3px;
   --main-padding: 5px;
-
 }
+
 .button-logout {
 	background: #FFF;
   padding: 2px 10px;
@@ -26,7 +26,11 @@
   font-weight: normal;
   font-size: 14px;
   text-decoration: none;
-  margin-right: 10px
+  margin-right: 10px;
+  display: inline;
+}
+.bt{
+	display: inline;
 }
 .button:hover{
 	background: rgb(90, 92, 108);
@@ -53,6 +57,7 @@
 .container{
   display:grid;
   height: 100vh;
+  max-width: 1330px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 0.15fr 0.15fr 0.35fr 0.35fr 3fr 0.05fr; 
   grid-template-areas:
@@ -63,7 +68,6 @@
     "main main main main"
     "footer footer footer footer";
   grid-gap: 0.3rem;
-  
 }
 #top_grid1 {
   background: #FFF;
@@ -118,8 +122,6 @@ heading{
   background: rgb(255, 255, 255);
   color: #FFF;
   grid-area: heading;
-  border-radius:0px;
-  padding:0px;
 }
 
 page-title{
@@ -132,24 +134,42 @@ page-title{
   font-size:26px;
   font-weight:bold;
 }
+
+.body {
+	font-family: 'Roboto', sans-serif;
+}
+
 .table th {
   background-color: #0B3696;
   color: white;
 }
 
 .table2 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
   border-collapse: collapse;
   width: 25%;
 }
-.table2 td {
+
+.table2 td  {
   padding-left: 5px;
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #089EF2;
+  background-color: #0B3696;
   color: white;
+  border: 1px solid #ddd;
+  padding: 5px;
+  font-weight:bold;
+
 }
+
+.table2 td:nth-child(even) {
+	background-color: #ECF0F1;
+    color: #000000;
+    font-weight:normal;
+
+}
+
 .h4{
   font-weight:bold;
   color: #0B3696;
@@ -158,10 +178,17 @@ page-title{
   font-weight:bold;
   color: #0B3696;
 }
+
 .sub-heading{
   font-weight:bold;
   color: #0B3696;
 }
+.well {
+	  width: 50%;
+	  background-color:#ECF0F1;
+	  border: 0;
+	}
+	
 @media only screen and (max-width: 550px) {
   .container{
     grid-template-columns: 1fr;

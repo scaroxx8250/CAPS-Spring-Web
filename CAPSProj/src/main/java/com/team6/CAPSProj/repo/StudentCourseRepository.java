@@ -49,4 +49,5 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, In
 
 	@Query("SELECT sc FROM StudentCourse sc WHERE sc.student = :student and sc.grade is not null")
 	List<StudentCourse> findAllGradedCoursesByStudent(@Param("student") Student student);
+	
 }

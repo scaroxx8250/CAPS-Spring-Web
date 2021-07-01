@@ -30,9 +30,13 @@
 					class="button" /></div>
 	<br>
 	<span th:if="${status != null}">
+
 	    <h5><span th:unless="${status}">There are existing courses linked to the selected lecturer. Lecturer cannot be deleted.</span></h5>
 	    <h5><span th:if="${status}">Lecturer record has been successfully deleted.</span></h5>
 	</span>
+	
+	<span th:if="${#lists.isEmpty(lecturers)}"><br><br>There are no lecturers, please add lecturers first.</span>
+	
 	<table th:if="${not #lists.isEmpty(lecturers)}" class="table">
 			<tr >
 				<th>First Name</th>
@@ -40,6 +44,8 @@
 				<th>Faculty</th>
 				<th>Email</th>
 				<th></th>
+				<th></th>
+				
 			</tr>
 			<tr th:each="lecturer:${lecturers}" >
 				<td th:text=${lecturer.firstName}>firstName</td>
@@ -47,13 +53,16 @@
 				<td th:text=${lecturer.faculty}>faculty</td>
 				<td th:text=${lecturer.email}>email</td>
 				<td>
+						
 						<a th:href="@{/admin/editLecturer/{Id}(Id=${lecturer.lecturerId})}"> 
         					<button type="button" class="button">Edit</button> 
    						</a>
-		
+				</td>
+				<td>
 					    <a th:href="@{/admin/deletelecturer/{Id}(Id=${lecturer.lecturerId})}"> 
         					<button type="button" class="button">Delete</button> 
    						</a>
+   						
 				</td>
 			</tr>
 		</table>

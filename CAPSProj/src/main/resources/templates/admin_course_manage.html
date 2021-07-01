@@ -29,7 +29,11 @@
 					onclick="window.location.href='/admin/addcourse'; return false"
 					class="button" /></div>
 		<br>
-		<h5><span th:if="${status != null}">Course record has been successfully deleted. All students that were in the course have been enroled.</span></h5>
+
+		<span th:if="${status != null}">Course has been deleted successfully and all students that were in the course are unenrolled.</span>
+		
+		<span th:if="${#lists.isEmpty(courses)}"><br><br>There are no courses, please add courses first.</span>
+      
 	    <table th:if="${not #lists.isEmpty(courses)}" class="table">
 			<tr >
 				<th>CourseID</th>
@@ -39,6 +43,7 @@
 				<th>Credits</th>
 				<th>Size</th>
 				<th>Lecturer Name</th>
+				<th></th>
 				<th></th>
 			</tr>
 			<tr th:each="course:${courses}" >
@@ -50,10 +55,12 @@
 				<td th:text="${course.size}">Size</td>
 				<td th:text="${course.Lecturer.firstName} + ' ' + ${course.Lecturer.lastName}">Lecturer Name</td>
 				<td>
+						
 						<a th:href="@{/admin/editcourse/{Id}(Id=${course.courseId})}"> 
         					<button type="button" class="button">Edit</button> 
    						</a>
-		
+				</td>
+				<td>
 					    <a th:href="@{/admin/deletecourse/{Id}(Id=${course.courseId})}"> 
         					<button type="button" class="button">Delete</button> 
    						</a>

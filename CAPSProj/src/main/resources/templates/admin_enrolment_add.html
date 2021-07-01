@@ -25,22 +25,12 @@
     	<div class="page-title"> Enrol Student</div>
     </page-title>
     <main>
-		
-		<h4>Select students to enrol for course:<span th:text=th:text="${course.courseName}"></span> </h4>
-<!-- 		<h2 th:text="${student}"></h2> -->
-<!-- 		<h2 th:text="${course}"></h2> -->
-<!-- 		<form action="#" th:object="${studentcourse}" th:action="@{/admin/enrolstudent}" method="post"> -->
-<!-- 			        <fieldset> -->
-<!-- 					     <input type="text" th:id="*{course}" th:name="*{course}" th:value="${course.getCourseId()}">   -->
-<!-- 					</fieldset> -->
-<!-- 					<fieldset> -->
-<!-- 					     <input type="hidden" th:id="*{student}" th:name="*{student}" th:value="${student.getStudentId()}">   -->
-<!-- 					</fieldset> -->
-<!-- 					<fieldset> -->
-<!-- 						<input type="submit" value="Submit"/>	 -->
-<!-- 						<input type="reset" value="Reset"/> -->
-<!-- 					</fieldset> -->
-<!-- 		</form> -->
+
+<!-- 		<h3>Which student do you want to enrol?</h3> -->
+
+		<span th:if="${#lists.isEmpty(notEnrolledStudents)}">There are no students to enrol, please add students first.</span>
+		<span th:unless="${#lists.isEmpty(notEnrolledStudents)}">Which student do you want to enrol?</span>
+
 	    <table th:if="${not #lists.isEmpty(notEnrolledStudents)}" class="table">
 			<tr >
 				<th>Matriculation Number</th>

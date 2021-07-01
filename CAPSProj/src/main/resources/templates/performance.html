@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
+
 	<div class = "container">
     <heading><div th:replace="fragments/general::heading"></div></heading>
     <div id="top_grid1">
@@ -32,6 +33,7 @@
 			<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
 		</select>
 	</div>
+
 	<br>
 	&nbsp;&nbsp;
 	<a id = "showenrolledstudents" th:href="@{/lecturer/StudentPerformance/{Id}/1 (Id=${id})}">Show Graded Students</a>
@@ -46,7 +48,9 @@
 	<br>
 	<h5>Graded Students for Course: <span th:text="${selectedCourse.courseName}"></span></h5>
 	<br>
-	<table class= "table" id="students">
+      
+	<h3 th:if="${#maps.isEmpty(studentgrade)}">No records found</h3>
+	<table id="students" class= "table" th:if="${not #maps.isEmpty(studentgrade)}">
 	<tr>
 			<th>Matric No</th>
 			<th>First Name</th>
@@ -55,7 +59,6 @@
 			<th>Academic Records</th>
 	</tr>
 	 <tr th:each="student : ${studentgrade}" class="table-row">
-			<!-- <td th:text=${student.key.studentId}>Student ID</td> -->
 			<td th:text=${student.key.matricNo}>Matric No</td>
 			<td th:text=${student.key.firstName}>First Name</td>
 			<td th:text=${student.key.lastName}>Last Name</td>

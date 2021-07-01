@@ -327,31 +327,32 @@ public class LecturerController {
 		
 		// find all courses that selected student is enrolled in 
 		List<StudentCourse> scourses = scinterface.findAllGradedCoursesByStudent(id);
-				
-		String firstName = sinterface.findFirstNameByStudentId(id);
-		model.addAttribute("firstName", firstName); 
 		
-		String lastName = sinterface.findLastNameByStudentId(id); 
-		model.addAttribute("lastName", lastName); 
-				
-		Student student = sinterface.findStudentByStudentId(id);
+		// go to error page when student does not have his/her course graded
+		if(scourses.size()<0) {
+			return "error";
+		}
+		
+		// get student object
+		Student student = scourses.stream().map(s-> s.getStudent()).findFirst().get();
+		
+		// pass into model
+		String studentName = student.getFirstName() + ' ' + student.getLastName();
+		model.addAttribute("studentName", studentName);
 		model.addAttribute("student", student);
+		
 				
 		List<Course> courses = new ArrayList<Course>(); 
 		Map<Course, Double> studentGrade = new HashMap<>();
 		
-		for (StudentCourse sc : scourses) {
-			courses.add(sc.getCourse());
-		}
-		model.addAttribute("courses", courses);
-				
+		// get a list of courses
+		// get a list of courses and its grade into map for display in html
 		for (StudentCourse sc: scourses) {
-			studentGrade.put(sc.getCourse(), sc.getGrade());
-		}
-				
-		model.addAttribute("studentGrade", studentGrade);
-		int size = studentGrade.size();
-		model.addAttribute("size", size); 
+			courses.add(sc.getCourse());
+			//studentGrade.put(sc.getCourse(), sc.getGrade());
+		}		
+		//model.addAttribute("studentGrade", studentGrade);
+	
 				
 		int ayCredits=0, cuCredits=0; 
 		double ayGPA=0, cuGPA=0;
@@ -405,7 +406,7 @@ public class LecturerController {
 		if(session != null) {
 			session.invalidate();
 		}
-		return "redirect:/logout";
+		return "logout";
 	}
 	
 }
