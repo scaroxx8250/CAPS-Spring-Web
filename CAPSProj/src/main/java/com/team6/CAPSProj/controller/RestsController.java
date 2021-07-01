@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team6.CAPSProj.exception.GpaRecordNotFoundException;
+import com.team6.CAPSProj.exception.BusinessException;
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
@@ -30,9 +30,9 @@ public class RestsController {
 	
 	@RequestMapping("/student/{id}/{year}")
 	@ResponseBody
-	public HashMap<String,Object> getGradedCourse(@PathVariable("id") int id,@PathVariable("year") int year ) {
+	public HashMap<String,Object> getGradedCourse(@PathVariable("id") int id,@PathVariable("year") int year ) throws BusinessException {
 		if( id ==0) {
-			throw new GpaRecordNotFoundException();
+			throw new BusinessException("id is invalid");
 		}
 		HashMap<String,Object> Items = new HashMap<String, Object>();
 		
@@ -52,7 +52,7 @@ public class RestsController {
 				List<StudentCourse> AyGradedCourses = scservice.findAllGradeByYearAndStudent(enrolCourses, s, year);
 				
 				if(AyGradedCourses.isEmpty()) {
-					throw new GpaRecordNotFoundException();
+					throw new BusinessException("GPA Record not found");
 				}
 				
 				// put into Data Transfer object cuurentYearGC
