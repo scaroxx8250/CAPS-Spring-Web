@@ -13,13 +13,14 @@
 <div class="container-fluid">
   <div class="row no-gutter">
     <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-    <div class="col-md-8 col-lg-6">
+     <div class="col-md-8 col-lg-6">
       <div class="login d-flex align-items-center py-5">
         <div class="container">
           <div class="row">
             <div class="col-md-9 col-lg-8 mx-auto">
               <h2 class="login-heading">Login</h2>
               <br>
+              <p style= "color:red" th:text="${error}"></p>
               <form action="" th:object="${user}" th:action="@{/authenticate}" method="post">
                 <div class="form-label-group">
 			        <fieldset>
@@ -41,14 +42,14 @@
 						<option th:value="LECTURER" th:text="Lecturer"></option>
 						<option th:value="ADMIN" th:text="Admin"></option>
 						</select>
-						</fieldset>
-					<fieldset>
+						</fieldset>	
 				</div>
-				<br>
+						<br> <fieldset>
 						<button type="submit" class="button" >Login</button>
 					</fieldset>
-					</div>
+					
 				</form>
+				
             </div>
           </div>
         </div>
@@ -56,6 +57,6 @@
     </div>
   </div>
 </div>
-<footer><div th:replace="fragments/general::footer"></div></footer> </div>
+<footer><div th:replace="fragments/general::footer"></div></footer>
 </body>
 </html>

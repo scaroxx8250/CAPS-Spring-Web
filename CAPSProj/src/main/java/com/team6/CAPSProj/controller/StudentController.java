@@ -1,5 +1,6 @@
 package com.team6.CAPSProj.controller;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,18 @@ public class StudentController {
 		return ViewCourses(1, session, model);
 	}
 	
+	//method for result of courses being enrolled
+   public String ViewCoursesResult(Model model, HttpSession session, Boolean enrol_course_status) {
+		
+	   if(enrol_course_status) {
+		   model.addAttribute("status", true);
+	   }
+	   else {
+		   model.addAttribute("status", false);
+	   }
+		   
+		return ViewCourses(1, session, model);
+	}
 	
 	@GetMapping(value="/list/{pageNo}")
 	public String ViewCourses(@PathVariable(value = "pageNo") int pageNo, HttpSession session, Model model) {
@@ -59,6 +72,7 @@ public class StudentController {
 		int pageSize = 5;
 		Page<StudentCourse> page = scservice.findAllPaginatedCoursesByStudent(pageNo, pageSize, s.getStudentId());
 		List<StudentCourse> listStudentCourses = page.getContent();
+		
 		int totalPages = page.getTotalPages();
 		long totalItems = page.getTotalElements();
 		model.addAttribute("currentPage", pageNo);
@@ -124,6 +138,7 @@ public class StudentController {
 	@PostMapping(value="/submitEnrol")
 	public String submitEnrolCourse(@ModelAttribute("selectCourse") StudentSelectedCourses clist, HttpSession session, Model model, BindingResult bindingResult) {
 		Student s = (Student) session.getAttribute("usession");
+		int totalCourse_enrol_success =0, totalCourseAvail_for_enrol =0;
 		
 		// session not found
 		if(s == null) {
@@ -134,10 +149,23 @@ public class StudentController {
 		if(clist.getCourse().size() != 0)
 		{
 			for(Course c : clist.course)
-			{
-				scservice.addStudentToCourse(c, s);
+			{		totalCourseAvail_for_enrol++;
+			
+				if(scservice.addStudentToCourse(c, s)) {
+					totalCourse_enrol_success++;
+					
+				}
 			}
-			return "redirect:/student/list";
+			// result of enrolling course(s) transfer to ViewCourseResult method
+			if(totalCourse_enrol_success != totalCourseAvail_for_enrol) {
+				return ViewCoursesResult(model, session,false);
+			}
+			else {
+				return ViewCoursesResult(model, session,true);
+			}
+			
+			
+			
 		}
 		return "enrolCourse";	
 	}
@@ -163,13 +191,14 @@ public class StudentController {
 		List<StudentCourse> AyGradedCourses = scservice.findAllGradeByYearAndStudent(enrolCourses, s, LocalDate.now().getYear());
 		List<StudentCourse> AllTimeGradedCourses = scservice.findAllGradeByStudent(enrolCourses, s);
 	
-		
+		DecimalFormat df = new DecimalFormat("0.00"); 
 		// calculate the current year graded courses' credits and GPA score
 		for (StudentCourse sc: AyGradedCourses) {
 			ayCredits += sc.getCourse().getCredits();
 			ayGPA += sc.getGrade() * sc.getCourse().getCredits();
 		}
 		ayGPA = ayGPA/ayCredits;
+		String ayGPAFormatted = df.format(ayGPA);
 		
 		 // calculate all year graded course' credits and all year GPA score
 		List<String> acadYears = new ArrayList<String>();
@@ -184,6 +213,7 @@ public class StudentController {
 			}
 		}
 		cuGPA = cuGPA/cuCredits;
+		String cuGPAFormatted = df.format(cuGPA);
 		
 		// sort the acadYears in descending order
 		acadYears = acadYears.stream().sorted((p1,p2) -> {
@@ -199,9 +229,9 @@ public class StudentController {
 		// passing the data to view
 		model.addAttribute("gradedCourse", AyGradedCourses);
 		model.addAttribute("ayCredits", ayCredits);
-		model.addAttribute("ayGPA", ayGPA);
+		model.addAttribute("ayGPA", ayGPAFormatted);
 		model.addAttribute("cuCredits", cuCredits);
-		model.addAttribute("cuGPA", cuGPA);
+		model.addAttribute("cuGPA", cuGPAFormatted);
 		model.addAttribute("ay",acadYears);
 		return "studentGradeCourse";
 	}
@@ -214,6 +244,7 @@ public class StudentController {
 		}
 		return "logout";
 	}
+	
 	
 }
 
