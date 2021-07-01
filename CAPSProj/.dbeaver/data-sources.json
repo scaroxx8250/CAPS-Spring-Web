@@ -18,8 +18,18 @@
 					"allowPublicKeyRetrieval": "TRUE",
 					"sslMode": "DISABLED"
 				},
-				"auth-model": "native",
-				"handlers": {}
+				"auth-model": "native"
+			}
+		}
+	},
+	"virtual-models": {
+		"mysql8-17a472da401-44a56d5adb075bfd": {
+			"caps": {
+				"@properties": {
+					"erd.diagram.state": {
+						"serialized": "<diagram version=\"1\" name=\"caps\" time=\"202107011824\"><entities><data-source id=\"mysql8-17a472da401-44a56d5adb075bfd\"><entity id=\"1\" name=\"admin\" fq-name=\"caps.admin\" order=\"0\" x=\"20\" y=\"398\"><path name=\"caps\"/></entity><entity id=\"2\" name=\"course\" fq-name=\"caps.course\" order=\"1\" x=\"187\" y=\"20\"><path name=\"caps\"/></entity><entity id=\"3\" name=\"lecturer\" fq-name=\"caps.lecturer\" order=\"2\" x=\"386\" y=\"55\"><path name=\"caps\"/></entity><entity id=\"4\" name=\"student\" fq-name=\"caps.student\" order=\"3\" x=\"297\" y=\"318\"><path name=\"caps\"/></entity><entity id=\"5\" name=\"student_course\" fq-name=\"caps.student_course\" order=\"4\" x=\"20\" y=\"245\"><path name=\"caps\"/></entity></data-source></entities><relations><relation name=\"FKejrkh4gv8iqgmspsanaji90ws\" fq-name=\"caps.student_course.FKejrkh4gv8iqgmspsanaji90ws\" type=\"fk\" pk-ref=\"2\" fk-ref=\"5\"/><relation name=\"FKldi1sgfhtnl1iuv8duxwkeif2\" fq-name=\"caps.course.FKldi1sgfhtnl1iuv8duxwkeif2\" type=\"fk\" pk-ref=\"3\" fk-ref=\"2\"/><relation name=\"FKq7yw2wg9wlt2cnj480hcdn6dq\" fq-name=\"caps.student_course.FKq7yw2wg9wlt2cnj480hcdn6dq\" type=\"fk\" pk-ref=\"4\" fk-ref=\"5\"/></relations></diagram>"
+					}
+				}
 			}
 		}
 	},
