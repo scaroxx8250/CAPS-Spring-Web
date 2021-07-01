@@ -13,8 +13,9 @@
  		<b><p th:text= "'Welcome, '+${session.usession.firstName} + ' '+ ${session.usession.lastName} "></p></b>
  	</div>    <div id="top_grid2"></div>
     <div id="top_grid3"></div>
-    <div id="top_grid4">
-    	<input type="button" value="Logout" onclick="window.location.href='/admin/logout'; return false" class="button-logout" />
+    <div id="top_grid4"><input type="button" value="Logout" 
+    		onclick="window.location.href='/admin/logout'; return false" 
+    		class="button-logout" />
 	</div>
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
@@ -26,8 +27,8 @@
 	    <div><input type="button" value="Add Student"
 					onclick="window.location.href='/admin/addstudent'; return false"
 					class="button" /></div>
-		<br>			
-	  <h5><span th:if="${status != null}">Student record has been successfully deleted and unenroled from his/her courses.</span></h5>
+	<br>			
+	  <span th:if="${status != null}"><h5>Student record has been successfully deleted and unenroled from his/her courses.</h5></span>
 		<span th:if="${#lists.isEmpty(studentlist)}">
 		<br>
 		There are no students in this system.
