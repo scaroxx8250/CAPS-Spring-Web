@@ -27,15 +27,16 @@
     <main>
     <div style="display:none;" id="stId" th:text="${session.usession.studentId}"></div>
   <div>
-  <label>Year</label>
-  <select th:field="${ay}">
+  <label th:if= "${not #lists.isEmpty(ay)}">Year</label>
+  <h4 th:unless="${not #lists.isEmpty(ay)}">Results are currently unavailable.</h4>
+  <select th:field="${ay}" th:if= "${not #lists.isEmpty(ay)}">
   <option th:each="selectOption : ${ay}" th:value="${selectOption}"
   th:text="${selectOption}"> selectedOption
   </option>
   </select>
   </div>
   <br>
-<table id="recTable" class="table">
+<table id="recTable" class="table" th:if= "${not #lists.isEmpty(gradedCourse)}">
  <tr>
    <th>Course Name</th>
    <th>Credits</th>
@@ -48,7 +49,7 @@
  </tr>
 </table>
 <br>
-<table class= "table2"  style="width:25%">
+<table class= "table2"  style="width:25%" th:if= "${not #lists.isEmpty(ay)}">
  <tr>
    <td>AY Credits</td>
    <td id="ayCredits" th:text="${ayCredits}"></td>
