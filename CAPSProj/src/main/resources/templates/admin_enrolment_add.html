@@ -21,8 +21,8 @@
     <nav>
     	<div th:replace="fragments/general.html :: admin-menu"></div>
     </nav>
-    <page-title>
-    	<div class="page-title"> Enrol Student</div>
+    <page-title th:text="'Enrol Student: ' + ${course.courseName}">
+    	<div class="page-title"></div>
     </page-title>
     <main>
 
