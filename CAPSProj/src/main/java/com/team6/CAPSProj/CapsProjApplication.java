@@ -123,11 +123,12 @@ public class CapsProjApplication {
 			Course c16 = new Course("SA4114", "Polymorphism", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
 			Course c17 = new Course("SA4115", "Abstract Classes and Interfaces", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
 			Course c18 = new Course("SA4116", "Functional Programming", Faculty.COMPUTING, 5,LocalDate.of(2021, 07, 11),l2, 2);
+			Course c19 = new Course("SA4110", "JPQL", Faculty.COMPUTING, 5,LocalDate.of(2021, 8, 11),l2, 2);
 			
 			crepo.save(c1);crepo.save(c2);crepo.save(c3);crepo.save(c4);crepo.save(c5);
 			crepo.save(c6);crepo.save(c7);crepo.save(c8);crepo.save(c9);crepo.save(c10);
 			crepo.save(c11);crepo.save(c12);crepo.save(c13);crepo.save(c14);crepo.save(c15);
-			crepo.save(c16);crepo.save(c17);crepo.save(c18);
+			crepo.save(c16);crepo.save(c17);crepo.save(c18);crepo.save(c19);
 			
 			
 			l1  = lrepo.findById(1).get();	

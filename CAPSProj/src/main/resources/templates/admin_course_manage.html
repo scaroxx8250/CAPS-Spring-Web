@@ -37,8 +37,9 @@
 				<th>Course Name</th>
 				<th>Faculty</th>
 				<th>Description</th>
-				<th>Credits</th>
+				<th>Course Start Date</th>
 				<th>Size</th>
+				<th>Course Occupancy</th>
 				<th>Lecturer Name</th>
 				<th></th>
 			</tr>
@@ -47,8 +48,9 @@
 				<td th:text="${course.courseName}">CourseName</td>
 				<td th:text="${course.faculty}">Faculty</td>
 				<td th:text="${course.description}">Description</td>
-				<td th:text="${course.credits}">Credits</td>
+				<td th:text="${course.courseStartDate}">CourseStartDate</td>
 				<td th:text="${course.size}">Size</td>
+				<td th:text="${course.courseOccupancy.name()}">CourseOccupancy</td>
 				<td th:text="${course.Lecturer.firstName} + ' ' + ${course.Lecturer.lastName}">Lecturer Name</td>
 				<td>
 						<a th:href="@{/admin/editcourse/{Id}(Id=${course.courseId})}"> 
