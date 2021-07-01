@@ -62,7 +62,7 @@
 			<td th:text=${student.key.lastName}>Last Name</td>
 			<td th:text=${student.value}>Grade</td>
 			<td>
-   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.key.studentId}"><button>Select</button></a>
+   				<a href="" th:href="@{/lecturer/StudentPerformance/detail/}+${student.key.studentId}"><button class="button">Select</button></a>
    			</td>
 	</tr>
 	</table>
@@ -80,7 +80,7 @@
 		</div>
 	</div>
 	</main>
-	</div>
 	<footer><div th:replace="fragments/general::footer"></div></footer>
+		</div>
 </body>
 </html>
