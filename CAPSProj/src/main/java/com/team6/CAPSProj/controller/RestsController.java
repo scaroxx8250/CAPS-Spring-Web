@@ -15,16 +15,16 @@ import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.model.StudentGPA;
-import com.team6.CAPSProj.service.StudentCourseInterface;
-import com.team6.CAPSProj.service.StudentInterface;
+import com.team6.CAPSProj.service.StudentCourseService;
+import com.team6.CAPSProj.service.StudentService;
 
 @RestController
 @RequestMapping("/api")
 public class RestsController {
 	@Autowired
-	private StudentCourseInterface scservice;
+	private StudentCourseService scservice;
 	@Autowired
-	private StudentInterface stservice;
+	private StudentService stservice;
 	
 	@RequestMapping("/student/{id}/{year}")
 	@ResponseBody

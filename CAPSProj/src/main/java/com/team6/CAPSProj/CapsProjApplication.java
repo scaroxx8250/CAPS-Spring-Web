@@ -24,11 +24,9 @@ import com.team6.CAPSProj.repo.CourseRepository;
 import com.team6.CAPSProj.repo.LecturerRepository;
 import com.team6.CAPSProj.repo.StudentCourseRepository;
 import com.team6.CAPSProj.repo.StudentRepository;
-import com.team6.CAPSProj.service.CourseInterface;
-import com.team6.CAPSProj.service.CourseServiceImpl;
-import com.team6.CAPSProj.service.LecturerInterface;
+import com.team6.CAPSProj.service.LecturerService;
 import com.team6.CAPSProj.service.LecturerServiceImpl;
-import com.team6.CAPSProj.service.StudentCourseInterface;
+import com.team6.CAPSProj.service.StudentCourseService;
 import com.team6.CAPSProj.service.StudentCourseServiceImpl;
 
 @SpringBootApplication
@@ -42,20 +40,13 @@ public class CapsProjApplication {
 	AdminRepository adrepo;
 	
 	@Autowired
-	private CourseInterface cservice;
-	@Autowired
-	public void setCourseService(CourseServiceImpl cserviceImpl) {
-		this.cservice = cserviceImpl;
-	}
-	
-	@Autowired
 	LecturerRepository lrepo;
 	
 	@Autowired
 	StudentCourseRepository screpo;
 	
 	@Autowired
-	private LecturerInterface lservice;
+	private LecturerService lservice;
 	@Autowired
 	public void setLecturerService(LecturerServiceImpl lserviceImpl)
 	{
@@ -63,7 +54,7 @@ public class CapsProjApplication {
 	}
 	
 	@Autowired
-	private StudentCourseInterface scservice;
+	private StudentCourseService scservice;
 	
 	@Autowired
 	public void setStudentCourseService(StudentCourseServiceImpl scserviceImpl) {

@@ -14,7 +14,7 @@ import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.repo.StudentRepository;
 
 @Service
-public class StudentImplementation implements StudentInterface {
+public class StudentServiceImpl implements StudentService {
 	//test
 	@Autowired
 	StudentRepository srepo;

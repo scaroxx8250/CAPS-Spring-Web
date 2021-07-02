@@ -14,7 +14,7 @@ import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.repo.LecturerRepository;
 
 @Service
-public class LecturerServiceImpl implements LecturerInterface {
+public class LecturerServiceImpl implements LecturerService {
 	
 	@Autowired
 	LecturerRepository lrepo; 

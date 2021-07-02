@@ -25,22 +25,22 @@ import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 
-import com.team6.CAPSProj.service.CourseInterface;
-import com.team6.CAPSProj.service.LecturerInterface;
-import com.team6.CAPSProj.service.StudentCourseInterface;
-import com.team6.CAPSProj.service.StudentInterface;
+import com.team6.CAPSProj.service.CourseService;
+import com.team6.CAPSProj.service.LecturerService;
+import com.team6.CAPSProj.service.StudentCourseService;
+import com.team6.CAPSProj.service.StudentService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@Autowired StudentInterface stservice;
+	@Autowired StudentService stservice;
 	
-	@Autowired LecturerInterface lservice;
+	@Autowired LecturerService lservice;
 	
-	@Autowired CourseInterface cservice;
+	@Autowired CourseService cservice;
 	
-	@Autowired StudentCourseInterface st_cs_service;
+	@Autowired StudentCourseService st_cs_service;
 	
 	public boolean authenticateAdmin(HttpSession session)
 	{

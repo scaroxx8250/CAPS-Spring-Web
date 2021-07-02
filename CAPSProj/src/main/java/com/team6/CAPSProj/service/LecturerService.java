@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 
 import com.team6.CAPSProj.model.Lecturer;
 
-public interface LecturerInterface {
+public interface LecturerService {
 
 	public List<Lecturer> GetAllLecturers();
 	public void addLecturer(Lecturer lecturer);

@@ -17,8 +17,8 @@ import com.team6.CAPSProj.model.Role;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.User;
 import com.team6.CAPSProj.service.AdminService;
-import com.team6.CAPSProj.service.LecturerInterface;
-import com.team6.CAPSProj.service.StudentInterface;
+import com.team6.CAPSProj.service.LecturerService;
+import com.team6.CAPSProj.service.StudentService;
 
 
 
@@ -27,10 +27,10 @@ import com.team6.CAPSProj.service.StudentInterface;
 public class HomeController {
 
 	@Autowired
-	private StudentInterface stservice;
+	private StudentService stservice;
 	
 	@Autowired 
-	private LecturerInterface lservice; 
+	private LecturerService lservice; 
 	
 	@Autowired 
 	private AdminService aservice; 
