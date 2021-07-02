@@ -50,8 +50,8 @@ public class HomeController {
 		if(bindingResult.hasErrors()) {
 			return "index";
 		}
+		model.addAttribute("error", "Incorrect Email address or Password. Please try again.");
 		
-		model.addAttribute("error", "Incorrect user ID or password. Please try again.");
 		Role role = user.getRole();
 		if(role == Role.STUDENT)
 		{

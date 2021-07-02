@@ -25,23 +25,24 @@
     </page-title>
     <main>
 		<div class="course-dropdown">
-				<select id="courseNameDropdown" class = "example" th:if="${not #lists.isEmpty(courses)}">
-				<option th:each="course, stat : ${courses}" th:value="${stat.index}" th:text="${course.courseName}"></option>
-				</select>
-				&nbsp; &nbsp;
-				<a id="showenrolledstudents" th:href="@{/admin/enrolmentlist/1/{Id} (Id=${id})}" ><button class="button">Show Enroled Students</button></a>
-				
-	<!-- 			<a th:href="@{/admin/editstudent/{Id}(Id=${student.matricNo})}">  -->
-				<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}"><button class="button">Add Student</button></a>
-				<br>
+			<select id="courseNameDropdown" class = "example" th:if="${not #lists.isEmpty(courses)}">
+				<option th:each="course, stat : ${courses}" th:value="'/admin/enrolmentlist/1/' + ${stat.index}" th:text="${course.courseName}"></option>
+			</select>
+			<a id="addstudent" th:href="@{/admin/addenrolment/{Id}/1 (Id=${id})}">
+				<span th:if="${selectedCourse.courseOccupancy.name() == 'NOTFULL'}"><button class="button" >Add Student</button></span>
+			</a>
+			<span th:if="${selectedCourse.courseOccupancy.name() == 'FULL'}">The course is already full.</span>
+			<br>
 		</div>
-		<script th:inline="javascript">var sel = document.getElementById('courseNameDropdown');
+		
+		<script th:inline="javascript">
+		var sel = document.getElementById('courseNameDropdown');
 		sel.onchange = function () {
-	    	document.getElementById("addstudent").href = "/admin/addenrolment/" + this.value + "/1"
-	    	document.getElementById("showenrolledstudents").href = "/admin/enrolmentlist/1/" + this.value;
-		}
-		var id = /*[[${id}]]*/
-			document.getElementById("courseNameDropdown").selectedIndex = id;
+	    	document.getElementById("addstudent").href = "/admin/addenrolment/" + this.selectedIndex + "/1"
+	    	window.location=this.value;
+ 		}
+ 		var id = /*[[${id}]]*/
+ 			document.getElementById("courseNameDropdown").selectedIndex = id;
 		</script>
 		
 		<br>
@@ -89,20 +90,5 @@
 			</div>
     </main>
  	<footer><div th:replace="fragments/general::footer"></div></footer> </div>
-</body>
-</html>
-  
-  
-  
-  
-  
-  	<!-- <script>var sel = document.getElementById('courseNameDropdown');
-	sel.onchange = function () {
-	    document.getElementById("addstudent").href = "addenrolment" + "/" + this.value;   
-	}
-	document.getElementById("courseNameDropdown").selectedIndex = -1;
-	</script> -->
-	
-	
 </body>
 </html>

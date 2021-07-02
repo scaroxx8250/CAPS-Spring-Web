@@ -17,7 +17,7 @@ public class DefaultExceptionHandler {
 	     @ExceptionHandler(value = { InvalidInputException.class })
 	 
 	     public String handleInvalidInputException(InvalidInputException ex, Model model) {
-	
+	    	
 	    	 logger.error("Invalid Input Exception: " + ex.getMessage());
 	    	 model.addAttribute("errorMsg", ex.getMessage());
 	    	 
