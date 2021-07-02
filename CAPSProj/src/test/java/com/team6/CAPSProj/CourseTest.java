@@ -24,9 +24,9 @@ import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.repo.CourseRepository;
 import com.team6.CAPSProj.repo.LecturerRepository;
-import com.team6.CAPSProj.service.CourseInterface;
+import com.team6.CAPSProj.service.CourseService;
 import com.team6.CAPSProj.service.CourseServiceImpl;
-import com.team6.CAPSProj.service.LecturerInterface;
+import com.team6.CAPSProj.service.LecturerService;
 import com.team6.CAPSProj.service.LecturerServiceImpl;
 
 @ExtendWith(SpringExtension.class)
@@ -36,10 +36,10 @@ import com.team6.CAPSProj.service.LecturerServiceImpl;
 public class CourseTest {
 
 	@Autowired
-	private CourseInterface cservice;
+	private CourseService cservice;
 	
 	@Autowired
-	private LecturerInterface lservice;
+	private LecturerService lservice;
 	
 	@Autowired
 	public void setCourseService(CourseServiceImpl cserviceImpl) {

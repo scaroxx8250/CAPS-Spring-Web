@@ -26,14 +26,14 @@ import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.repo.CourseRepository;
 import com.team6.CAPSProj.repo.LecturerRepository;
 import com.team6.CAPSProj.repo.StudentCourseRepository;
-import com.team6.CAPSProj.service.CourseInterface;
+import com.team6.CAPSProj.service.CourseService;
 import com.team6.CAPSProj.service.CourseServiceImpl;
-import com.team6.CAPSProj.service.LecturerInterface;
+import com.team6.CAPSProj.service.LecturerService;
 import com.team6.CAPSProj.service.LecturerServiceImpl;
-import com.team6.CAPSProj.service.StudentCourseInterface;
+import com.team6.CAPSProj.service.StudentCourseService;
 import com.team6.CAPSProj.service.StudentCourseServiceImpl;
-import com.team6.CAPSProj.service.StudentImplementation;
-import com.team6.CAPSProj.service.StudentInterface;
+import com.team6.CAPSProj.service.StudentServiceImpl;
+import com.team6.CAPSProj.service.StudentService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = CapsProjApplication.class)
@@ -45,7 +45,7 @@ public class StudentCourseTest {
 	private StudentCourseRepository screpo;
 	
 	@Autowired
-	private StudentCourseInterface scservice;
+	private StudentCourseService scservice;
 	
 	@Autowired
 	public void setStudentCourseService(StudentCourseServiceImpl scserviceImpl) {
@@ -53,19 +53,19 @@ public class StudentCourseTest {
 	}
 	
 	@Autowired
-	private StudentInterface stservice;
+	private StudentService stservice;
 	
 	@Autowired
-	public void setStudentService(StudentImplementation stserviceImpl) {
+	public void setStudentService(StudentServiceImpl stserviceImpl) {
 		this.stservice = stserviceImpl;
 	}
 	@Autowired
-	private CourseInterface cservice;
+	private CourseService cservice;
 	
 	@Autowired
 	private LecturerRepository lrepo;
 	@Autowired
-	private LecturerInterface lservice;
+	private LecturerService lservice;
 	
 	@Autowired
 	public void setCourseService(CourseServiceImpl cserviceImpl) {

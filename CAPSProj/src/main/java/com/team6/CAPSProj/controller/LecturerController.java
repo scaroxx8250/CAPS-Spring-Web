@@ -24,8 +24,8 @@ import com.team6.CAPSProj.model.CourseGrades;
 import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
-import com.team6.CAPSProj.service.CourseInterface;
-import com.team6.CAPSProj.service.StudentCourseInterface;
+import com.team6.CAPSProj.service.CourseService;
+import com.team6.CAPSProj.service.StudentCourseService;
 
 
 @Controller
@@ -33,10 +33,10 @@ import com.team6.CAPSProj.service.StudentCourseInterface;
 public class LecturerController {
 	
 	@Autowired
-	private CourseInterface cinterface;
+	private CourseService cservice;
 
 	@Autowired 
-	private StudentCourseInterface scinterface;
+	private StudentCourseService scservice;
 
 	@RequestMapping(value="/Courses")
 	public String listCourses(Model model, HttpSession session) {
@@ -58,7 +58,7 @@ public class LecturerController {
 		
 		int pageSize = 5; 
 
-		Page<Course> page = cinterface.findAllPaginatedCourseByYearAndLecturer(pageNo, pageSize, l.getLecturerId());
+		Page<Course> page = cservice.findAllPaginatedCourseByYearAndLecturer(pageNo, pageSize, l.getLecturerId());
 		List<Course> courselist = page.getContent();
 		int studentsEnrolled = 0;
 		// instantiate hash map
@@ -66,7 +66,7 @@ public class LecturerController {
 		// for each course in the list of courses
 		for (Course c : courselist) {
 			// get total number of enrolled students 
-			studentsEnrolled = scinterface.CountTotalStudentEnrol(c.getCourseId());
+			studentsEnrolled = scservice.CountTotalStudentEnrol(c.getCourseId());
 			// put course(key) and number of enrolled students(value) into hash map 
 			map.put(c, studentsEnrolled);
 		}
@@ -99,7 +99,7 @@ public class LecturerController {
 		int pageSize = 5; 
 		
 		// find list of courses that lecturer teaches for current year 
-		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(), l.getLecturerId());
+		List<Course> courselist = cservice.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(), l.getLecturerId());
 		model.addAttribute("courses", courselist);
 		
 		Course course1; int totalPages=0; long totalItems =0;
@@ -114,7 +114,7 @@ public class LecturerController {
 				course1 = courselist.get(id);
 			}
 			
-			Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByCourse(pageNo, pageSize, course1.getCourseName());
+			Page<StudentCourse> page = scservice.findAllPaginatedStudentsByCourse(pageNo, pageSize, course1.getCourseName());
 			List<StudentCourse> studentslist = page.getContent(); 
 			model.addAttribute("studentslist", studentslist);
 			
@@ -164,7 +164,7 @@ public class LecturerController {
 		int pageSize = 5; 
 		
 		// Get list of courses taught by lecturer (user) 
-		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(), l.getLecturerId()); 
+		List<Course> courselist = cservice.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(), l.getLecturerId()); 
 		model.addAttribute("courses", courselist);
 		
 		Course course1; 
@@ -181,7 +181,7 @@ public class LecturerController {
 				course1 = courselist.get(id); 
 			}
 			
-			Page<StudentCourse> page = scinterface.findAllPaginatedStudentsByGradedCourse(pageNo, pageSize, course1.getCourseName());
+			Page<StudentCourse> page = scservice.findAllPaginatedStudentsByGradedCourse(pageNo, pageSize, course1.getCourseName());
 			List<StudentCourse> studentslist = page.getContent(); 
 			List<Student> students = new ArrayList<Student>(); 
 			for (StudentCourse sc : studentslist) {
@@ -194,7 +194,7 @@ public class LecturerController {
 			Map<Student, Double> studentGrade = new HashMap<>();
 			// for each student in the course, get their grades 
 			for (Student s: students) {
-				StudentCourse selectedSc = scinterface.findGradeByStudentAndCourse(s, course1);
+				StudentCourse selectedSc = scservice.findGradeByStudentAndCourse(s, course1);
 			
 				if( selectedSc.getGrade() !=null) {
 					studentGrade.put(s, selectedSc.getGrade());
@@ -251,7 +251,7 @@ public class LecturerController {
 		// 5 records displayed on one page 
 		int pageSize = 5;
 		// get all courses taught by lecturer of current year 
-		List<Course> courselist = cinterface.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(),l.getLecturerId()); 
+		List<Course> courselist = cservice.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(),l.getLecturerId()); 
 		model.addAttribute("courses", courselist);
 		
 		Course course1; 
@@ -268,7 +268,7 @@ public class LecturerController {
 			}
 		
 		// find all students according to page number and size 
-		Page<StudentCourse>page = scinterface.findAllPaginatedStudentsByLecturer(pageNo, pageSize, l.getLecturerId(), course1);
+		Page<StudentCourse>page = scservice.findAllPaginatedStudentsByLecturer(pageNo, pageSize, l.getLecturerId(), course1);
 		List<StudentCourse> studentslist =  page.getContent();
 		List<Student> students = new ArrayList<Student>(); 
 		
@@ -323,7 +323,7 @@ public class LecturerController {
 		}
 		
 		if(courseGrade.getStudentCourse() !=null) {
-			scinterface.updateStudentGrade(courseGrade.getStudentCourse());
+			scservice.updateStudentGrade(courseGrade.getStudentCourse());
 		}
 		
 		return "success";
@@ -340,7 +340,7 @@ public class LecturerController {
 		model.addAttribute("name", name);
 		
 		// find all courses that selected student is enrolled in 
-		List<StudentCourse> scourses = scinterface.findAllGradedCoursesByStudent(id);
+		List<StudentCourse> scourses = scservice.findAllGradedCoursesByStudent(id);
 		
 		// go to error page when student does not have his/her course graded
 		if(scourses.size()<0) {
@@ -364,8 +364,8 @@ public class LecturerController {
 		}		
 		
 	
-		List<StudentCourse>AyGradedCourses = scinterface.findAllGradeByYearAndStudent(courses, student, LocalDate.now().getYear());
-		List<StudentCourse>AllTimeGradedCourses = scinterface.findAllGradeByStudent(courses, student);
+		List<StudentCourse>AyGradedCourses = scservice.findAllGradeByYearAndStudent(courses, student, LocalDate.now().getYear());
+		List<StudentCourse>AllTimeGradedCourses = scservice.findAllGradeByStudent(courses, student);
 		
 		// calculate the current year graded courses' credits and GPA score
 		HashMap<String, String> AYcreditGPA = CalculateUtility.calGradeCourse(AyGradedCourses);

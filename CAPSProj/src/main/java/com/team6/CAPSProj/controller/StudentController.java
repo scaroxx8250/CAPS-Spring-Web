@@ -26,18 +26,18 @@ import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.model.StudentSelectedCourses;
-import com.team6.CAPSProj.service.CourseInterface;
-import com.team6.CAPSProj.service.StudentCourseInterface;
+import com.team6.CAPSProj.service.CourseService;
+import com.team6.CAPSProj.service.StudentCourseService;
 
 @Controller
 @RequestMapping("/student")
 public class StudentController {
 	
 	@Autowired
-	private StudentCourseInterface scservice;
+	private StudentCourseService scservice;
 		
 	@Autowired
-	private CourseInterface cservice;
+	private CourseService cservice;
 	
 
 	@GetMapping("/list")

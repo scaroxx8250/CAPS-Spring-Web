@@ -9,7 +9,7 @@ import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.StudentCourse;
 
-public interface CourseInterface {
+public interface CourseService {
 	
 	public List<Course>findAllCourses(List<Integer> CourseId);
 	public List<Course>findAllCourseforCurrentYear();

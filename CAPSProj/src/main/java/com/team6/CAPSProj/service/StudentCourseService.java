@@ -9,7 +9,7 @@ import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 
-public interface StudentCourseInterface {
+public interface StudentCourseService {
 	
 	public List<StudentCourse>findAllCoursesByStudent(Integer studentId);
 	public List<StudentCourse>findAllStudentsByCourse(String CourseName);

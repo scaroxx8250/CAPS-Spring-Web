@@ -20,7 +20,7 @@ import com.team6.CAPSProj.repo.StudentCourseRepository;
 import com.team6.CAPSProj.repo.StudentRepository;
 
 @Service
-public class StudentCourseServiceImpl implements StudentCourseInterface {
+public class StudentCourseServiceImpl implements StudentCourseService {
 	
 	@Autowired
 	StudentCourseRepository screpo; 
@@ -32,7 +32,7 @@ public class StudentCourseServiceImpl implements StudentCourseInterface {
 	StudentRepository srepo; 
 	
 	@Autowired
-	CourseInterface cservice;
+	CourseService cservice;
 	
 	public List<StudentCourse> findAllCoursesByStudent(Integer studentId) {
 		Student student = srepo.findByStudentId(studentId);

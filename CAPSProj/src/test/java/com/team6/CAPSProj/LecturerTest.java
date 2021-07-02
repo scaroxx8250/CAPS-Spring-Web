@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.repo.LecturerRepository;
-import com.team6.CAPSProj.service.LecturerInterface;
+import com.team6.CAPSProj.service.LecturerService;
 import com.team6.CAPSProj.service.LecturerServiceImpl;
 
 @ExtendWith(SpringExtension.class)
@@ -29,7 +29,7 @@ import com.team6.CAPSProj.service.LecturerServiceImpl;
 public class LecturerTest {
 	
 	@Autowired
-	private LecturerInterface lservice; 
+	private LecturerService lservice; 
 	
 	@Autowired
 	LecturerRepository lrepo; 

@@ -18,8 +18,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.repo.StudentRepository;
-import com.team6.CAPSProj.service.StudentImplementation;
-import com.team6.CAPSProj.service.StudentInterface;
+import com.team6.CAPSProj.service.StudentServiceImpl;
+import com.team6.CAPSProj.service.StudentService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = CapsProjApplication.class)
@@ -31,10 +31,10 @@ public class StudentTest {
 	private StudentRepository srepo;
 	
 	@Autowired
-	private StudentInterface stservice;
+	private StudentService stservice;
 	
 	@Autowired
-	public void setStudentService(StudentImplementation stserviceImpl) {
+	public void setStudentService(StudentServiceImpl stserviceImpl) {
 		this.stservice = stserviceImpl;
 	}
 	

@@ -16,7 +16,7 @@ import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.repo.CourseRepository;
 import com.team6.CAPSProj.repo.StudentRepository;
 @Service
-public class CourseServiceImpl implements CourseInterface {
+public class CourseServiceImpl implements CourseService {
 
 	@Autowired
 	CourseRepository crepo;
