@@ -38,8 +38,7 @@ public class LecturerServiceTest {
 	public void setLecturerInterface(LecturerServiceImpl lserviceImpl) {
 		this.lservice = lserviceImpl; 
 	}
-		
-	
+  
 	  @Test
 	  @Order(1)
 	  // Positive Test Case - add lecturer functionality
@@ -149,5 +148,6 @@ public class LecturerServiceTest {
 //		assertTrue(lecturers.size() == 3); 
 		assertTrue(lecturers.size() == 8); 
 	}
+
 	
 }
