@@ -3,7 +3,6 @@ package com.team6.CAPSProj;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +19,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
-import com.team6.CAPSProj.repo.CourseRepository;
-import com.team6.CAPSProj.repo.LecturerRepository;
 import com.team6.CAPSProj.repo.StudentCourseRepository;
 import com.team6.CAPSProj.service.CourseService;
-import com.team6.CAPSProj.service.CourseServiceImpl;
-import com.team6.CAPSProj.service.LecturerService;
-import com.team6.CAPSProj.service.LecturerServiceImpl;
 import com.team6.CAPSProj.service.StudentCourseService;
-import com.team6.CAPSProj.service.StudentCourseServiceImpl;
-import com.team6.CAPSProj.service.StudentServiceImpl;
 import com.team6.CAPSProj.service.StudentService;
 
 @ExtendWith(SpringExtension.class)
@@ -54,6 +46,7 @@ public class StudentCourseServiceTest {
 	
 	@Test
 	@Order(1)
+	// Positive Test Case
 	public void testAddStudentToCourse() {
 		
 		Student student1 = stservice.findStudentByStudentId(3);
@@ -68,6 +61,7 @@ public class StudentCourseServiceTest {
 
 	@Test
 	@Order(2)
+	// Positive Test Case
 	public void testFindAllCourseByStudents() {	
 		Student s1 = stservice.findStudentByMatricNo("A9996B");
 		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s1.getStudentId());
@@ -76,6 +70,7 @@ public class StudentCourseServiceTest {
 
 	@Test
 	@Order(3)
+	// Positive Test Case
 	public void testFindAllStudentsByCourse() {
 		
 		List<StudentCourse> scList = scservice.findAllStudentsByCourse("Beginner Pottery");
@@ -84,6 +79,7 @@ public class StudentCourseServiceTest {
 	
 	@Test
 	@Order(4)
+	// Positive Test Case
 	public void testFindAllGradesByYearAndStudent() {
 		Student s1 = stservice.findStudentByMatricNo("A9996B");
 		List<StudentCourse>sclist = scservice.findAllCoursesByStudent(s1.getStudentId());
@@ -97,6 +93,7 @@ public class StudentCourseServiceTest {
 	}
 	@Test
 	@Order(5)
+	// Positive Test Case
 	public void testUpdateStudentGrade() {
 
 		List<StudentCourse> scList = scservice.findAllStudentsByCourse("Beginner Pottery");
@@ -113,6 +110,7 @@ public class StudentCourseServiceTest {
 	
 	@Test
 	@Order(6)
+	// Positive Test Case
 	public void testCountTotalStudentEnrol() {
 		
 		Course c = cservice.findCourseByCourseName("Beginner Pottery");
@@ -122,6 +120,7 @@ public class StudentCourseServiceTest {
 	
 	@Test
 	@Order(7)
+	// Positive Test Case
 	public void testRemoveStudentCourse() {
 			
 		StudentCourse studentcourse = scservice.findAllStudentsByCourse("Beginner Pottery").get(0);
@@ -133,6 +132,7 @@ public class StudentCourseServiceTest {
 	
 	@Test
 	@Order(8)
+	// Positive Test Case
 	public void testFindAllGradeByStudent() {
 		
 		
@@ -151,6 +151,7 @@ public class StudentCourseServiceTest {
 	
 	@Test
 	@Order(9)
+	// Positive Test Case
 	public void testFindGradeByStudentAndCourse() {
 		
 		Student s1 = stservice.findStudentByMatricNo("A9996B");
@@ -161,6 +162,7 @@ public class StudentCourseServiceTest {
 	
 	@Test
 	@Order(10)
+	// Positive Test Case
 	public void testFindAllGradedCoursesByStudent() {
 		Student s1 = stservice.findStudentByMatricNo("A9996B");
 		List<StudentCourse>sclist = scservice.findAllGradedCoursesByStudent(s1.getStudentId());
@@ -172,6 +174,7 @@ public class StudentCourseServiceTest {
 	
 	@Test
 	@Order(11)
+	// Negative Test Case - to test whether the student still can be assign to the course that is full
 	public void testAdminAddStudentToCourse() {
 		
 		Course c = cservice.findCourseByCourseName("Beginner Pottery");
