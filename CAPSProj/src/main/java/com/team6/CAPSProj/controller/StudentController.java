@@ -1,10 +1,10 @@
 package com.team6.CAPSProj.controller;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,6 +38,7 @@ public class StudentController {
 		
 	@Autowired
 	private CourseInterface cservice;
+	
 
 	@GetMapping("/list")
 	public String ViewCourses(Model model, HttpSession session) {
@@ -185,69 +186,41 @@ public class StudentController {
 		}
 		
 		// get student's grades for all years
-		int ayCredits =0, cuCredits =0 ;
-		double ayGPA = 0, cuGPA =0;
-		
 		List<StudentCourse> AllTimeGradedCourses = scservice.findAllGradeByStudent(enrolCourses, s);
+		HashMap<String, String> ATcreditGPA = CalculateUtility.calGradeCourse(AllTimeGradedCourses);
+		model.addAttribute("cuCredits", ATcreditGPA.get("credits"));
+		model.addAttribute("cuGPA", ATcreditGPA.get("gpa"));
 		
-		
-		//get the latest year from the graded courses
-		int year = 1000;
-		for(StudentCourse sc :AllTimeGradedCourses) {
-			if(sc.getCourse().getCourseStartDate().getYear()>year) {
-				year = sc.getCourse().getCourseStartDate().getYear();
-			}
-		}
-		// get student's grades for latest year		
-		List<StudentCourse> AyGradedCourses = scservice.findAllGradeByYearAndStudent(enrolCourses, s, year);
-		
-	
-		DecimalFormat df = new DecimalFormat("0.00"); 
-		
-		// calculate the latest year graded courses' credits and GPA score
-		for (StudentCourse sc: AyGradedCourses) {
-			ayCredits += sc.getCourse().getCredits();
-			ayGPA += sc.getGrade() * sc.getCourse().getCredits();
-		}
-		ayGPA = ayGPA/ayCredits;
-		String ayGPAFormatted = df.format(ayGPA);
-		
-		 // calculate all year graded course' credits and all year GPA score
-		List<String> acadYears = new ArrayList<String>();
-		for (StudentCourse sc: AllTimeGradedCourses) {
-		cuCredits += sc.getCourse().getCredits();
-		cuGPA += sc.getGrade() * sc.getCourse().getCredits();
-		
-		// retrieve year that student completed the course and store in acadYears list
-		String courseYear = String.valueOf(sc.getCourse().getCourseStartDate().getYear());
-		if(!acadYears.contains(courseYear)){
-			acadYears.add(String.valueOf(sc.getCourse().getCourseStartDate().getYear()));
-			}
-		}
-		cuGPA = cuGPA/cuCredits;
-		String cuGPAFormatted = df.format(cuGPA);
-		
-		// sort the acadYears in descending order
-		acadYears = acadYears.stream().sorted((p1,p2) -> {
-			if(Integer.valueOf(p1) > Integer.valueOf(p2))
-				return -1;
-			else if (Integer.valueOf(p1)< Integer.valueOf(p2))
-				return 1;
-			else
-				return 0;
-		}).collect(Collectors.toList());
-		
-	
-		// passing the data to view
-		model.addAttribute("gradedCourse", AyGradedCourses);
-		model.addAttribute("ayCredits", ayCredits);
-		model.addAttribute("ayGPA", ayGPAFormatted);
-		model.addAttribute("cuCredits", cuCredits);
-		model.addAttribute("cuGPA", cuGPAFormatted);
+		 // get All Graded Years
+		List<String> acadYears = CalculateUtility.sortAcadYearsDesc(AllTimeGradedCourses);
 		model.addAttribute("ay",acadYears);
+			
+		if(!acadYears.isEmpty())
+		{
+			//get the latest year from the graded courses
+			String year = acadYears.stream().max(Comparator.comparing(Integer::valueOf)).get();
+			
+			
+			// get student's grades for latest year		
+			List<StudentCourse> AyGradedCourses = scservice.findAllGradeByYearAndStudent(enrolCourses, s, Integer.valueOf(year));
+			HashMap<String, String> AYcreditGPA = CalculateUtility.calGradeCourse(AyGradedCourses);
+			model.addAttribute("gradedCourse", AyGradedCourses);
+			model.addAttribute("ayCredits", AYcreditGPA.get("credits"));
+			model.addAttribute("ayGPA", AYcreditGPA.get("gpa"));
+
+		}
+		else 
+		{
+			model.addAttribute("gradedCourse", null);
+			model.addAttribute("ayCredits", null);
+			model.addAttribute("ayGPA", null);
+			
+		}
+	
 		return "studentGradeCourse";
 	}
 	
+
 	@RequestMapping(value = "/logout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession(false); 
