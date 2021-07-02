@@ -25,7 +25,7 @@ import com.team6.CAPSProj.service.StudentService;
 @SpringBootTest(classes = CapsProjApplication.class)
 @TestMethodOrder(OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class StudentTest {
+public class StudentServiceTest {
 	
 	@Autowired
 	private StudentRepository srepo;
