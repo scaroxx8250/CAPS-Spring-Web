@@ -1,5 +1,6 @@
 package com.team6.CAPSProj;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
@@ -38,27 +39,29 @@ public class StudentServiceTest {
 		this.stservice = stserviceImpl;
 	}
 	
+
+	
 	@Test
 	@Order(1)
 	public void testAddStudents() {
-		Student student1 = new Student("A2345B","Kevin", "Lin", "kevin@mail.com","1233@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 22));
-		stservice.addStudent(student1);
-		Student student2 = new Student("A2346B","Kevin", "Foster", "paul@mail.com","1234@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 23));
-		stservice.addStudent(student2);
-		Student student3 = new Student("A2347B","Linda", "Cheng", "linda@mail.com","1235@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 24));
-		stservice.addStudent(student3);
 		
-		List<Student> students = srepo.findAll();
-		assertTrue(students.size() == 3);
+		List<Student> beforeAddStudents = stservice.findAllStudents();
 		
+		stservice.addStudent(new Student("A2345B","Kevin", "Lin", "kevin@mail.com","1233@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 22)));
+		stservice.addStudent(new Student("A2346B","Robert", "Foster", "robert@mail.com","1234@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 23)));
+		stservice.addStudent(new Student("A2347B","Kevin", "Foster", "samuel@mail.com","1235@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 24)));
+		
+		List<Student> afterAddStudents = stservice.findAllStudents();
+		assertTrue(afterAddStudents.size() - beforeAddStudents.size() == 3);
 	}
 	
 	@Test
 	@Order(2)
-	public void testFindAllStudents() {	
-		List<Student> students = srepo.findAll();
+	public void testFindAllStudents() {
+		List<Student> students = stservice.findAllStudents();
 		assertTrue(students.size() > 0);
 	}
+	
 	
 	@Test
 	@Order(3)
@@ -67,53 +70,57 @@ public class StudentServiceTest {
 		//Given a list of StudentIds
 		List<Integer>Id = createListOfStudentIds();
 		//When we find all students
-		assertTrue(findAllStudentsById(Id));
-	}
-	
-	public List<Integer> createListOfStudentIds() {
-		List<Integer> numList = new ArrayList<Integer>();
-		numList.add(Integer.valueOf(2));
-		numList.add(3);
-		return numList;
-	}
-	
-	public boolean findAllStudentsById(List<Integer>Id) {
-		
-		List<Student> studentlist = new ArrayList<Student>();
 		List<Integer> retrievedIds = new ArrayList<Integer>();
-		for(Integer id : Id)
-		{
-			if(srepo.findById(id).get() != null)
-				studentlist.add(srepo.findById(id).get());
-		}
-		for(Student s : studentlist)
+		List<Student> retrievedStudents = stservice.findAllStudentsById(Id);
+		for(Student s : retrievedStudents)
 		{
 			retrievedIds.add(s.getStudentId());
 		}
-		//Then the retrieved IDs have to be equal to the given IDs
-		if(Id.equals(retrievedIds))
-			return true;
-		else
-			return false;
+		assertTrue(Id.equals(retrievedIds));
+
 	}
+	
+	public List<Integer> createListOfStudentIds() {
+	List<Integer> numList = new ArrayList<Integer>();
+	numList.add(2);
+	numList.add(3);
+	return numList;
+	}
+	
 	
 	@Test
 	@Order(4)
 	public void testFindStudentByMatricNo() {
-		Student studentx = stservice.findStudentByMatricNo("A2345B");
-		assertTrue(studentx.getMatricNo().equalsIgnoreCase("A2345B"));
-		
+		String matricNo = "A2345B";
+		Student studentx = stservice.findStudentByMatricNo(matricNo);
+		assertTrue(studentx.getMatricNo().equals(matricNo));
 	}
+	
 	
 	@Test
 	@Order(5)
 	public void testFindStudentByEmail() {
-		Student studentx = stservice.findStudentByEmail("1233@nus.edu.sg");
-		assertTrue(studentx.getEmail().equalsIgnoreCase("1233@nus.edu.sg"));
+		String email = "1233@nus.edu.sg";
+		Student studentx = stservice.findStudentByEmail(email);
+		assertTrue(studentx.getEmail().equals(email));
 	}
 	
 	@Test
 	@Order(6)
+	public void testFindStudentsByMatric_FirstName() {
+		String matricNo = "A2345B";
+		
+		List<Student> matricResults = stservice.findStudentByMatric_FirstName(matricNo);
+
+		String firstName = "Kevin";
+		List<Student> firstNameResults = stservice.findStudentByMatric_FirstName(firstName);
+		
+		assertTrue(matricResults.size() == 1 && firstNameResults.size() == 2);
+	}
+	
+	
+	@Test
+	@Order(7)
 	public void testUpdateStudent() {
 		Student studentx = stservice.findStudentByMatricNo("A2347B");
 		studentx.setFirstName("Xudong");
@@ -130,34 +137,60 @@ public class StudentServiceTest {
 	
 	
 	@Test
-	@Order(7)
-	public void testFindStudentByMatric() {
-		String s1 = "A2345B";
+	@Order(8)
+	public void testDeleteStudent() {	
+		//Create new Student
+		stservice.addStudent(new Student("A1111B","Karin", "Baumann", "km@mail.com","5247@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 24)));
 		
-		List<Student> sList = stservice.findStudentByMatric_FirstName(s1);
-		assertTrue(sList.size() == 1);
+		//Delete Student
+		List<Student> beforeDeleteStudents = stservice.findAllStudents();
+		stservice.deleteStudent(stservice.findStudentByMatricNo("A1111B"));
+		List<Student> afterDeleteStudents = stservice.findAllStudents();
+		
+		assertTrue(beforeDeleteStudents.size() - afterDeleteStudents.size() == 1);
+	}
+	
+	@Test
+	@Order(9)
+	public void testFindStudentByEmailAndPassword() {
+		
+		//Find a student by email and PW
+		assertNotNull(stservice.findByEmailAndPassword("1233@nus.edu.sg", "pw123"));
 	}
 	
 	
 	@Test
-	@Order(8)
-	public void testFindStudentByFirstName() { 
-		String s1 = "Kevin";
+	@Order(10)
+	public void testFindFirstNameByStudentId() {
 		
-		List<Student> sList = stservice.findStudentByMatric_FirstName(s1);
-		assertTrue(sList.size() == 2);
+		//get ID by of one of the students (Kevin Lin)
+		int studentId = stservice.findStudentByMatricNo("A2345B").getStudentId();
+		
+		// get first name by Student id
+		assertTrue(stservice.findFirstNameByStudentId(studentId).equals("Kevin"));
+		
 	}
 	
+	@Test
+	@Order(11)
+	public void testFindLastNameByStudentId() {
+	//get ID by of one of the students (Kevin Lin)
+	int studentId = stservice.findStudentByMatricNo("A2345B").getStudentId();
 	
-//	@Test
-//	@Order(9)
-//	public void testDeleteStudent() {
-//		List<Student> students = srepo.findAll();
-//		for(Student s : students) {
-//			stservice.deleteStudent(s);
-//		}
-//		assertTrue(srepo.findAll().size() == 0);
-//	}
+	// get first name by Student id
+	assertTrue(stservice.findLastNameByStudentId(studentId).equals("Lin"));
+		
+	}
+	
+	@Test
+	@Order(12)
+	public void testFindStudentByStudentId() {
+		//get ID by of one of the students (Kevin Lin)
+		int studentId = stservice.findStudentByMatricNo("A2345B").getStudentId();
+		
+		//Find student by this Id
+		assertNotNull(stservice.findStudentByStudentId(studentId));
+	}
 	
 
 }
