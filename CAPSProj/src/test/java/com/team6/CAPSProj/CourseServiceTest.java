@@ -33,7 +33,7 @@ import com.team6.CAPSProj.service.LecturerServiceImpl;
 @SpringBootTest(classes = CapsProjApplication.class)
 @TestMethodOrder(OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CourseTest {
+public class CourseServiceTest {
 
 	@Autowired
 	private CourseService cservice;
