@@ -21,10 +21,10 @@ public interface CourseService {
 	public List<Course>findAllCourseByYear(int year);
 	public List<Course>findAllCourseByYearAndLecturerId(int year, int lecturerId);
 	public List<Course>getAllCourses();
+	public Course findCourseByCourseId(int courseId);
 	Page<Course> findAllPaginatedNotEnrolledCoursesByStudent(int pageNo, int pageSize, Integer studentId);
 	Page<Course> findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(int pageNo, int pageSize, Integer studentId,int faculty);
 	Page<Course> findAllPaginatedCourseByYearAndLecturer(int pageNo, int pageSize, int lecturerId);
-	public Course findCourseByCourseId(int courseId);
 	Page<Course> findAllPaginatedCourseForCurrentYear(int pageNo, int pageSize);
 	
 }

@@ -26,7 +26,7 @@ import com.team6.CAPSProj.service.LecturerServiceImpl;
 @SpringBootTest(classes = CapsProjApplication.class)
 @TestMethodOrder(OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class LecturerTest {
+public class LecturerServiceTest {
 	
 	@Autowired
 	private LecturerService lservice; 

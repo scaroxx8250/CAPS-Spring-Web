@@ -39,7 +39,7 @@ import com.team6.CAPSProj.service.StudentService;
 @SpringBootTest(classes = CapsProjApplication.class)
 @TestMethodOrder(OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class StudentCourseTest {
+public class StudentCourseServiceTest {
 
 	@Autowired
 	private StudentCourseRepository screpo;
