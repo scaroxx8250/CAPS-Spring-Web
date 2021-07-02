@@ -20,8 +20,6 @@ import com.team6.CAPSProj.service.AdminService;
 import com.team6.CAPSProj.service.LecturerService;
 import com.team6.CAPSProj.service.StudentService;
 
-
-
 @Controller
 @RequestMapping("/")
 public class HomeController {
@@ -35,13 +33,11 @@ public class HomeController {
 	@Autowired 
 	private AdminService aservice; 
 
-
 	@RequestMapping("/home")
 	public String login(Model model) {
 		User user = new User();
 		model.addAttribute("user",user);
 		 return "index";
-		
 	}
 	
 	@RequestMapping(path = "/authenticate", method=RequestMethod.POST)
@@ -50,6 +46,7 @@ public class HomeController {
 		if(bindingResult.hasErrors()) {
 			return "index";
 		}
+		
 		model.addAttribute("error", "Incorrect Email address or Password. Please try again.");
 		
 		Role role = user.getRole();
@@ -70,7 +67,6 @@ public class HomeController {
 				session.setAttribute("usession", l);
 				return "redirect:/lecturer/Courses";
 			}
-			
 			return "index";
 		}
 		else
@@ -82,7 +78,5 @@ public class HomeController {
 			}
 			return "index";
 		}
-		
 	}
-	
 }

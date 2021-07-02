@@ -5,15 +5,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +21,6 @@ import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Lecturer;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
-
 import com.team6.CAPSProj.service.CourseService;
 import com.team6.CAPSProj.service.LecturerService;
 import com.team6.CAPSProj.service.StudentCourseService;
@@ -49,23 +45,12 @@ public class AdminController {
 			return false;
 		return true;
 	}
-
-//	@RequestMapping(value = "/studentlist")
-//	public String listStudent(HttpSession session)
-//	{
-//		if(!authenticateAdmin(session))
-//			return "redirect:/home";
-//		
-//		return "redirect:/admin/studentlist/1";
-//	}
 	
 	@RequestMapping(value = "/studentlist/{pageNo}")
 	public String listStudent(@PathVariable(value = "pageNo") int pageNo, Model model, HttpSession session, Boolean delete_student_status) 
 	{
 		if(!authenticateAdmin(session))
 			return "redirect:/home";
-		
-//		model.addAttribute("studentlist", stservice.findAllStudents());
 		
 		if(delete_student_status != null)
 			model.addAttribute("status", delete_student_status);
@@ -154,24 +139,12 @@ public class AdminController {
 		stservice.deleteStudent(student);
 		return listStudent(1, model, session, true);
 	}
-
-//	@RequestMapping(value = "/lecturerlist")
-//	public String listLecturer(HttpSession session)
-//	{
-//		if(!authenticateAdmin(session))
-//			return "redirect:/home";
-//		
-//		return "redirect:/admin/lecturerlist/1";
-//	}
-	
 	
 	@RequestMapping(value = "/lecturerlist/{pageNo}")
 	public String listLecturer(@PathVariable(value = "pageNo") int pageNo, Model model, HttpSession session, Boolean delete_lecturer_status) 
 	{
 		if(!authenticateAdmin(session))
 			return "redirect:/home";
-
-//		List<Lecturer> lecturers = lservice.GetAllLecturers();
 			
 		// status will be null when accessing this page for the first time (not coming from admin/deletelecturer)
 		if(delete_lecturer_status != null)
@@ -179,8 +152,6 @@ public class AdminController {
 			// If user is coming from admin/deletelecturer, show feedback whether delete is successful or not
 			model.addAttribute("status", delete_lecturer_status);
 		}
-			
-//		model.addAttribute("lecturers", lecturers);
 		
 		int pageSize = 5;
 		Page<Lecturer> page = lservice.findAllPaginatedLecturers(pageNo, pageSize);
@@ -233,8 +204,6 @@ public class AdminController {
 		lservice.addLecturer(lecturer);
 		return "forward:/admin/lecturerlist/1";
 	}
-	
-	
 
 	@RequestMapping(value = "/editLecturer/{lecturerId}")
 	public String editLecturer(Model model, @PathVariable("lecturerId") int lecturerId, HttpSession session) 
@@ -276,7 +245,6 @@ public class AdminController {
 		return listEnrolment(1, model, 0, session, null, false);
 	}
 	
-	
 	@RequestMapping(value = "/enrolmentlist/{pageNo}")
 	public String listEnrolment(@PathVariable(value = "pageNo") int pageNo, Model model, Integer id, HttpSession session, Boolean enrol_student_status, boolean unenrol_student_status)
 	{
@@ -297,15 +265,6 @@ public class AdminController {
 			else
 				course1 = cservice.findAllCourseByYear(LocalDate.now().getYear()).get(id);
 
-//			List<StudentCourse> sclist = st_cs_service.findAllStudentsByCourse(course1.getCourseName());
-//			
-//			List<Student> students = new ArrayList<Student>();
-//			for (StudentCourse sc: sclist)
-//			{
-//				students.add(sc.getStudent());
-//			}
-			
-//			model.addAttribute("studentlist", students);
 			model.addAttribute("course", new Course());
 			
 			int pageSize = 5;
@@ -356,18 +315,6 @@ public class AdminController {
 		// Default show first page
 		return listEnrolment(pageNo, model, id, session, null, false);
 	}
-	
-//	@RequestMapping(value = "/enrolmentlist/{id}/{statusId}")
-//	public String listEnrolment(@PathVariable("id") Integer id, Model model, @PathVariable("statusId") Integer statusId, HttpSession session)
-//	{	
-//		if(!authenticateAdmin(session))
-//			return "redirect:/home";
-//    
-//		if(statusId == 1)
-//			return listEnrolment(1, model, id, statusId, session, true, false);
-//		else
-//			return listEnrolment(1, model, id, statusId, session, false, false);
-//	}
 	
 	@RequestMapping(value = "/addenrolment/{id}/{pageNo}")
 	public String addEnrolment(@PathVariable(value = "pageNo") int pageNo, Model model, @PathVariable("id") int id, HttpSession session) 
@@ -432,9 +379,6 @@ public class AdminController {
 	{
 		if(!authenticateAdmin(session))
 			return "redirect:/home";
-		
-//		List<Course> courses = cservice.findAllCourseforCurrentYear();
-//		model.addAttribute("courses", courses);
 		
 		// If delete_course_status is not null, means the admin tried to delete a course, then we will display a success message
 		// Null means that they didn't even try to delete a course
@@ -514,7 +458,6 @@ public class AdminController {
 		return "admin_course_edit";
 	}
 	
-
 	@RequestMapping(value = "/deletecourse/{courseId}")
 	public String deleteCourse(@PathVariable("courseId") int courseId, HttpSession session, Model model) 
 	{
@@ -539,5 +482,4 @@ public class AdminController {
 		}
 		return "logout";
 	}
-
 }

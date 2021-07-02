@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team6.CAPSProj.model.Course;
-
 import com.team6.CAPSProj.model.Faculty;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
@@ -47,7 +46,7 @@ public class StudentController {
 	}
 	
 	//method for result of courses being enrolled
-   public String ViewCoursesResult(Model model, HttpSession session, Boolean enrol_course_status) {
+    public String ViewCoursesResult(Model model, HttpSession session, Boolean enrol_course_status) {
 		
 	   if(enrol_course_status) {
 		   model.addAttribute("status", true);
@@ -80,7 +79,6 @@ public class StudentController {
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("listStudentCourses", listStudentCourses);
 		return "studentlist";
-		
 	}
 	
 	@GetMapping("/enrolCourse")
@@ -107,7 +105,6 @@ public class StudentController {
 		List<Faculty> facultyList = Arrays.asList(Faculty.values());
 		model.addAttribute("facultyList", facultyList);	
 		
-		
 		// get the faculty enum
 		Faculty faculty1;
 		if(facultyId == 0) {
@@ -123,14 +120,12 @@ public class StudentController {
 		Page<Course> page = cservice.findAllPaginatedNotEnrolledCoursesByStudentAndFaculty(pageNo, pageSize, s.getStudentId(),fac);
 		List<Course> notEnrolledCourses = page.getContent();
 			
-		
 		int totalPages = page.getTotalPages();
 		long totalItems = page.getTotalElements();
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("notEnrolledCourses", notEnrolledCourses);	
-		
 		
 		return "enrolCourse";
 	}
@@ -163,12 +158,10 @@ public class StudentController {
 			else {
 				return ViewCoursesResult(model, session,true);
 			}
-			
-			
-			
 		}
 		return "enrolCourse";	
 	}
+	
 	@GetMapping(value="/GradesGPA")
 	public String gradesAndGPA(Model model,HttpSession session ) {
 		Student s = (Student) session.getAttribute("usession");
@@ -191,7 +184,7 @@ public class StudentController {
 		model.addAttribute("cuCredits", ATcreditGPA.get("credits"));
 		model.addAttribute("cuGPA", ATcreditGPA.get("gpa"));
 		
-		 // get All Graded Years
+		// get All Graded Years
 		List<String> acadYears = CalculateUtility.sortAcadYearsDesc(AllTimeGradedCourses);
 		model.addAttribute("ay",acadYears);
 			
@@ -207,16 +200,14 @@ public class StudentController {
 			model.addAttribute("gradedCourse", AyGradedCourses);
 			model.addAttribute("ayCredits", AYcreditGPA.get("credits"));
 			model.addAttribute("ayGPA", AYcreditGPA.get("gpa"));
-
 		}
 		else 
 		{
 			model.addAttribute("gradedCourse", null);
 			model.addAttribute("ayCredits", null);
 			model.addAttribute("ayGPA", null);
-			
 		}
-	
+		
 		return "studentGradeCourse";
 	}
 	
@@ -229,7 +220,5 @@ public class StudentController {
 		}
 		return "logout";
 	}
-	
-	
 }
 
