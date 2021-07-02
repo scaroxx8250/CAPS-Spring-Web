@@ -3,7 +3,6 @@ package com.team6.CAPSProj;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.team6.CAPSProj.model.Course;
-import com.team6.CAPSProj.model.Faculty;
-import com.team6.CAPSProj.model.Lecturer;
+
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
 import com.team6.CAPSProj.repo.CourseRepository;
@@ -48,164 +46,135 @@ public class StudentCourseServiceTest {
 	private StudentCourseService scservice;
 	
 	@Autowired
-	public void setStudentCourseService(StudentCourseServiceImpl scserviceImpl) {
-		this.scservice = scserviceImpl;
-	}
-	
-	@Autowired
 	private StudentService stservice;
 	
 	@Autowired
-	public void setStudentService(StudentServiceImpl stserviceImpl) {
-		this.stservice = stserviceImpl;
-	}
-	@Autowired
 	private CourseService cservice;
 	
-	@Autowired
-	private LecturerRepository lrepo;
-	@Autowired
-	private LecturerService lservice;
 	
-	@Autowired
-	public void setCourseService(CourseServiceImpl cserviceImpl) {
-		this.cservice = cserviceImpl;
+	@Test
+	@Order(1)
+	public void testAddStudentToCourse() {
+		
+		Student student1 = stservice.findStudentByStudentId(3);
+		Student student2 = stservice.findStudentByStudentId(4);
+		Course c1 = cservice.findCourseByCourseId(10);
+		
+		scservice.addStudentToCourse(c1, student1);
+		scservice.addStudentToCourse(c1, student2);
+		assertTrue(screpo.findAll().size()==14);
+		
 	}
 
-	@Autowired
-	private CourseRepository crepo;
-	
-	public DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
-	
-	@Autowired
-	public void setLecturerService(LecturerServiceImpl lserviceImpl)
-	{
-		this.lservice = lserviceImpl;
+	@Test
+	@Order(2)
+	public void testFindAllCourseByStudents() {	
+		Student s1 = stservice.findStudentByMatricNo("A9996B");
+		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s1.getStudentId());
+		assertTrue(scList.size() > 0);
+	}
+
+	@Test
+	@Order(3)
+	public void testFindAllStudentsByCourse() {
+		
+		List<StudentCourse> scList = scservice.findAllStudentsByCourse("Beginner Pottery");
+		assertTrue(scList.size() > 0);
 	}
 	
-//	@Test
-//	@Order(1)
-//	public void testAddStudentToCourse() {
-//		Student student1 = new Student("A2345B","Kevin", "Lin", "kevin@mail.com","1233@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 22));
-//		stservice.addStudent(student1);
-//		Student student2 = new Student("A2347B","Linda", "Cheng", "linda@mail.com","1235@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 24));
-//		stservice.addStudent(student2);
-//		Lecturer l1 = new Lecturer("Francis", "Tan", Faculty.BUSINESS, "francis@gmail.com", null, null);
-//		lservice.addLecturer(l1);
-//		LocalDate ld = LocalDate.parse("22/05/2021",df);
-//		Course c1 = new Course("ADProject", "ADProject", Faculty.BUSINESS, 5, ld, l1, 10);
-//		cservice.addCourse(c1);
-//
-//		scservice.addStudentToCourse(c1, student1);
-//		scservice.addStudentToCourse(c1, student2);
-//		
-//		assertTrue(screpo.findAll().size()==2);
-//		
-//	}
-//	
-//	
-//	@Test
-//	@Order(2)
-//	public void testFindAllCourseByStudents() {	
-//		Student s1 = stservice.findStudentByMatricNo("A2345B");
-//		List<StudentCourse> scList = scservice.findAllCoursesByStudent(s1.getStudentId());
-//		assertTrue(scList.size() > 0);
-//	}
-//	
-//	@Test
-//	@Order(3)
-//	public void testFindAllStudentsByCourse() {
-//		Course c1 = cservice.findCourseByCourseName("ADProject");
-//		
-//		List<StudentCourse> scList = screpo.findAllStudentsByCourse(c1);
-//		assertTrue(scList.size() > 0);
-//	}
-//	
-//	@Test
-//	@Order(4)
-//	public void testFindAllGradesByYearAndStudent() {
-//		
-//		
-//		
-//		Student s1 = stservice.findStudentByMatricNo("A2345B");
-//		List<StudentCourse>sclist = scservice.findAllCoursesByStudent(s1.getStudentId());
-//		List<Course> clist = new ArrayList<Course>();
-//		for(StudentCourse course: sclist) {
-//			clist.add(course.getCourse());
-//		}
-//		
-//		assertNotNull(scservice.findAllGradeByYearAndStudent(clist, s1,2021));
-//		
-//	}
-//	@Test
-//	@Order(5)
-//	public void testUpdateStudentGrade() {
-//		Lecturer l1 = lrepo.findByLecturerId(1);
-//		List<Course> courseList = crepo.findCourseByLecturer(l1.getLecturerId());
-//		List<StudentCourse>scList = null;
-//		for(Course course : courseList) {
-//			scList = scservice.findAllStudentsByCourse(course.getCourseName());
-//			for (StudentCourse sc: scList) {
-//				sc.setGrade(4.7);
-//			}
-//			
-//		}	
-//		scservice.updateStudentGrade(scList);
-//		
-//		List<StudentCourse>retrieveList = screpo.findAll();
-//		assertTrue(scList.equals(retrieveList));
-//	
-//	}
-//	
-//	@Test
-//	@Order(6)
-//	public void testCountTotalStudentEnrol() {
-//		
-//		Course c = cservice.findCourseByCourseName("ADProject");
-//	
-//		assertTrue( scservice.CountTotalStudentEnrol(c.getCourseId())== 2);
-//	}
+	@Test
+	@Order(4)
+	public void testFindAllGradesByYearAndStudent() {
+		Student s1 = stservice.findStudentByMatricNo("A9996B");
+		List<StudentCourse>sclist = scservice.findAllCoursesByStudent(s1.getStudentId());
+		List<Course> clist = new ArrayList<Course>();
+		for(StudentCourse course: sclist) {
+			clist.add(course.getCourse());
+		}
+		
+		assertNotNull(scservice.findAllGradeByYearAndStudent(clist, s1,2021));
+		
+	}
+  
+	@Test
+	@Order(5)
+	public void testUpdateStudentGrade() {
+
+		List<StudentCourse> scList = scservice.findAllStudentsByCourse("Beginner Pottery");
+			for (StudentCourse sc: scList) {
+				sc.setGrade(4.7);
+			}
+			
+		scservice.updateStudentGrade(scList);
+		
+		StudentCourse retrieveSC = scservice.findAllStudentsByCourse("Beginner Pottery").get(0);
+		assertTrue(retrieveSC.getGrade().equals(4.7));
+	
+	}
+	
+	@Test
+	@Order(6)
+	public void testCountTotalStudentEnrol() {
+		
+		Course c = cservice.findCourseByCourseName("Beginner Pottery");
+	
+		assertTrue( scservice.CountTotalStudentEnrol(c.getCourseId())== 4);
+	}
 	
 	@Test
 	@Order(7)
 	public void testRemoveStudentCourse() {
-		Student student3 = new Student("A2345B","Kevin", "Lin", "kevin@mail.com","1233@nus.edu.sg", "pw123", LocalDate.of(2021, 07, 22));
-		stservice.addStudent(student3);
-		Lecturer l2 = new Lecturer("Francis2", "Tan2", Faculty.BUSINESS, "francis@gmail.com", null, null);
-		lservice.addLecturer(l2);
-		Course c3 = new Course("ADProject2", "ADProject", Faculty.BUSINESS, 5, LocalDate.of(2021, 07, 24), l2, 10);
-		cservice.addCourse(c3);
-		
-		scservice.addStudentToCourse(c3, student3);
-		
-		StudentCourse studentcourse = scservice.findAllStudentsByCourse("ADProject2").get(0);
-		
+		StudentCourse studentcourse = scservice.findAllStudentsByCourse("Beginner Pottery").get(0);
 		scservice.removeStudentCourse(studentcourse);
-		
-		assertTrue(scservice.findAllStudentsByCourse("ADProject2").isEmpty());
+		assertTrue(scservice.findAllStudentsByCourse("Beginner Pottery").size()== 3);
 	}
 	
-//	@Test
-//	@Order(7)
-//	public void testFindStudentCourseByCourse() {
-//		
-//		Course c = cservice.findCourseByCourseName("ADProject");
-//		StudentCourse sc = scservice.findByCourse(c);
-//	
-//		assertNotNull(sc);
-//	}
+	@Test
+	@Order(8)
+	public void testFindAllGradeByStudent() {
+		Student s1 = stservice.findStudentByMatricNo("A9996B");
+		List<StudentCourse> sclist = scservice.findAllCoursesByStudent(s1.getStudentId());
+		List<Course> clist =  new ArrayList<Course>();
+		for(StudentCourse sc: sclist) {
+			clist.add(sc.getCourse());
+		}
+		
+		List<StudentCourse> sc = scservice.findAllGradeByStudent(clist, s1);
+		assertNotNull(sc);
+	}
 	
-//	@Test
-//	@Order(8)
-//	public void testRemoveStudentFromCourse() {
-//		Course c = cservice.findCourseByCourseName("ADProject");
-//		Student s1 = stservice.findStudentByMatricNo("A2345B");
-//		
-//		scservice.removeStudentFromCourse(c, s1);
-//		assertTrue(screpo.findAll().size()==1);
-//	}
-//	
+	@Test
+	@Order(9)
+	public void testFindGradeByStudentAndCourse() {
+		
+		Student s1 = stservice.findStudentByMatricNo("A9996B");
+		Course c1 = cservice.findCourseByCourseName("Beginner Pottery");
+		assertNotNull(scservice.findGradeByStudentAndCourse(s1, c1).getGrade());
+		
+	}
 	
+	@Test
+	@Order(10)
+	public void testFindAllGradedCoursesByStudent() {
+		Student s1 = stservice.findStudentByMatricNo("A9996B");
+		List<StudentCourse>sclist = scservice.findAllGradedCoursesByStudent(s1.getStudentId());
+		for(StudentCourse sc : sclist) {
+			 assertNotNull(sc.getGrade());
+		}
+		  
+	}
+	
+	@Test
+	@Order(11)
+	public void testAdminAddStudentToCourse() {
+		
+		Course c = cservice.findCourseByCourseName("Beginner Pottery");
+		Student s1 = stservice.findStudentByMatricNo("A9994B");
+		Student s2 = stservice.findStudentByMatricNo("A9993B");
+		Student s3 = stservice.findStudentByMatricNo("A9992B");
+		scservice.adminAddStudentToCourse(c, s1);
+		scservice.adminAddStudentToCourse(c, s2);
+		assertTrue(!scservice.adminAddStudentToCourse(c, s3));
+	}
 	
 }

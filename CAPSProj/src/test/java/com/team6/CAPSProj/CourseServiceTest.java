@@ -118,6 +118,7 @@ public class CourseServiceTest {
 		Course c = cservice.findCourseByCourseName("ADProject");
 		
 		c.setCourseStartDate(LocalDate.parse("02/03/2021",df));
+
 		c.setCredits(15);
 		c.setDescription("testing1");
 		c.setFaculty(Faculty.BUSINESS);
@@ -128,7 +129,6 @@ public class CourseServiceTest {
 		assertTrue(c.equals(d));
 		
 	}
-
 
 	@Test
 	@Order(6)
@@ -162,7 +162,6 @@ public class CourseServiceTest {
 		List<Course> test = cservice.findAllCourseByYearAndLecturerId(LocalDate.now().getYear(),1);
 		assertNotNull(test);
 	}
-	
 	
 	@Test
 	@Order(10)
