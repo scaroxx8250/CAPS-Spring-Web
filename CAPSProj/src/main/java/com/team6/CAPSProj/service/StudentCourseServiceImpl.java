@@ -137,8 +137,12 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 		StudentCourse toDelete = screpo.findByCourseIdAndStudentIdAndYear(course, student,2021).get(0);
 		if (toDelete != null) {
 			screpo.delete(toDelete);
+			if(course.getCourseOccupancy() == CourseOccupancy.FULL)
+			{
+				course.setCourseOccupancy(CourseOccupancy.NOTFULL);
+				cservice.updateCourse(course);
+			}
 		}
-
 	}
 
 	

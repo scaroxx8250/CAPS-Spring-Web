@@ -40,8 +40,6 @@
 	}
 	var id = /*[[${id}]]*/
 		document.getElementById("courseNameDropdown").selectedIndex = id; 
-	
-	
 	</script>
 	<a href="" th:href="@{/lecturer/GradeCourse/{Id}/1 (Id=${id})}"><button class="button" th:if="${not #lists.isEmpty(studentslist)}">Grade this course</button></a>
 	</div>
