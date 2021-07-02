@@ -3,7 +3,6 @@ package com.team6.CAPSProj;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +19,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.team6.CAPSProj.model.Course;
 import com.team6.CAPSProj.model.Student;
 import com.team6.CAPSProj.model.StudentCourse;
-import com.team6.CAPSProj.repo.CourseRepository;
-import com.team6.CAPSProj.repo.LecturerRepository;
 import com.team6.CAPSProj.repo.StudentCourseRepository;
 import com.team6.CAPSProj.service.CourseService;
-import com.team6.CAPSProj.service.CourseServiceImpl;
-import com.team6.CAPSProj.service.LecturerService;
-import com.team6.CAPSProj.service.LecturerServiceImpl;
 import com.team6.CAPSProj.service.StudentCourseService;
-import com.team6.CAPSProj.service.StudentCourseServiceImpl;
-import com.team6.CAPSProj.service.StudentServiceImpl;
 import com.team6.CAPSProj.service.StudentService;
 
 @ExtendWith(SpringExtension.class)

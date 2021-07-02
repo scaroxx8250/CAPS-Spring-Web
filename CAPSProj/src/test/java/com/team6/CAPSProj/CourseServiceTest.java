@@ -69,10 +69,9 @@ public class CourseServiceTest {
 		
 	
 		LocalDate ld = LocalDate.parse("22/05/2021",df);
-		Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 0);
-		Course c2 = new Course("ADProject2", "ADProject2", Faculty.COMPUTING, 5, ld, 0);
+
+		Course c1 = new Course("ADProject", "ADProject", Faculty.COMPUTING, 5, ld, 10);
 		cservice.addCourse(c1);
-		cservice.addCourse(c2);
 		assertNotNull(cservice.findCourseByCourseName("ADProject"));
 	}
 	
@@ -120,7 +119,7 @@ public class CourseServiceTest {
 		Course c = cservice.findCourseByCourseName("ADProject");
 		
 		c.setCourseStartDate(LocalDate.parse("02/03/2021",df));
-		c.setCredits(50);
+		c.setCredits(15);
 		c.setDescription("testing1");
 		c.setFaculty(Faculty.BUSINESS);
 		c.setSize(12);
@@ -166,5 +165,19 @@ public class CourseServiceTest {
 	}
 	
 	
+	@Test
+	@Order(10)
+	public void getAllCourses()
+	{
+		List<Course> clist = cservice.getAllCourses();
+		assertNotNull(clist);
+	}
 	
+	@Test
+	@Order(11)
+	public void findCourseByCourseId() {
+	int courseId = 1;
+	Course c = cservice.findCourseByCourseId(courseId);
+	assertNotNull(c);
+	}
 }
