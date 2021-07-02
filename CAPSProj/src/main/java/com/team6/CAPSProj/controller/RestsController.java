@@ -21,8 +21,10 @@ import com.team6.CAPSProj.service.StudentService;
 @RestController
 @RequestMapping("/api")
 public class RestsController {
+	
 	@Autowired
 	private StudentCourseService scservice;
+	
 	@Autowired
 	private StudentService stservice;
 	
@@ -55,7 +57,6 @@ public class RestsController {
 		Items.put("ayCredits", AYcreditGPA.get("credits"));
 		Items.put("ayGPA", AYcreditGPA.get("gpa"));
 		
-		
 		// get student's grades for all year
 		List<StudentCourse> AllTimeGradedCourses = scservice.findAllGradeByStudent(enrolCourses, s);
 		
@@ -63,7 +64,7 @@ public class RestsController {
 			throw new BusinessException("GPA Record not found");
 		}
 				
-		 // calculate all year graded course' credits and all year GPA score
+		// calculate all year graded course' credits and all year GPA score
 		HashMap<String, String> ATcreditGPA = CalculateUtility.calGradeCourse(AllTimeGradedCourses);
 		Items.put("cuCredits", ATcreditGPA.get("credits"));
 		Items.put("cuGPA", ATcreditGPA.get("gpa"));

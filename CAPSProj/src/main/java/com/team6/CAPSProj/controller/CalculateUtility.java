@@ -9,7 +9,6 @@ import com.team6.CAPSProj.model.StudentCourse;
 
 public final class CalculateUtility {
 
-	
 	public final static HashMap<String, String> calGradeCourse(List<StudentCourse> sclist) {
 		
 		DecimalFormat df = new DecimalFormat("0.00");
@@ -26,10 +25,10 @@ public final class CalculateUtility {
 		creditAndGPA.put("credits",String.valueOf(credits));
 		creditAndGPA.put("gpa", df.format(gpa));
 		
-		return creditAndGPA;
-		
+		return creditAndGPA;	
 	}
-	public final static List<String> sortAcadYearsDesc(List<StudentCourse> sclist){
+	
+	public final static List<String> sortAcadYearsDesc(List<StudentCourse> sclist) {
 		
 		List<String> acadYears = sclist.stream().map(c->String.valueOf( c.getCourse().getCourseStartDate().getYear())).distinct().sorted((p1,p2) -> {
 			if(Integer.valueOf(p1) > Integer.valueOf(p2))
@@ -41,9 +40,5 @@ public final class CalculateUtility {
 		}).collect(Collectors.toList());
 		
 		return acadYears;
-	
 	}
-	
-
-	
 }

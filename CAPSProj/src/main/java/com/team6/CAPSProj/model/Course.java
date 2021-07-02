@@ -25,6 +25,7 @@ public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int courseId;
+	
 	@NotEmpty
 	private String courseName;
 
@@ -38,19 +39,15 @@ public class Course {
 	@NotNull
 	private int credits;
 	
-
-
 	@DateTimeFormat (pattern="yyyy-MM-dd")
 	@NotNull
-
 	private LocalDate courseStartDate;
 	
 	@ManyToOne
 	private Lecturer lecturer;
 
-
-@Max(80)
-@Min(1)
+	@Max(80)
+	@Min(1)
 	@NotNull
 	private int size;
 	
@@ -58,12 +55,10 @@ public class Course {
 	
 	private HashSet<StudentCourse> studentCourses = new HashSet<StudentCourse>();
 
-	
 	public Course() {
 		super();
 	}
 	
-
 	public Course(String courseName, String description, Faculty faculty, int credits, LocalDate courseStartDate,
 			int size) {
 		super();
@@ -86,7 +81,6 @@ public class Course {
 		this.lecturer = lecturer;
 		this.size = size;
 	}
-
 
 	public int getCourseId() {
 		return courseId;
@@ -119,28 +113,22 @@ public class Course {
 	public void setFaculty(Faculty faculty) {
 		this.faculty = faculty;
 	}
-	
-	
-	
+
 	public int getCredits() {
 		return credits;
 	}
-
 
 	public void setCredits(int credits) {
 		this.credits = credits;
 	}
 
-
 	public LocalDate getCourseStartDate() {
 		return courseStartDate;
 	}
 
-
 	public void setCourseStartDate(LocalDate courseStartDate) {
 		this.courseStartDate = courseStartDate;
 	}
-
 
 	public Lecturer getLecturer() {
 		return lecturer;
@@ -174,7 +162,6 @@ public class Course {
 				+ size + "]";
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -189,7 +176,6 @@ public class Course {
 		result = prime * result + size;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -231,20 +217,11 @@ public class Course {
 		return true;
 	}
 
-
 	public CourseOccupancy getCourseOccupancy() {
 		return courseOccupancy;
 	}
 
-
 	public void setCourseOccupancy(CourseOccupancy courseOccupancy) {
 		this.courseOccupancy = courseOccupancy;
 	}
-
-
-	
-	
-	
-
-	
 }

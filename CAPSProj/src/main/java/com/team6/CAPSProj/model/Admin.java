@@ -37,8 +37,6 @@ public class Admin {
 		this.password = password;
 	}
 	
-	
-
 	public Admin(String firstName, String lastName, String password) {
 		super();
 		this.firstName = firstName;
@@ -91,8 +89,4 @@ public class Admin {
 		return "Admin [adminId=" + adminId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + "]";
 	} 
-	
-	
-	
-	
 }

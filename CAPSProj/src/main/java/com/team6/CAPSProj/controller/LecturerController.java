@@ -136,9 +136,7 @@ public class LecturerController {
 		else {
 			model.addAttribute("selectedCourse", null); 
 		}
-		
-		
-		
+
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("totalItems",totalItems);
@@ -229,13 +227,11 @@ public class LecturerController {
 		model.addAttribute("totalItems",totalItems);			
 		
 		return "performance"; 
-	
 	}
 	
 	@RequestMapping(value="/GradeCourse")
 	public String listGrades (Model model, HttpSession session) {
 		return listGrades(0, 1, session, model);
-		
 	}
 	
 	@RequestMapping(value="/GradeCourse/{id}/{pageNo}")
@@ -307,7 +303,6 @@ public class LecturerController {
 		CourseGrades cg = new CourseGrades(new ArrayList<StudentCourse>());
 			
 		model.addAttribute("selectedGrade", cg);
-		
 			
 		return "gradeCourse"; 
 	}
@@ -325,9 +320,7 @@ public class LecturerController {
 		if(courseGrade.getStudentCourse() !=null) {
 			scservice.updateStudentGrade(courseGrade.getStudentCourse());
 		}
-		
 		return "success";
-		
 	}
 	
 	@RequestMapping(value="/StudentPerformance/detail/{id}")
@@ -354,7 +347,6 @@ public class LecturerController {
 		String studentName = student.getFirstName() + ' ' + student.getLastName();
 		model.addAttribute("studentName", studentName);
 		model.addAttribute("student", student);
-		
 				
 		List<Course> courses = new ArrayList<Course>(); 
 		
@@ -363,7 +355,6 @@ public class LecturerController {
 			courses.add(sc.getCourse());
 		}		
 		
-	
 		List<StudentCourse>AyGradedCourses = scservice.findAllGradeByYearAndStudent(courses, student, LocalDate.now().getYear());
 		List<StudentCourse>AllTimeGradedCourses = scservice.findAllGradeByStudent(courses, student);
 		
@@ -394,7 +385,6 @@ public class LecturerController {
 		}
 		return "logout";
 	}
-	
 }
 
 		
